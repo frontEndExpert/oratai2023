@@ -1,0 +1,23 @@
+  .headbox {
+    display: block;
+    width: 100%;
+    max-width: 800px;
+    padding:20px;
+    background-color: black;
+  }
+  .bigheader {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+  }
+  .headbox > h2 {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+  }
+  .headbox > p {
+    font-size: 14px;
+    font-weight: normal;
+    color: white;
+  }

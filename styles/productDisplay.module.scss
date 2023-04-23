@@ -1,0 +1,128 @@
+.productDetailsContainer {
+    background-color: white;
+    z-index: 15;
+}
+
+.productTitle{
+    color: black;
+}
+
+
+.productDetails {
+    color: white;
+    background-color: black;
+}
+    .adminbtn button{
+        color: black;
+        margin: 10px;
+        padding: 3px;
+        border-radius: 10px;
+        background-color: #cccccc;
+    }
+    .adminbtn button:hover{
+        background-color: #999999;
+        cursor: pointer;
+
+    }
+   
+    .grouptitle {
+        text-align: center;
+        font-size: 24px;
+        width: 100%;
+        margin: 20px;
+        padding: 0px ;
+        box-sizing: border-box;
+    }
+    
+    .productTitle{
+        color: white;
+        text-align: center;
+        font-size: 18px;
+    }
+
+    .productPager{
+        color: black;
+        text-align: center;
+        font-size: 18px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .productPager > button {
+        color: black;
+        font-size: 18px;
+        margin: 10px;
+        padding: 3px;
+        border-radius: 10px;
+        background-color: #cccccc;
+    }
+    
+
+    .productPager> button.disabled{
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+    .productPager> button{
+        background-color: #cccccc;
+    }
+    .productPager> button:hover, .productPager> button:focus{
+        background-color: #999999;
+    }
+
+    .productdetails{
+        display: flex;
+        width: 100%;
+        justify-content: space-evenly;
+        flex-wrap: nowrap;
+    }
+    .productImgContainer{
+        width: 30%;
+        padding: 15px;
+        flex: 1 0 40%;
+    }
+    .prdimg{
+        width: 360px;
+        height: 320px;
+    }
+    .productDescContainer{
+        width: 60%;
+    }
+
+    @media (max-width: 700px) {
+        .productdetails{
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .productImgContainer{
+            padding: 15px;
+            flex: 1 0 100%;
+        }
+        .productImgContainer{
+            width: 100%;
+            flex: 1 0 100%;
+            padding: 15px;
+        }
+        
+        div.productDescContainer > p,
+        .productDescContainer > p{
+            word-wrap: break-word;
+        }
+    }
+
+    @media (max-width:421px){
+        .productPager{
+            align-items: center;
+            font-weight: bold;
+            button {
+                padding: 0px 6px;
+            }
+        }
+
+        .prdimg{
+            width: 300px;
+            height: 270px;
+        }
+
+    }

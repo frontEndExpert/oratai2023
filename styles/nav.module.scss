@@ -1,0 +1,209 @@
+    .navbar {
+      top: -5px;
+      padding: 0px!important;
+      margin: 0px!important;
+
+      margin: 0px!important;
+      padding: 0px!important;
+      // #ba9509 !important; // ora-brown #3d2115
+      background-image: linear-gradient(#ad966c, #f4eacf, #ad966c);
+      z-index: 1;
+    }
+    
+    .navbarnav>li {
+      float: left!important;
+    }
+
+   /*  .navbar .navbar-nav {
+      display: inline-flex;
+      flex-flow: row nowrap;
+    } */
+
+    .navbar .navbarnav> li > a{
+      color: black; //#BFA25E; 
+      text-decoration: none;
+      padding: 10px 0px!important;
+    }
+    
+    .mynavbar > li > a.active,
+    .authbar > li > a:active, 
+    .authbar > li > a.active,
+    #reviews > a.active,
+    #productscat > a.active,
+    #aboutus > a.active,
+    #home > a.active {
+      color: #de4d0e !important;  //orange #de4d0e  #cc9933 F7E29D
+      //background-color: #581414!important; // ora-yellow cc9933
+      font-weight: bold!important;
+    }
+    
+    .mynavbar > li > a:hover, 
+    .mynavbar > li > a:focus,
+    .authbar > li > a:hover, 
+    .authbar > li > a:focus
+    {
+      color: #de4d0e!important; // efa40d
+      background-color: transparent!important;
+    }
+
+   
+.navbarnav {
+    width: 325px!important;
+    margin: 0px 0px !important;
+    padding: 0px!important;
+    display: inline-block;
+}
+
+
+.navitem {
+    width: 60px!important;
+    padding: 0px!important;
+    margin: 0px 2px!important;
+    text-align: center;
+}
+
+.mynavbar > .navitem.contact{
+width: 60px!important; 
+padding: 0px!important;
+text-align: center;
+background-color: red;
+}
+.mynavbar > li.navitem,
+.authbar > li.navitem,
+#admin-bar > li.navitem
+{
+display: inline-block!important;
+text-align: center!important;
+padding: 0px!important;
+
+}
+
+.authbar > li.navlang{
+display: inline-block!important;
+text-align: center!important;
+padding: 10px;
+}
+
+.mynavbar > li > a,
+.authbar > li > a,
+#admin-bar > li > a
+{
+text-align: center!important;
+margin: 0px!important;
+padding: 0px!important;
+}
+
+.authbar > li > a > span.menuicon,
+.mynavbar > li > a > span.menuicon{
+font-weight: 700;
+font-size: 18px;
+margin-bottom: 6px;
+color: black;
+text-align: center;
+}
+.mynavbar > li > a > span.menuicon2{
+font-weight: 700!important;
+font-size: 18px!important;
+color: black;
+text-align: center;
+}
+
+
+.authbar {
+  width:    160px!important;        
+  display:  inline-block; 
+  min-width:    60px!important;
+  text-align: center;
+  padding: 0px!important;
+  margin: 0px 0px!important;
+  }
+
+#admin-bar{
+display: block; 
+width: 300px!important;
+ 
+ text-align: center;
+ margin: 15px 0px;
+}
+
+
+#admin-bar > li > .admin{
+color: black!important;
+}
+
+#orders > .logout{
+color: black!important;
+}
+#logout > a :hover, #orders > a :hover{
+color: red!important;
+}
+
+#logout > span.menutext,
+.authbar > li > a ,
+#admin-bar > li > a ,
+#logout, #orders {
+height: 100%;
+padding: 10px 0px;
+width: 50px;
+margin: 0px;
+color: black;
+text-align: center;
+}
+
+.mynav{
+padding: 0px 5px!important;
+margin: 0px!important;
+}
+
+.mynavbar > li > a {
+line-height: 90%!important;
+}
+
+.mynavbar > li > a > .menutext,
+.authbar > li > a > span.menutext,
+#admin-bar > li > a > span.menutext{
+font-weight: 500!important;
+font-size: 12px!important;
+line-height: 90%!important;
+color: inherit!important;
+text-align: center;
+}
+
+@media (max-width:421px){
+        #main-navbar{
+            width: 100%;
+        }
+        .mynav{
+            padding: 0px 0px!important;
+        }
+        .mynavbar{
+            width: 210px!important;
+            min-width: 190px!important;
+        }
+        .mynavbar > .navitem,
+        .authbar > .navitem,
+        #admin-bar > .navitem{
+            margin: 0px 2px!important;
+            padding: 0px!important;
+            width: 48px!important;
+
+        }
+        .authbar {
+            display: inline-flex;
+            width: 120px!important;
+            min-width: 100px!important;
+            padding: 0px 0px!important;
+            margin: 0px 0px!important;
+          >  .navlang{
+                padding: 0px 0px!important;
+                margin-top: 20px;
+            }
+        }
+
+        .authbar > li.navlang{
+            padding: 0px 0px!important;
+            margin-top: 20px;
+        }
+
+}
+

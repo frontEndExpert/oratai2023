@@ -1,0 +1,34 @@
+    .Auth {
+        position: relative;
+        margin: 0px auto;
+        width: 100%;
+        display: block;
+        text-align: center;
+        border: 0px;
+        padding: 10px;
+        box-sizing: border-box;
+        z-index: 30;
+    }
+    .login-form{
+        position: relative;
+        z-index: 31;
+    }
+    .btn-div{
+        width: 100%;
+        text-align: center;
+    }
+    .inline{
+        display: inline-block;
+    }
+    
+    @media (min-width: 401px) {
+        .Auth {
+            width: 360px;
+        }
+    }
+    @media (max-width: 400px) {
+        .Auth {
+            width: 300px;
+            margin: 0px;
+        }
+    }

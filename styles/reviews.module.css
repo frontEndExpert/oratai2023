@@ -1,0 +1,93 @@
+    .countries {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content:space-around;
+        
+    }
+    .flag {
+        width: 14%;
+        height: auto;
+        margin: 5px;
+    }
+
+    .reviews {
+          background-color: #000000;
+          color: white;
+          text-align: center;
+    }
+    .center-text{
+        margin: 0 auto;
+        text-align: center;
+    }
+    .reviewslist {
+        display: flex;
+        width: 100%;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        padding: 10px;
+    }
+    .review {
+        display: block;
+        width: 50%;
+        height: auto;
+        margin: 10px 0px;
+        padding: 10px;
+        border-bottom: 1px dashed white;
+        align-items: center;
+        text-align: center;
+    }
+    .review img,
+    .customer-img {
+        width: 50%;
+        margin: auto;
+        padding:5px;
+        align-self: center;
+    }
+    .customer-img > img {
+        width:100%;
+        height: auto;
+    }
+    .customer-text{
+        display: block;
+        width: 200px;
+
+        padding: 5px;
+        white-space: normal; 
+
+    }
+    .customer-text > span{
+        font-size: 1.4em;
+        white-space: normal;
+        padding: 0px 5px;
+    }
+
+    .yellow{
+        color: yellow;
+    }
+
+
+    @media (max-width: 650px){
+        .countries img{
+            width: 12%;
+            height: auto;
+            margin: 3px;
+    }
+        .review{
+            width: 100%;
+            flex-wrap: wrap;
+        }
+        .customer-text > span{
+            font-size: 1em;
+        }
+
+        .customer-text{
+            flex: 0 0 100%;
+        }
+    }
+
+
+    @media (max-width:421px){
+        .review{
+            width: 100%;
+        }
+    }
