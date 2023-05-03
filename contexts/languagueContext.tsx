@@ -10,7 +10,7 @@ export interface LanguagueContextType {
 }
 const LanguagueContext = createContext<LanguagueContextType>({
     currentLanguage: "en",
-    setCurrentLanguage: (): string => 'en'
+    setCurrentLanguage: (): string => 'he'
 });
 
 

@@ -3,11 +3,6 @@
     z-index: 15;
 }
 
-.productTitle{
-    color: black;
-}
-
-
 .productDetails {
     color: white;
     background-color: black;
@@ -35,7 +30,7 @@
     }
     
     .productTitle{
-        color: white;
+        color: black;
         text-align: center;
         font-size: 18px;
     }
@@ -72,20 +67,23 @@
     .productdetails{
         display: flex;
         width: 100%;
-        justify-content: space-evenly;
-        flex-wrap: nowrap;
+        justify-content: space-between;
+        flex-flow: row nowrap;
     }
     .productImgContainer{
-        width: 30%;
+        width: 50%;
         padding: 15px;
         flex: 1 0 40%;
     }
     .prdimg{
-        width: 360px;
-        height: 320px;
+        width: 100%;
+        height: auto;
+        max-width: 360px;  
+        max-height: 320px;
     }
     .productDescContainer{
-        width: 60%;
+        width: 40%;
+        padding: 10px;
     }
 
     @media (max-width: 700px) {
@@ -96,19 +94,17 @@
             flex-wrap: wrap;
         }
         .productImgContainer{
-            padding: 15px;
-            flex: 1 0 100%;
-        }
-        .productImgContainer{
             width: 100%;
-            flex: 1 0 100%;
-            padding: 15px;
+            padding: 20px;
         }
-        
-        div.productDescContainer > p,
-        .productDescContainer > p{
-            word-wrap: break-word;
-        }
+
+        .productDescContainer {
+            width: 100%;
+            padding: 20px;
+            p {
+                word-wrap: break-word;
+            }
+       }
     }
 
     @media (max-width:421px){
@@ -121,8 +117,20 @@
         }
 
         .prdimg{
-            width: 300px;
-            height: 270px;
+            width: 100%;
+            height: auto;
+            max-width: 300px;
+            max-height: 270px;
+        }
+
+        .productImgContainer{
+            width: 100%;
+            padding: 20px;
+        }
+
+        .productDescContainer{
+            width: 100%;
+            padding: 20px;
         }
 
     }

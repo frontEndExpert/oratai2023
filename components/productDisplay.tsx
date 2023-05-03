@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import Image from 'next/image';
 import { useSelector, useDispatch } from 'react-redux';
 import { AnyAction } from 'redux';
 import {
     delProduct, fetchProducts, openEdit, closeEdit, updateCurrentProductId,
-    updateCurrentProductGroup, closeProductPage, closeAdded
+    updateCurrentProductGroup, closeProductPage, closeAdded, add2AllClose
 } from '../redux/features/productsReducer';
 import { getisAdmin } from '../redux/features/authReducer';
 import axios from '../config/axios-firebase';
@@ -14,6 +14,9 @@ import styles from '../styles/productDisplay.module.scss'
 import * as _ from 'lodash';
 import { productsSlice, authSlice } from '../redux/store';
 import type { Product } from "../redux/features/productsReducer";
+import EditModal from "./UI/EditModal";
+import EditProdForm from "./editProdForm";
+import Add2AllForm from "./add2AllForm";
 
 type Props = {
     prodShow?: boolean;
@@ -31,14 +34,14 @@ interface InputChangeEvent extends React.ChangeEvent<HTMLInputElement> {
 
 const ProductDisplay = (props: Props) => {
     const [formIsValid, setFormIsValid] = useState(true);
-    //const [currentArrSize, setCurrentArrSize] = useState(0);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     //const [current_product_index, setCurrent_product_index] = useState(null);
     //const [current_product_id, setCurrent_product_id] = useState(null);
     const [product, setProduct] = useState<Product>();
     const [isImageError, setIsImageError] = useState(false);
 
     const dispatch = useDispatch();
-    const { productAdded, allProducts, currentProductGroup, prodShow, currentProductId } = useSelector(productsSlice);
+    const { productAdded, allProducts, currentProductGroup, prodShow, currentProductId, editShow, add2AllShow } = useSelector(productsSlice);
     const { token, isAdmin, loading } = useSelector(authSlice);
 
     useEffect(() => {
@@ -50,7 +53,6 @@ const ProductDisplay = (props: Props) => {
     useEffect(() => {
         if (prodShow && currentProductId != "") {
             const temp = allProducts.find((p: Product) => p.id === props.pid)
-            console.log("temp", temp);
             setProduct(temp);
         }
         if (prodShow === false) {
@@ -58,6 +60,10 @@ const ProductDisplay = (props: Props) => {
         }
 
     }, [currentProductId, prodShow, allProducts, productAdded]);
+
+    useEffect(() => {
+        setIsAuthenticated(token.length > 0)
+    }, [token]);
 
     // componentDidMount() {
     //     if(props.pin){
@@ -106,12 +112,43 @@ const ProductDisplay = (props: Props) => {
         dispatch(openEdit(pid));
     };
 
-
+    const handleEditClose = () => {
+        dispatch(closeEdit())
+    };
 
     // onError={(event: InputChangeEvent) => {event.target.src="/static/colors1.jpg"}}
     // current_product_index = props.pin,
 
     return <>
+        {/*(isAdmin === true) && <>
+            <EditModal
+                name="editProdModal"
+                show={editShow}
+                modalClosed={dispatch(closeEdit())}
+                modalHeight={'600'}
+            >
+                <button className="btn btn-link" onClick={() => dispatch(closeEdit())}>
+                    X
+                </button>
+                <EditProdForm editModalClose={handleEditClose} />
+            </EditModal>
+
+            <EditModal
+                name="add2AllModal"
+                show={add2AllShow}
+                modalClosed={() => dispatch(add2AllClose())}
+                modalHeight="600"
+            >
+                <button
+                    className="btn btn-link"
+                    onClick={() => dispatch(add2AllClose())}
+                >
+                    X
+                </button>
+                <Add2AllForm />
+            </EditModal>
+        </>*/}
+
         {!_.isEmpty(product) && <div key={product.id}
             style={{ visibility: prodShow ? 'visible' : 'hidden' }}
             className={styles.productDetailsContainer}>

@@ -1,10 +1,10 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AnyAction } from "redux";
-import Router, { useRouter } from 'next/router';
-import { changeLanguages } from '../redux/features/productsReducer';
+import { useRouter, usePathname } from 'next/navigation';
+import LanguagueContext from '../contexts/languagueContext';
 import { auth, authClose, authOpen, authLogout, setAuthRedirectPath } from '../redux/features/authReducer'
 import Input from './UI/Input';
 import Button from './UI/Button';
@@ -13,7 +13,6 @@ import useTranslations from "../hooks/useTranslations";
 import { productsSlice, authSlice } from '../redux/store';
 import type { FormElementConfig } from '../shared/types';
 import styles from '../styles/auth.module.css';
-import { Providers } from '../redux/reduxProvider'
 
 
 type Controls = {
@@ -61,17 +60,18 @@ const Auth = (props: any) => {
     //const [currentLanguage, setCurrentLanguage] = useState('en');
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-    const currentLanguage = "en"; // useSelector(productsSlice);
-    const { t } = useTranslations(currentLanguage);
-    const router = useRouter();
+    const { currentLanguage, setCurrentLanguage } = useContext(LanguagueContext);
+    const t = useCallback((key: string) => { return useTranslations(currentLanguage).t(key) }, [currentLanguage, useTranslations]);
+
+    const router: any = useRouter();
+    const pathname = usePathname();
 
     const dispatch = useDispatch();
     const { token, loading, authRedirectPath, authShow, isAdmin } = useSelector(authSlice);
 
-
     useEffect(() => {
         if (authRedirectPath !== '/') {
-            dispatch(setAuthRedirectPath('/products/en'))
+            dispatch(setAuthRedirectPath('/products/'))
         }
         setIsAuthenticated(token !== null)
         //setCurrentLanguage( { router.query.lang.toString()})
@@ -79,14 +79,12 @@ const Auth = (props: any) => {
 
     useEffect(() => {
         if (currentLanguage && authShow) {
-            //setState( { currentLanguage: Router.query.lang})
-            dispatch(changeLanguages(router.query.lang as string))
             setControls({
                 email: {
                     elementType: 'input',
                     elementConfig: {
                         type: 'email',
-                        placeholder: props.t("auth:email") // "Email"
+                        placeholder: t("auth:email") // "Email"
                     },
                     value: '',
                     validation: {
@@ -100,7 +98,7 @@ const Auth = (props: any) => {
                     elementType: 'input',
                     elementConfig: {
                         type: 'password',
-                        placeholder: props.t("auth:password")
+                        placeholder: t("auth:password")
                     },
                     value: '',
                     validation: {
@@ -116,7 +114,7 @@ const Auth = (props: any) => {
             setIsAuthenticated(token !== null)
         }
         if (isAuthenticated === true) {
-            Router.push('/products/');
+            router.push("/products/");
         }
     }, [currentLanguage, authShow, token]);
 
@@ -142,7 +140,7 @@ const Auth = (props: any) => {
 
         dispatch(auth(authObj) as unknown as AnyAction)
         dispatch(authClose())
-        Router.replace('/products/');
+        router.replace('/products/');
     }
 
     const switchAuthModeHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -175,7 +173,7 @@ const Auth = (props: any) => {
 
 
 
-    if (props.loading) {
+    if (loading) {
         form = <div className='Loader'>Loading...</div> as JSX.Element
     }
 
@@ -187,7 +185,7 @@ const Auth = (props: any) => {
         );
     }
 
-    return (<Providers>
+    return (
         <div className={styles.Auth}>
             {errorMessage}
             <form className={styles.loginForm} onSubmit={submitHandler}>
@@ -204,7 +202,7 @@ const Auth = (props: any) => {
                 </div>
             </form>
         </div>
-    </Providers>);
+    );
 };
 
 

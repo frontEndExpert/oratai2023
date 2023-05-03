@@ -1,13 +1,25 @@
+'use client';
+
 import React from 'react'
 import Nav from '../../components/nav'
+import { Providers } from './providers';
+import { LanguagueContextProvider } from '../../contexts/languagueContext'
+import AuthModal from '@/components/AuthModal';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-
+function Layout({ children }: { children: React.ReactNode }) {
 
     return (
-        <div className="bg-black">
-            <Nav />
-            {children}
-        </div>
+        <Providers>
+            <LanguagueContextProvider>
+
+                <div className="bg-black">
+                    <Nav />
+                    <AuthModal />
+                    {children}
+                </div>
+            </LanguagueContextProvider>
+        </Providers>
     )
 }
+
+export default Layout;

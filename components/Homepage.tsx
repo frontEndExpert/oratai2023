@@ -9,9 +9,7 @@ import Image from 'next/image';
 import { productsSlice, authSlice } from '../redux/store';
 import ReactPlayer from "react-player/lazy";
 import YouTube from 'react-youtube';
-import { LanguagueContextProvider } from '../contexts/languagueContext'
 import LanguagueContext from '../contexts/languagueContext';
-import { withLanguageContext } from '../contexts/withLanguageContext';
 
 //<LanguagueContextProvider></LanguagueContextProvider>
 const Homepage = (props: any) => {
@@ -22,12 +20,15 @@ const Homepage = (props: any) => {
     const t = useCallback((key: string) => { return useTranslations(currentLanguage).t(key) }, [currentLanguage, useTranslations]);
 
     useEffect(() => {
-        console.log("useEffect", t("homepage:focus"));
+        console.log("homepage currentLanguage", currentLanguage, t("homepage:focus"));
+
     }, [currentLanguage]);
+
+
     return (
         <div className='container-fluid bg-black h-full m-0 text-white w-full p-20px home relative'>
             <div className="z-10 grid-cols-12">
-                <div id="welcome" className="text-lg" >
+                <div id="welcome" className="bg-black text-lg text-white" >
                     <h1 className='text-center text-red-900 text-3xl'>{t("homepage:welcome")}{" "}<b> {t("homepage:sitename")}{" "}<br />
                         {t("homepage:focus")}</b>.
                     </h1>
@@ -167,5 +168,5 @@ const Homepage = (props: any) => {
 //     };
 // };
 
-export default withLanguageContext(Homepage);
+export default Homepage;
 

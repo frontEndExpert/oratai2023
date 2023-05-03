@@ -4,6 +4,11 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: black;
+}
+
+#welcome > h1, #welcome > p {
+  color: white;
 }
 
 main {
@@ -19,6 +24,7 @@ main {
 body,
 .mainbody{
       background-color: black;
+      color: white;
       margin: 0px!important;
       padding: 0px!important;
 }
@@ -515,7 +521,7 @@ body,
     .Modal {
         position: fixed;
         z-index: 12;
-        background-color: rgb(24, 24, 24);
+        background-color: white;
         width: 90%;
         height: 450px;
         padding: 5px;
@@ -536,6 +542,29 @@ body,
             top: 10px;
         }
     }
+
+    .editmodal {
+      position: fixed;
+      z-index: 500;
+      background-color: white;
+      width: 80%;
+      height: 800px;
+      border: 1px solid #ccc;
+      box-shadow: 1px 1px 1px black;
+      padding: 16px;
+      left: 15%;
+      top: 30px;
+      box-sizing: border-box;
+      transition: all 0.3s ease-out;
+  }
+
+  @media (max-width: 600px) {
+      .editmodal {
+          width: 300px;
+          height: 270px;
+          left: calc(50% - 250px);
+      }
+  }
 
 /*/ /*/
     .panel-default>.panel-heading {

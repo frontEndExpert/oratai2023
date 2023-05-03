@@ -3,15 +3,12 @@
 import React, { useState, useCallback, useContext } from 'react';
 import useTranslations from "../hooks/useTranslations";
 import LanguagueContext from '../contexts/languagueContext';
-import { withLanguageContext } from '../contexts/withLanguageContext';
 
 
 const ProductsText = () => {
     const [revealText, setRevealText] = useState(false);
 
     const { currentLanguage } = useContext(LanguagueContext);
-    //const currentLanguage = "en"
-    //console.log("currentLanguage", currentLanguage);
     const t = useCallback((key: string) => { return useTranslations(currentLanguage).t(key) }, [currentLanguage, useTranslations]);
 
 
@@ -50,5 +47,4 @@ const ProductsText = () => {
 
 }
 
-export default withLanguageContext(ProductsText);
-// export default ProductsText;
+export default ProductsText;

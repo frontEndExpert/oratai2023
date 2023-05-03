@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useCallback } from 'react';
 import useTranslations from '../hooks/useTranslations'
 import Image from 'next/image';
 import { LanguagueContextProvider } from '../contexts/languagueContext'
@@ -8,15 +8,8 @@ import LanguagueContext from '../contexts/languagueContext';
 import styles from '../styles/reviews.module.css';
 
 const Reviews = (props: any) => {
-    //const currentLanguage = props.currentLanguage;
     const { currentLanguage } = useContext(LanguagueContext);
-    //console.log("Reviews currentLanguage", currentLanguage);
-    var { t } = useTranslations(currentLanguage)
-
-    useEffect(() => {
-        console.log("use Reviews currentLanguage", currentLanguage);
-        t = useTranslations(currentLanguage).t
-    }, [currentLanguage]);
+    const t = useCallback((key: string) => { return useTranslations(currentLanguage).t(key) }, [currentLanguage, useTranslations]);
 
     return (
         <LanguagueContextProvider>

@@ -7,6 +7,9 @@ import {
 } from "@reduxjs/toolkit";
 import authAxios from 'axios';
 import axios from '../../config/axios-firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
 import { RejectedActionFromAsyncThunk } from '@reduxjs/toolkit/dist/matchers';
 
 export type AuthState = {
@@ -20,7 +23,7 @@ export type AuthState = {
     userDetails: any;
     path: string;
     email: string;
-    expiresIn: number;
+    //expiresIn?: number;
 }
 
 const initialState = {
@@ -33,9 +36,22 @@ const initialState = {
     isAdmin: false,
     userDetails: null,
     path: '/',
-    email: "",
-    expiresIn: 1000
+    email: ""
+    //expiresIn: 1000
 };
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDW7ozYaZ9Z8_6pqHnyeVIJFNgwEkKrD_A",
+    authDomain: "oratai-2018.firebaseapp.com",
+    projectId: "oratai-2018",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "376642946923",
+    appId: "oratai-2018",
+};
+
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 
 export const addUser = createAsyncThunk(
     'auth/addUser',
@@ -99,31 +115,72 @@ export const auth = createAsyncThunk(
     async (emailObj: { email: string, password: string, isSignup: boolean }, { dispatch, rejectWithValue, fulfillWithValue }) => {
         try {
             const { email, password, isSignup } = emailObj;
-            const authData = {
-                email: email,
-                password: password,
-                returnSecureToken: true
-            };
-            let url = (isSignup)
-                ? 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDW7ozYaZ9Z8_6pqHnyeVIJFNgwEkKrD_A'
-                : 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyDW7ozYaZ9Z8_6pqHnyeVIJFNgwEkKrD_A';
 
-            const response = await authAxios.post(url, authData);
-            const userData = response.data;
-            const expirationDate = new Date(new Date().getTime() + userData.expiresIn * 1000);
+            var userData = { email: "", isAdmin: false, idToken: "", localId: "", isAuthenticated: false } as { email: string, isAdmin: boolean, idToken: string, localId: string, isAuthenticated: boolean };
 
-            localStorage.setItem('token', userData.idToken);
-            localStorage.setItem('expirationDate', expirationDate.toISOString());
-            localStorage.setItem('userId', userData.localId);
             if (isSignup) {
-                // set up new user is database
-                const userObj = { email, userId: userData.localId }
-                dispatch(addUser(userObj));
+                firebase.auth().createUserWithEmailAndPassword(email, password)
+                    .then(async (userCredential) => {
+                        // Signed in 
+                        if (userCredential.user) {
+                            console.log("userCredential", userCredential);
+
+                            localStorage.setItem('userId', userCredential.user.uid);
+                            localStorage.setItem('isAdmin', "false");
+                            localStorage.setItem('token', userCredential.user.refreshToken);
+                            // localStorage.setItem('expirationDate', expirationDate.toDateString());
+                            userData.localId = userCredential.user.uid;
+                            userData.email = email;
+                            userData.isAuthenticated = true;
+                            userData.isAdmin = false;
+                            userData.idToken = userCredential.user.refreshToken
+                            dispatch(setToken(userData.idToken));
+                        }
+                        // set up new user is database
+                        const userObj = { email, userId: userData.localId }
+                        dispatch(addUser(userObj));
+
+                    })
+                    .catch((error) => {
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        console.log("error login", errorCode, errorMessage);
+                    });
+            } else {
+                firebase.auth().signInWithEmailAndPassword(email, password)
+                    .then(async (userCredential) => {
+                        // Signed in
+                        if (userCredential.user) {
+                            console.log("userCredential", userCredential);
+                            //const expirationDate = (lastSignInTime) + 10000; //credential.expirationDate;
+                            const isAdmin = await dispatch(getisAdmin(email)).unwrap();
+                            console.log("isAdmin", isAdmin);
+
+                            localStorage.setItem('userId', userCredential.user.uid);
+                            localStorage.setItem('isAdmin', isAdmin.toString());
+                            localStorage.setItem('token', userCredential.user.refreshToken);
+                            // localStorage.setItem('expirationDate', expirationDate.toDateString());
+                            userData.localId = userCredential.user.uid;
+                            userData.email = email;
+                            userData.isAdmin = isAdmin;
+                            userData.idToken = userCredential.user.refreshToken
+                            dispatch(setToken(userData.idToken));
+                        }
+
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        console.log("error login", errorCode, errorMessage);
+                    });
             }
-            const isAdmin = await dispatch(getisAdmin(email)).unwrap();
-            localStorage.setItem('isAdmin', isAdmin.toString());
+
+
+            // localStorage.setItem('expirationDate', expirationDate.toISOString());
+
+
             dispatch(authClose());
-            return fulfillWithValue({ ...userData, isAdmin });
+            return fulfillWithValue({ ...userData });
         } catch (error: any) {
             console.log("error", error)
             if (!error.response) {
@@ -146,7 +203,8 @@ export const getisAdmin = createAsyncThunk<boolean, string, { rejectValue: strin
             let userArr = [];
             let isAdmin = false;
             if (email !== "") {
-                userArr = usersArr.filter(user => user.email.toLowerCase() === email.toLowerCase())
+                userArr = usersArr.filter(user => user.email.toLowerCase() === email.toLowerCase());
+                console.log("userArr", userArr)
                 isAdmin = userArr[0].isAdmin;
             } else {
                 isAdmin = localStorage.getItem("isAdmin") == "true" ? true : false;
@@ -168,6 +226,9 @@ const authReducer = createSlice({
     name: 'auth',
     initialState,
     reducers: {
+        setToken: (state, action) => {
+            state.token = action.payload;
+        },
         authOpen: (state: AuthState) => {
             state.authShow = true;
             state.loading = false;
@@ -180,13 +241,19 @@ const authReducer = createSlice({
             state.authRedirectPath = action.payload;
         },
         authLogout: (state) => {
-            localStorage.removeItem('token');
-            localStorage.removeItem('expirationDate');
-            localStorage.removeItem('userId');
+            firebase.auth().signOut().then(() => {
+                // Sign-out successful.
+                console.log('User signed out');
+                localStorage.removeItem('token');
+                localStorage.removeItem('expirationDate');
+                localStorage.removeItem('userId');
+                state.token = "";
+                state.userId = "";
+                state.isAdmin = false;
+            }).catch((error) => {
+                console.log('Error User signed out');
+            });
 
-            state.token = "";
-            state.userId = "";
-            state.isAdmin = false;
         },
     },
     extraReducers: (builder: ActionReducerMapBuilder<AuthState>) => {
@@ -195,13 +262,13 @@ const authReducer = createSlice({
             state.loading = true;
         }),
             builder.addCase(addUser.fulfilled, (state, action) => {
-                console.log('userDetails payload', action.payload)
+                //console.log('userDetails payload', action.payload)
                 state.userDetails = action.payload.toString() //.userDetails; userId
                 state.loading = false;
             }),
             builder.addCase(addUser.rejected, (state, action) => {
                 if (action.payload) {
-                    console.log('action.payload error', action.payload)
+                    //console.log('action.payload error', action.payload)
                     state.error = action.payload.toString() //.error;
                 } else {
                     state.error = action.error.toString();
@@ -218,7 +285,7 @@ const authReducer = createSlice({
                 state.error = "";
                 state.isAdmin = action.payload.isAdmin;
                 state.loading = false;
-                state.expiresIn = parseInt(action.payload.expiresIn) * 1000;
+                //state.expiresIn = parseInt(action.payload.expiresIn) * 1000;
             }),
             builder.addCase(auth.rejected, (state, action: any) => {
                 state.error = action.payload.toString();
@@ -239,6 +306,6 @@ const authReducer = createSlice({
 })
 
 
-export const { authOpen, authClose, setAuthRedirectPath, authLogout } = authReducer.actions;
+export const { authOpen, authClose, setAuthRedirectPath, authLogout, setToken } = authReducer.actions;
 
 export default authReducer.reducer;

@@ -17,7 +17,7 @@ const GroupMenu = (props: any) => {
     const [currentGroupId, setCurrentGroupId] = useState("1");
 
     const router = useRouter();
-    const { productAdded, allProducts, currentProductId, currentProductGroup, prodShow, currentLanguage } = useSelector(productsSlice);
+    const { productAdded, allProducts, currentProductId, currentProductGroup, prodShow } = useSelector(productsSlice);
 
     const dispatch = useDispatch();
 

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 import Image from 'next/image';
 import useTranslations from '../hooks/useTranslations';
 import { useSelector } from 'react-redux';
@@ -8,13 +8,9 @@ import { useSelector } from 'react-redux';
 import styles from '../styles/aboutus.module.css'
 import LanguagueContext from '../contexts/languagueContext';
 
-
 const AboutUs = (props: any) => {
-    //const currentLanguage = props.currentLanguage;
-    //const { currentLanguage } =  useSelector(productsSlice);
     const { currentLanguage } = useContext(LanguagueContext);
-    //console.log("AboutUs currentLanguage", currentLanguage);
-    var { t } = useTranslations(currentLanguage)
+    const t = useCallback((key: string) => { return useTranslations(currentLanguage).t(key) }, [currentLanguage, useTranslations]);
 
     return (
         <div className="mainbody" dir={currentLanguage == "he" ? "rtl" : "ltr"}>
@@ -27,7 +23,7 @@ const AboutUs = (props: any) => {
                     className="img-responsive"
                     width={1000} height={200}
                     alt="Fashionable Thai Sarong Fabric" />
-                <div className="col-sm-12 body" >
+                <div className="bg-black col-sm-12" >
                     <div className={styles.content}>
                         <h2>{t("aboutus:aboutus")}{" "}</h2>
 

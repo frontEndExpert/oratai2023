@@ -1,7 +1,7 @@
-//"use client";
+"use client";
 
 import { PropsWithChildren } from "react";
-import store from "../redux/store";
+import store from "../../redux/store";
 import { useServerInsertedHTML } from "next/navigation";
 import { ReduxProvider } from "@/redux/reduxProvider";
 import { LanguagueContextProvider } from "@/contexts/languagueContext";
@@ -17,8 +17,8 @@ export function Providers({ children }: PropsWithChildren) {
   // });
 
   return (
-    <LanguagueContextProvider>
+    <ReduxProvider>
       {children}
-    </LanguagueContextProvider>
+    </ReduxProvider>
   )
 }

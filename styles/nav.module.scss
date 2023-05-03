@@ -1,4 +1,6 @@
     .navbar {
+      position: relative;
+      min-height: 50px;
       top: -5px;
       padding: 0px!important;
       margin: 0px!important;
@@ -80,6 +82,7 @@ padding: 0px!important;
 
 .authbar > li.navlang{
 display: inline-block!important;
+color: black;
 text-align: center!important;
 padding: 10px;
 }
