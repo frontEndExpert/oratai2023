@@ -58,7 +58,7 @@ const Auth = (props: any) => {
     const [controls, setControls] = useState<Controls>({ ...initialControls });
     const [isSignup, setSignup] = useState<boolean>(true);
     //const [currentLanguage, setCurrentLanguage] = useState('en');
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+    //const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
     const { currentLanguage, setCurrentLanguage } = useContext(LanguagueContext);
     const t = useCallback((key: string) => { return useTranslations(currentLanguage).t(key) }, [currentLanguage, useTranslations]);
@@ -67,14 +67,12 @@ const Auth = (props: any) => {
     const pathname = usePathname();
 
     const dispatch = useDispatch();
-    const { token, loading, authRedirectPath, authShow, isAdmin } = useSelector(authSlice);
+    const { isAuthenticated, loading, authRedirectPath, authShow, isAdmin } = useSelector(authSlice);
 
     useEffect(() => {
         if (authRedirectPath !== '/') {
             dispatch(setAuthRedirectPath('/products/'))
         }
-        setIsAuthenticated(token !== null)
-        //setCurrentLanguage( { router.query.lang.toString()})
     }, []);
 
     useEffect(() => {
@@ -110,13 +108,11 @@ const Auth = (props: any) => {
                 }
             });
         }
-        if (token !== null) {
-            setIsAuthenticated(token !== null)
-        }
-        if (isAuthenticated === true) {
+
+        if (isAuthenticated) {
             router.push("/products/");
         }
-    }, [currentLanguage, authShow, token]);
+    }, [currentLanguage, authShow, isAuthenticated]);
 
 
     const inputChangedHandler = (event: InputChangeEvent, controlName: string) => {
@@ -130,8 +126,7 @@ const Auth = (props: any) => {
         setControls({ ...updatedControls });
     }
 
-    const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const submitHandler = () => {
         const authObj = {
             email: controls.email.value,
             password: controls.password.value,
@@ -143,8 +138,7 @@ const Auth = (props: any) => {
         router.replace('/products/');
     }
 
-    const switchAuthModeHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        event.preventDefault();
+    const switchAuthModeHandler = () => {
         setSignup(!isSignup);
     }
 
@@ -189,9 +183,13 @@ const Auth = (props: any) => {
         <div className={styles.Auth}>
             {errorMessage}
             <form className={styles.loginForm} onSubmit={submitHandler}>
-                {form}
+                <div className='flex flex-col flex-wrap formInput justify-around ' >
+                    {form}
+                </div>
                 <div className={styles.btnDiv}>
-                    <Button btnType="Success inline">
+                    <Button btnType="Success inline"
+                        clicked={submitHandler}
+                    >
                         {isSignup ? t("auth:signup") : t("auth:signin")}
                     </Button>
 

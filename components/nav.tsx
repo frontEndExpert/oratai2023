@@ -8,46 +8,45 @@ import { AnyAction } from "redux";
 import { authClose, authLogout, authOpen } from '../redux/features/authReducer'
 import { closeEdit, add2AllClose } from '../redux/features/productsReducer';
 import styles from '../styles/nav.module.scss'
-import 'setimmediate'
 import { productsSlice, authSlice } from '../redux/store';
 import LanguagueContext from '../contexts/languagueContext';
 import { withReduxStore } from "../redux/withReduxStore";
 import EditModal from "./UI/EditModal";
 import EditProdForm from "./editProdForm";
 import Add2AllForm from "./add2AllForm";
+import Image from "next/image";
+import home from "@/public/static/home.svg";
+import cart from "@/public/static/cart.svg";
+import reviews from "@/public/static/person-hearts.svg";
+import aboutus from "@/public/static/question-circle-fill.svg";
+import login from "@/public/static/login.svg";
+import logout from "@/public/static/logout.svg";
+import gear from "@/public/static/gear.svg";
 
 interface SelectChangeEvent extends React.ChangeEvent<HTMLSelectElement> {
   target: HTMLSelectElement & EventTarget;
 }
 
 const Nav = (props: any) => {
-  const [myTimeout, setMyTimeout] = React.useState(1000)
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
   const pathname = usePathname();
-  const { editShow, add2AllShow } = useSelector(productsSlice);
 
-  const { isAdmin, token } = useSelector(authSlice);
+  const { editShow, add2AllShow } = useSelector(productsSlice);
+  const { isAdmin, isAuthenticated } = useSelector(authSlice);
   const dispatch = useDispatch();
 
   const { currentLanguage, setCurrentLanguage } = useContext(LanguagueContext);
 
-  useEffect(() => {
-    console.log("isAuthenticated1", token.length > 0);
-  }, []);
 
-  useEffect(() => {
-    console.log("nav currentLanguage", currentLanguage);
-  }, [currentLanguage]);
+  const handleEditClose = () => {
+    dispatch(closeEdit())
+  };
 
-  useEffect(() => {
-    console.log("isAuthenticated", token.length > 0);
-    setIsAuthenticated(token.length > 0)
-  }, [token]);
+  const handleAddClose = () => {
+    dispatch(add2AllClose())
+  };
 
   const handleChangeLanguages = (event: SelectChangeEvent) => {
     const lang = event.target.value as "en" | "he" | "th"
-    console.log("Lang", lang);
     setCurrentLanguage(lang);
   }
 
@@ -56,148 +55,151 @@ const Nav = (props: any) => {
   }
 
   function onAuthLogout() {
-    dispatch(authClose() as unknown as AnyAction)
+    dispatch(authLogout() as unknown as AnyAction)
   }
 
 
   let authlinks = <></> as JSX.Element;
-  if ((isAuthenticated === true) && (isAdmin === true)) {
+  if (isAuthenticated && isAdmin) {
     authlinks = (
       <ul className={`nav ${styles.navbarnav} navbar-right`} id="admin-bar">
-        <li key="admin" className={styles.navitem}>
-          <span className={`glyphicon glyphicon-wrench  ${styles.admin}`}></span><br />
-          <span className={styles.menutext + " " + styles.admin}>Admin</span>
+        <li key="admin" className="cursor-pointer flex flex-col flex-wrap  w-20 justify-center items-center" >
+          <Image className="mx-auto" src={gear} width={30} height={30} alt="admin" />
+          <span className="font-500 text-black text-center text-12px w-13 decoration-none">Admin</span>
         </li>
-        <li key="logout" role="listitem" aria-label="logout" className={styles.navitem}>
-          <a id="logout" className={styles.navlink}
+        <li key="logout" role="listitem" aria-label="logout" >
+          <div id="logout" className="cursor-pointer flex flex-col flex-wrap w-20 justify-center items-center"
             onClick={onAuthLogout}>
-            <span className={`glyphicon glyphicon-log-out ${styles.menuicon}`}></span><br />
-            <span className={styles.menutext}>Log Out</span>
-          </a>
+            <span className="font-500 text-black text-center text-12px w-13 decoration-none">
+              <Image className="mx-auto" src={logout} width={30} height={30} alt="logout" />
+              <span className="link-text" >Log Out</span>
+            </span>
+          </div>
         </li>
       </ul>
     );
-  } else if (isAuthenticated === true) {
+  } else if (isAuthenticated) {
     authlinks = (
-      <ul className={`nav ${styles.navbarnav + " " + styles.authbar} navbar-right`} id="auth-bar">
-        <li key="lang" role="listitem" aria-label="lang" className={styles.navlang}>
+      <ul className="flex flex-row flex-nowrap h-30 text-black w-50 justify-end items-center align-middle float-right" id="auth-bar">
+        <li key="lang" role="listitem" aria-label="lang" className="p-2 inline-block ">
           <select className={styles.navSelectLang} defaultValue={currentLanguage} onChange={handleChangeLanguages} >
             <option value="en"  >English</option>
             <option value="he"  >Hebrew</option>
             <option value="th"  >Thai</option>
           </select>
         </li>
-        <li key="logout" role="listitem" aria-label="logout" className={styles.navitem}>
-          <a id="logout" className={styles.navlink}
-            onClick={onAuthOpen}>
-            <span className={`glyphicon glyphicon-log-out ${styles.menuicon}`}></span><br />
-            <span className={styles.menutext}>Log Out<br />&nbsp;</span>
-          </a>
+        <li key="logout" role="listitem" aria-label="logout">
+          <div id="logout" className="cursor-pointer flex flex-col flex-wrap w-20 justify-center items-center"
+            onClick={onAuthLogout}>
+            <span className="font-500 text-black text-center text-12px w-13 decoration-none">
+              <Image className="mx-auto" src={logout} width={30} height={30} alt="logout" />
+              <span className="link-text" >Log Out</span>
+            </span>
+          </div>
         </li>
       </ul>
     );
-  } else {
+  } else { //{`nav ${styles.navbarnav} ${styles.authbar} navbar-right`} 
     authlinks = (
-      <ul className={`nav ${styles.navbarnav} ${styles.authbar} navbar-right`} id="auth-bar">
-        <li key="lang" role="listitem" aria-label="lang" className={styles.navlang}>
+      <ul className="flex flex-row flex-nowrap h-30 text-black w-35 justify-end items-center align-middle float-right" id="auth-bar">
+        <li key="lang" role="listitem" aria-label="lang" className="p-0 text-12px inline-block ">
           <select className={styles.navSelectLang} defaultValue={currentLanguage}
             onChange={handleChangeLanguages}>
             <option value="he">Hebrew</option>
             <option value="en">English</option>
-            <option value="th"  >Thai</option>
+            <option value="th">Thai</option>
           </select>
         </li>
-        <li key="login" role="listitem" aria-label="login" className={styles.navitem}>
-          <a id="logout" className="navlink"
+        <li key="login" role="listitem" className="h-15 my-0 mx-1 w-15" aria-label="login" >
+          <div id="logout" className="cursor-pointer flex flex-col flex-wrap w-15 justify-center items-center"
             onClick={onAuthOpen}>
-            <span className={`glyphicon glyphicon-user ${styles.menuicon}`}></span><br />
-            <span className="menutext">Login<br /></span>
-          </a>
+            <span className=" font-500 text-black text-center min-w-15 decoration-none">
+              <Image className="mx-auto w-8 " src={login} width={30} height={30} alt="login" />
+              <span className="link-text" >Login</span>
+            </span>
+          </div>
         </li>
       </ul>
     );
   }
-  //onClick={() => gotoLink('/')}
+
+  <span className=" font-500 text-black text-center text-12px w-13 decoration-none "></span>
+
   return (
     <>
-      <nav className={`navbar ${styles.navbar}`} id="main-navbar">
-        <div className={styles.mynav}>
-          <ul role="navigation list" className={`nav ${styles.navbarnav} ${styles.mynavbar}`} id="mynavbar">
-            <li role="listitem" aria-label="home" className={styles.navitem}>
-
-              <Link className={(pathname === '/') ? styles.active : ""}
-                href={'/'}
+      <div className="bg-gradient-to-b from-[#ad966c] via-[#f4eacf] to-[#ad966c]  m-0 w-full p-0 relative" id="main-navbar">
+        <div className="flex flex-row flex-nowrap m-0 p-0 px-1 justify-between items-center">
+          <ul role="navigation list" className="flex flex-row flex-nowrap h-15 my-1 w-60 justify-items-center items-center " id="mynavbar">
+            <li role="listitem" aria-label="home" className="h-14 my-0 mx-1 w-15">
+              <Link className={"font-500 text-black text-center w-13 decoration-none cursor-pointer" + (pathname === '/') ? styles.active : ""} href={'/'}
               >
-                <span className={`glyphicon glyphicon-home ${styles.menuicon}`}></span><br />
-                <span className={styles.menutext}>Home<br />&nbsp;</span>
+                <Image className="mx-auto" src={home} width={30} height={30} alt="home" />
+                <span className="link-text" >Home</span>
               </Link>
-
             </li>
-            <li id="aboutus" role="listitem" aria-label="about us" className={styles.navitem}>
-
-
-              <Link className={(pathname === '/aboutus/') ? styles.active : ""}
+            <li id="aboutus" role="listitem" aria-label="about us" className="h-15 my-0 mx-1 w-18">
+              <Link className={" font-500 text-black text-center w-15 decoration-none cursor-pointer " + (pathname === '/aboutus/') ? styles.active : ""}
                 href={{ pathname: "/aboutus/" }} >
-                <span className={`glyphicon glyphicon-question-sign ${styles.menuicon}`}></span><br />
-                <span className={styles.menutext}>About Us</span>
+                <span className=" font-500 text-black text-center  min-w-15 decoration-none">
+                  <Image className="mx-auto" src={aboutus} width={30} height={30} alt="about us" />
+                  <span className="link-text" >About Us</span>
+                </span>
               </Link>
 
             </li>
 
-            <li id="productscat" role="listitem" aria-label="product catalog" className={styles.navitem}>
-
-              <Link className={(pathname === '/products/') ? styles.active : ""}
+            <li id="productscat" role="listitem" aria-label="product catalog" className="h-15 my-0 mx-1 w-15">
+              <Link className={"cursor-pointer" + (pathname === '/products/') ? styles.active : ""}
                 href={{ pathname: "/products/" }}>
-                <span className={`glyphicon glyphicon-shopping-cart ${styles.menuicon}`}></span><br />
-                <span className={styles.menutext}>Products<br />&nbsp;</span>
+                <span className=" font-500 text-black text-center w-13 decoration-none ">
+                  <Image className="mx-auto" src={cart} width={30} height={30} alt="product catalog" />
+                  <span className="link-text" >Products</span>
+                </span>
               </Link>
 
             </li>
-            <li id="reviews" role="listitem" aria-label="reviews" className={styles.navitem}>
-
-              <Link className={(pathname === '/reviews/') ? styles.active : ""}
+            <li id="reviews" role="listitem" aria-label="reviews" className="h-15 my-0 mx-1 w-15">
+              <Link className={"cursor-pointer" + (pathname === '/reviews/') ? styles.active : ""}
                 href={{ pathname: "/reviews/" }}>
-                <span className={`glyphicon glyphicon-thumbs-up ${styles.menuicon}`}></span><br />
-                <span className={styles.menutext}>Reviews<br />&nbsp;</span>
+                <span className=" font-500 text-black text-center w-13 decoration-none">
+                  <Image className="mx-auto" src={reviews} width={30} height={30} alt="reviews" />
+                  <span className="link-text" >Reviews</span>
+                </span>
               </Link>
 
             </li>
           </ul>
           {authlinks}
         </div>
-      </nav>
-      {(isAdmin === true) && <>
-        <EditModal
-          name="editProdModal"
-          show={editShow}
-          modalClosed={dispatch(closeEdit())}
-          modalHeight={'600'}
+      </div>
+      {(isAdmin && editShow) && <EditModal
+        name="editProdModal"
+        show={editShow}
+        modalClosed={handleEditClose}
+      >
+        <button className="text-black" onClick={handleEditClose}>
+          X
+        </button>
+        <EditProdForm editModalClose={handleEditClose} />
+      </EditModal>
+      }
+      {(isAdmin && add2AllShow) && <EditModal
+        name="add2AllModal"
+        show={add2AllShow}
+        modalClosed={handleAddClose}
+        modalHeight="600"
+      >
+        <button
+          className="btn btn-link"
+          onClick={handleAddClose}
         >
-          <button className="btn btn-link" onClick={() => dispatch(closeEdit())}>
-            X
-          </button>
-          <EditProdForm editModalClose={dispatch(closeEdit())} />
-        </EditModal>
-
-        <EditModal
-          name="add2AllModal"
-          show={add2AllShow}
-          modalClosed={() => dispatch(add2AllClose())}
-          modalHeight="600"
-        >
-          <button
-            className="btn btn-link"
-            onClick={() => dispatch(add2AllClose())}
-          >
-            X
-          </button>
-          <Add2AllForm />
-        </EditModal>
-      </>
+          X
+        </button>
+        <Add2AllForm />
+      </EditModal>
       }
     </>
   )
 }
-
 
 export default withReduxStore(Nav);

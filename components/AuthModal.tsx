@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { authSlice } from '../redux/store';
 import { authClose } from '../redux/features/authReducer';
 import { withReduxStore } from "../redux/withReduxStore";
-
+import { AnyAction } from "redux";
 
 const AuthModal = (props: any) => {
 
@@ -18,17 +18,19 @@ const AuthModal = (props: any) => {
     //     dispatch(authOpen() as unknown as AnyAction)
     // }
 
-    // function onAuthClose() {
-    //     dispatch(authClose() as unknown as AnyAction)
-    // }
+    function onAuthClose(e: React.MouseEvent<HTMLButtonElement>) {
+        e.preventDefault();
+        e.stopPropagation();
+        dispatch(authClose() as unknown as AnyAction)
+    }
 
     const modalInstance = authShow ? <Modal
         name="authFormModal"
         show={authShow}
-        modalClosed={() => dispatch(authClose())}>
+        modalClosed={onAuthClose}>
         <button
-            className="btn btn-link auth-btn"
-            onClick={() => dispatch(authClose())}>
+            className="btn btn-link auth-btn "
+            onClick={onAuthClose}>
             X
         </button>
         <Auth />
@@ -43,4 +45,3 @@ const AuthModal = (props: any) => {
 }
 
 export default withReduxStore(AuthModal);
-

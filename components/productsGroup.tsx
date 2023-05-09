@@ -5,7 +5,7 @@ import Image from 'next/image';
 import _ from "lodash";
 import type { Product } from "../redux/features/productsReducer";
 import LanguagueContext from '../contexts/languagueContext';
-import { fetchProducts, updateAllProducts, add2AllOpen, add2AllClose, closeProductPage, openProductPage, closeEdit, updateCurrentProductId, updateCurrentProductGroup, closeAdded } from '../redux/features/productsReducer';
+import { fetchProducts, updateAllProducts, add2AllOpen, openAdded, add2AllClose, closeProductPage, openProductPage, closeEdit, updateCurrentProductId, updateCurrentProductGroup, closeAdded } from '../redux/features/productsReducer';
 import { productsSlice } from '../redux/store';
 import { useSelector, useDispatch } from 'react-redux';
 import useTranslations from "../hooks/useTranslations";
@@ -22,7 +22,6 @@ const ProductsGroup = (props: { groupid: string }) => {
     //const currentLanguage = "en"
     const dispatch = useDispatch();
 
-    //console.log("currentLanguage", currentLanguage, "prodShow", prodShow);
     const t = useCallback((key: string) => { return useTranslations(currentLanguage).t(key) }, [currentLanguage, useTranslations]);
 
     useEffect(() => {
@@ -34,6 +33,14 @@ const ProductsGroup = (props: { groupid: string }) => {
     useEffect(() => {
         setCurrentProductGroup([...allProducts.filter((item) => item.group_id == props.groupid)]);
     }, [props.groupid, allProducts]);
+
+    useEffect(() => {
+        if (productAdded) {
+            console.log("productGroup fetchProducts",)
+            dispatch(fetchProducts() as unknown as AnyAction);
+            dispatch(openAdded() as unknown as AnyAction)
+        }
+    }, [productAdded]);
 
     const openProductModal = (pid: string, p_in: string) => {
         dispatch(updateCurrentProductId(pid))

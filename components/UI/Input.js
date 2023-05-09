@@ -3,12 +3,13 @@ import React from "react"
 const input = (props) => {
   let inputElement = null
   const inputClasses = [
-    "w-full outline-none border-slate bg-white px-2.5 py-1.5 box-border focus:bg-slate"
+    "w-full outline-none !border-slate !bg-slate px-2.5 py-1.5 box-border focus:bg-slate"
   ]
 
   if (props.invalid && props.shouldValidate && props.touched) {
-    inputClasses.push("Invalid border-red bg-red/25 bg-[FDA49A]")
+    inputClasses.push("border-red bg-red ") //Invalid [#FDA49A]
   }
+
   if (props.inline) {
     inputClasses.push("inline-block")
   }
@@ -17,7 +18,11 @@ const input = (props) => {
     case "input":
       inputElement = (
         <input
-          style={{ width: "100%" }}
+          style={{
+            width: "100%",
+            border: "1px solid slate",
+            borderRadius: "10px"
+          }}
           className={inputClasses.join(" ")}
           {...props.elementConfig}
           value={props.value}
@@ -64,11 +69,11 @@ const input = (props) => {
   }
 
   return (
-    <div className="flex flex-col flex-wrap min-[480px]:flex-nowrap min-[480px]:w-120 p-2 w-[80%] box-border ">
-      <div className="font-bold m-2 mx-5 text-left text-black w-full min-[480px]:w-[50%] inline-block">
+    <div className="flex flex-row flex-wrap min-[480px]:flex-nowrap box-border ">
+      <div className="font-bold m-2 mx-5 text-left text-black min-[480px]:w-[40%] w-full inline-block">
         {props.label}
       </div>
-      <div className="text-left w-full min-[480px]:w-[50%] min-[480px]:w-100 px-2.5 box-border focus:bg-slate">
+      <div className="text-left text-black w-full min-[480px]:px-2.5 box-border !border-slate  ">
         {inputElement}
       </div>
     </div>

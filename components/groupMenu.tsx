@@ -5,20 +5,21 @@ import { useRouter } from 'next/navigation';
 import productGroupData from "../shared/productGroup.json";
 import Link from 'next/link';
 import Image from 'next/image';
-import { productsSlice } from '../redux/store';
+import { authSlice, productsSlice } from '../redux/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { withReduxStore } from "../redux/withReduxStore";
 import { AnyAction } from "redux";
 import Modal from './UI/Modal'
 import { fetchProducts, updateAllProducts, add2AllOpen, add2AllClose, closeProductPage, openProductPage, closeEdit, updateCurrentProductId, updateCurrentProductGroup, closeAdded } from '../redux/features/productsReducer';
 import ProductDisplay from './productDisplay';
+import { auth } from "@/redux/features/authReducer";
 
 const GroupMenu = (props: any) => {
     const [currentGroupId, setCurrentGroupId] = useState("1");
 
     const router = useRouter();
-    const { productAdded, allProducts, currentProductId, currentProductGroup, prodShow } = useSelector(productsSlice);
-
+    const { productAdded, allProducts, currentProductId, loading, prodShow } = useSelector(productsSlice);
+    const { isAdmin } = useSelector(authSlice)
     const dispatch = useDispatch();
 
 
@@ -28,15 +29,18 @@ const GroupMenu = (props: any) => {
         }
     }, []);
 
-
-
     const OpenMenu = (id: string) => {
         setCurrentGroupId(id);
         router.push(`/products/${id}`);
-    }
+    };
+
+    const handleAddProduct = () => {
+        dispatch(add2AllOpen());
+    };
     // <Link href={{ pathname: `/products/${productGroup.id}` }}
     return (
         <div className="bg-black">
+            {loading && <div className="text-white loading">Loading...</div>}
             <Modal
                 name="productPage"
                 show={prodShow}
@@ -77,6 +81,11 @@ const GroupMenu = (props: any) => {
 
                 </ul>
             </div>
+            {isAdmin && <div className="" >
+                <div className="border-white border-solid rounded cursor-pointer flex bg-orange-700 border-1 h-9 text-center w-60 justify-center items-center align-middle"
+                    onClick={handleAddProduct}
+                >Add New Product</div>
+            </div>}
             <div className="bg-black strike">
                 <Image
                     src={"/static/divider1.svg"}

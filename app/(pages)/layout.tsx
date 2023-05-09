@@ -11,7 +11,6 @@ function Layout({ children }: { children: React.ReactNode }) {
     return (
         <Providers>
             <LanguagueContextProvider>
-
                 <div className="bg-black">
                     <Nav />
                     <AuthModal />

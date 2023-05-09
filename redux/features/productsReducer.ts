@@ -1,8 +1,24 @@
 'use client'
 
 import React from 'react';
-import { createSlice, createAsyncThunk, isRejectedWithValue, ActionReducerMapBuilder, PayloadAction } from "@reduxjs/toolkit";
-import axios from '../../config/axios-firebase';
+import { createSlice, createAsyncThunk, ActionReducerMapBuilder, PayloadAction } from "@reduxjs/toolkit";
+import firebase from 'firebase/app';
+import "firebase/database";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDW7ozYaZ9Z8_6pqHnyeVIJFNgwEkKrD_A",
+  authDomain: "oratai-2018.firebaseapp.com",
+  projectId: "oratai-2018",
+  messagingSenderId: "376642946923",
+  appId: "oratai-2018",
+  databaseURL: "https://oratai-2018.firebaseio.com",
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+// Initialize Realtime Database and get a reference to the service
+const database = firebase.database();
 
 export type Product = {
   id: string;
@@ -23,6 +39,7 @@ export type FireProduct = {
   retail_price: string;
   title: string;
   wholesale_price: string;
+  [key: string]: any;
 }
 
 export type ProductReducer = {
@@ -41,97 +58,97 @@ export type ProductReducer = {
   pathname: string;
 }
 
-// fetch('/allProducts.json', {muteHttpExceptions: true})
-//   fetch('https://oratai-2018.firebaseio.com/allProducts.json', {muteHttpExceptions: true}) 
+
 export const fetchProducts = createAsyncThunk<Promise<Product[] | Object>, void, { rejectValue: string }>(
   'products/fetchProducts',
-  async (): Promise<Product[] | Object> => {
+  async (_, thunkAPI): Promise<Product[] | Object> => {
     let fetchedProducts: Product[] = [];
     try {
-      const response = await axios.get('/allProducts.json')
-        .then(data => {
-          console.log("data", data)
-          return data
+      database.ref('allProducts').on('value', (snapshot) => {
+        const data = snapshot.val();
+        const keys = Object.keys(data)
+        fetchedProducts = keys.map((key: string) => {
+          return { id: key, ...data[key] }
         })
-
-      const keys = Object.keys(response.data)
-      const valuesArr: FireProduct[] = Object.values(response.data)
-      fetchedProducts = valuesArr.map((productObj: FireProduct, index: number) => {
-        return { id: keys[index], ...productObj }
       })
-      return fetchedProducts;
-    } catch (err: any) {
-      console.log("fetch response error", err)
-      if (!err.response) {
-        throw err;
+
+      return thunkAPI.fulfillWithValue(fetchedProducts)
+    } catch (error: any) {
+      console.log("fetchProducts error", error)
+      if (!error) {
+        throw error;
       }
-      return isRejectedWithValue(err.response.data);
-    }
-  })
+      return thunkAPI.rejectWithValue(error);
+    };
+  }
+);
 
 export const addProduct = createAsyncThunk(
   'products/addProduct',
-  async (product, thunkAPI) => {
+  async (product: FireProduct, thunkAPI) => {
     try {
-      let token = localStorage.getItem("token");
-      const response = await axios.post(`/allProducts.json?auth=${token}`, product)
-        .then(data => data)
-      return response;
-    } catch (err: any) {
-      if (!err.response) {
-        throw err;
+      const ref = database.ref('allProducts');
+      const newProductRef = ref.push();
+      const newProductId = newProductRef.key;
+
+      if (!newProductId) {
+        throw new Error('Failed to generate key for new product');
       }
-      return isRejectedWithValue(err.response.data);
+
+      await newProductRef.set(product);
+      //     var newPostKey = database.ref().child('allProducts').push().key;
+      //     var newPostKey = database.ref('allProducts').push().key;
+      //     var updates: { [key: string]: FireProduct } = {};
+      //     updates['/allProducts/' + newPostKey] = product;
+      //     database.ref().update(updates, (error) => {
+      console.log("addProduct saved successfully!");
+      return thunkAPI.fulfillWithValue(true);
+    } catch (error: any) {
+      console.error("addProduct error", error);
+      return thunkAPI.rejectWithValue(error);
     }
-  });
+  }
+);
+
 
 export const delProduct = createAsyncThunk(
   'products/delProduct',
-  async (id: string) => {
+  async (id: string, thunkAPI) => {
     try {
-      let token = localStorage.getItem("token");
-      let response = null;
       if (!id) {
         throw new Error('id of product is invalid or missing')
       } else {
-        response = await axios.delete(`/allProducts/${id}.json?auth=${token}`)
-          .then(data => data)
+        await database.ref(`/allProducts/${id}`).remove();
       }
-      return response;
-    } catch (err: any) {
-      console.log("delProduct err", err);
-      if (!err.response) {
-        throw err;
-      }
-      return isRejectedWithValue(err.response);
+      console.log("delProduct saved successfully!");
+      return thunkAPI.fulfillWithValue(true)
+    } catch (error: any) {
+      // The write failed...
+      console.log("delProduct error", error);
+      return thunkAPI.rejectWithValue(error);
     }
   });
 
 
 export const editProduct = createAsyncThunk(
   'products/editProduct',
-  async (currentProduct: Product, thunkAPI) => {
-    try {
-      const id: string = currentProduct.id;
-      let token = localStorage.getItem("token");
-      const url = '/allProducts/' + id + '.json?auth=' + token;
-      let response = null
-      if (!id) {
-        console.log("edit error");
-        throw new Error('id of product is invalid or missing')
-      } else {
-        response = await axios.put(url, currentProduct)
-          .then(data => data)
-      }
-      return response;
-    } catch (err: any) {
-      console.log("edit err", err);
-      if (!err.response) {
-        throw err;
-      }
+  async (productObj: { id: string, fireProduct: FireProduct }, thunkAPI) => {
 
-      return isRejectedWithValue(err.response.data);
-    }
+    var updates: { [key: string]: FireProduct } = {};
+    updates['/allProducts/' + productObj.id] = productObj.fireProduct;
+
+    database.ref().update(updates, (error) => {
+      if (error) {
+        // The write failed...
+        console.log("editProduct error", error);
+        return thunkAPI.rejectWithValue(error);
+      } else {
+        // Data saved successfully!
+        console.log("editProduct saved successfully!");
+        return thunkAPI.fulfillWithValue(true)
+      }
+    });
+
   });
 
 
@@ -233,7 +250,7 @@ export const productsReducer = createSlice({
         state.add2AllShow = false
       }),
       builder.addCase(addProduct.rejected, (state, action) => {
-        state.error = action.payload ? action.payload.toString() : action.error.toString();
+        state.error = action.error.toString();
         state.productAdded = false;
         state.loading = false;
       }),
@@ -244,6 +261,8 @@ export const productsReducer = createSlice({
       builder.addCase(delProduct.fulfilled, (state) => {
         state.loading = false;
         state.productAdded = true;
+        state.editShow = false;
+        state.prodShow = false;
       }),
       builder.addCase(delProduct.rejected, (state) => {
         state.error = "" // action.payload ? action.payload.toString() : action.error.toString();

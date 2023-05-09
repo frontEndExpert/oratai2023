@@ -11,12 +11,10 @@ import ReactPlayer from "react-player/lazy";
 import YouTube from 'react-youtube';
 import LanguagueContext from '../contexts/languagueContext';
 
-//<LanguagueContextProvider></LanguagueContextProvider>
+
 const Homepage = (props: any) => {
-    //const { currentLanguage } = useAppSelector(productsSlice);
     const { currentLanguage } = useContext(LanguagueContext);
-    //const currentLanguage = "en"
-    //console.log("currentLanguage", currentLanguage);
+
     const t = useCallback((key: string) => { return useTranslations(currentLanguage).t(key) }, [currentLanguage, useTranslations]);
 
     useEffect(() => {
@@ -26,7 +24,7 @@ const Homepage = (props: any) => {
 
 
     return (
-        <div className='container-fluid bg-black h-full m-0 text-white w-full p-20px home relative'>
+        <div className='container bg-black h-full m-0 text-white w-full p-20px home relative'>
             <div className="z-10 grid-cols-12">
                 <div id="welcome" className="bg-black text-lg text-white" >
                     <h1 className='text-center text-red-900 text-3xl'>{t("homepage:welcome")}{" "}<b> {t("homepage:sitename")}{" "}<br />
@@ -129,44 +127,7 @@ const Homepage = (props: any) => {
 
     )
 }
-//         <ReactPlayer width="530px" height="300px" url="https://www.youtube.com/embed/Te_DTmOt4Xw" light="/static/normal-sarong-0007.jpg"/>
-// <ReactPlayer width="530px" height="300px" url="https://www.youtube.com/embed/ne25PfyH9L8" light="/static/batik-video.png" />
-{/* <video style={{ width: '530px', height: '300px' }} >
-<source src="https://www.youtube.com/embed/Te_DTmOt4Xw" />
-</video>
-<video style={{ width: '530px', height: '300px' }}>
-<source src="https://www.youtube.com/embed/ne25PfyH9L8" />
-</video> */}
 
-
-{/* <YouTube 
-            videoId="Te_DTmOt4Xw" 
-            opts={{
-                height: '300',
-                width: '530',
-                playerVars: {
-                    autoplay: 0,
-                    controls: 1
-                }
-            }}
-            
-         />
-            <YouTube videoId="ne25PfyH9L8" 
-            opts={{
-                height: '300',
-                width: '530',
-                playerVars: {
-                    autoplay: 0,
-                    controls: 1
-                }
-            }} /> */}
-
-
-// const mapStateToProps = state => {
-//     return {
-//         currentLanguage: state.products.currentLanguage,
-//     };
-// };
 
 export default Homepage;
 

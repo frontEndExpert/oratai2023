@@ -26,6 +26,13 @@
       text-decoration: none;
       padding: 10px 0px!important;
     }
+
+    .mynavbar {
+      list-style: none;
+      margin: 0px 0px!important;
+      padding: 0px!important;
+      display: inline-block;
+    }
     
     .mynavbar > li > a.active,
     .authbar > li > a:active, 
@@ -58,9 +65,15 @@
 
 
 .navitem {
+    display: flex;
+    flex-flow: col wrap;
+    align-items: center;
+    justify-content: center;
     width: 60px!important;
-    padding: 0px!important;
-    margin: 0px 2px!important;
+    height: 80px!important;
+    padding: 0px 0px!important;
+    align-items: center!important;
+    margin: auto 2px!important;
     text-align: center;
 }
 
@@ -97,12 +110,12 @@ padding: 0px!important;
 }
 
 .authbar > li > a > span.menuicon,
-.mynavbar > li > a > span.menuicon{
-font-weight: 700;
-font-size: 18px;
-margin-bottom: 6px;
-color: black;
-text-align: center;
+.mynavbar > li > a > span.menuicon {
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 6px;
+    color: black;
+    text-align: center;
 }
 .mynavbar > li > a > span.menuicon2{
 font-weight: 700!important;
@@ -162,6 +175,8 @@ margin: 0px!important;
 line-height: 90%!important;
 }
 
+
+
 .mynavbar > li > a > .menutext,
 .authbar > li > a > span.menutext,
 #admin-bar > li > a > span.menutext{
@@ -175,6 +190,10 @@ text-align: center;
 @media (max-width:421px){
         #main-navbar{
             width: 100%;
+            width: 325px!important;
+            margin: 0!important;
+            padding: 0!important;
+            display: inline-block;
         }
         .mynav{
             padding: 0px 0px!important;

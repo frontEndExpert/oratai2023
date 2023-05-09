@@ -7,8 +7,8 @@ import Button from './UI/Button';
 //import axios from '../config/axios-firebase';
 import Input from './UI/Input';
 import { fetchProducts, closeEdit, editProduct, closeAdded, openAdded } from '../redux/features/productsReducer';
-import type { Product } from '../redux/features/productsReducer';
-import { getisAdmin } from '../redux/features/authReducer';
+import type { Product, FireProduct } from '../redux/features/productsReducer';
+
 import { productsSlice, authSlice } from '../redux/store';
 import type { RootState } from '../redux/store';
 import { updateObject, checkValidity } from '../shared/utility';
@@ -143,15 +143,12 @@ const EditProdForm = (props: any) => {
     const [productId, setProductId] = useState<string>("");
 
     const { productAdded, allProducts, globalformIsValid, currentProductId, error, editShow } = useSelector(productsSlice);
-    const { token, isAdmin, loading } = useSelector(authSlice);
+    const { isAuthenticated, isAdmin, loading } = useSelector(authSlice);
     const dispatch = useDispatch();
 
     useEffect(() => {
         setProdForm({ ...initialState.productForm })
 
-        if (token !== null) {
-            dispatch<any>(getisAdmin(""));
-        };
         if (currentProductId && currentProductId !== "0" && editShow) {
             if (currentProductId.length > 1 && productId !== currentProductId) {
                 setProductId(currentProductId)
@@ -173,25 +170,19 @@ const EditProdForm = (props: any) => {
         setProductArray(allProducts, currentProductId)
     }, [allProducts, productId]);
 
+    // useEffect(() => {
+    //     if (productAdded) {
+    //         console.log("editProdForm fetchProducts")
+    //         dispatch(fetchProducts() as unknown as AnyAction);
+    //         dispatch(openAdded() as unknown as AnyAction)
+    //     }
+    // }, [productAdded]);
+
 
     function setProductArray(productArray: Product[], prodId: string) {
-        // let currentProdArray = productArray.filter(
-        //     product => product.id === prodId
-        // )
-        // let currentProduct=currentProdArray[0];
         let currentProduct: Product = productArray.find(product => product.id === prodId) as Product
 
         if (currentProduct) {
-            // const newProductForm = update(prodForm, {
-            //     title: { value: { $set: currentProduct.title } },
-            //     group_id: { value: { $set: currentProduct.group_id } },
-            //     pattern_id: { value: { $set: currentProduct.pattern_id } },
-            //     description: { value: { $set: currentProduct.description } },
-            //     wholesale_price: { value: { $set: currentProduct.wholesale_price } },
-            //     retail_price: { value: { $set: currentProduct.retail_price } },
-            //     photo_url: { value: { $set: currentProduct.photo_url } }
-            // });
-            // setProdForm({ ...newProductForm })
             setProdForm({
                 ...prodForm, title: { ...prodForm.title, value: currentProduct.title },
                 group_id: { ...prodForm.group_id, value: currentProduct.group_id },
@@ -209,18 +200,25 @@ const EditProdForm = (props: any) => {
 
     const productHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const formData: { [key: string]: any } = {};
-        //let formElementIdentifier: string[] = Object.keys(prodForm);  
-        //let formElementIdentifier = ['title', 'group_id', 'pattern_id', 'description', 'retail_price', 'wholesale_price', 'photo_url']         
+        const formData: FireProduct = {
+            description: "",
+            group_id: "",
+            pattern_id: "",
+            photo_url: "",
+            retail_price: "",
+            title: "",
+            wholesale_price: ""
+        };
+
         for (let formIdentifier in prodForm) {
-            //for (let formIdentifier of formElementIdentifier) {
             formData[formIdentifier] = prodForm[formIdentifier].value;
         }
 
-        dispatch<any>(editProduct({ id: productId, ...formData } as Product) as unknown as AnyAction);
+        dispatch(editProduct({ id: productId, fireProduct: { ...formData } } as { id: string, fireProduct: FireProduct }) as unknown as AnyAction);
         dispatch(openAdded());
         if (productAdded) {
-            dispatch<any>(fetchProducts());
+            console.log("editProdForm productHandler fetchProducts")
+            dispatch(fetchProducts() as unknown as AnyAction);
 
             setProductArray(allProducts, productId)
         }
@@ -282,7 +280,7 @@ const EditProdForm = (props: any) => {
     }
 
     let form = (
-        <form className="text-black" onSubmit={productHandler}>
+        <form onSubmit={productHandler}>
             {formElementsArray.map(formElement => (
                 <Input
                     key={formElement.id}
@@ -297,24 +295,22 @@ const EditProdForm = (props: any) => {
             ))}
 
             <input type="file" name="myFile" onChange={uploadFile} />
-            <Button type='submit' btnType='Success'
-                disabled={!formIsValid}>Edit This Product</Button>
+            <button type='submit' className='Button Success'
+                disabled={!formIsValid}>Edit This Product</button>
         </form>
     );
     if (loading) {
         form = <div className='Loader'>Loading...</div>;
-    } else if (token === null) {
+    } else if (!isAuthenticated) {
         form = <p key="errMsg">Please Login (Only Admin Can Add Products!)</p>
     } else if (!isAdmin) {
         form = <p key="errMsg">Only Admin Can Add Products!</p>
     }
 
-    const form_height = '450px';
-
     return (
-        <div className='text-black mx-auto my-0 sm:w-500 w-80% h-[${form_height}] text-center border-0 px-auto py-30px;'>
+        <div className='mx-auto border-0 h-120 my-0 text-black text-center max-w-80 py-30px; px-10 sm:max-w-90'>
             <h4>Edit Product Here</h4>
-            <div className='pro-form'>
+            <div className='text-black px-10 pro-form'>
                 {form}
             </div>
         </div>

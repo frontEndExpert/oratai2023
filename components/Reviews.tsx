@@ -3,17 +3,18 @@
 import React, { useContext, useCallback } from 'react';
 import useTranslations from '../hooks/useTranslations'
 import Image from 'next/image';
-import { LanguagueContextProvider } from '../contexts/languagueContext'
+// import { LanguagueContextProvider } from '../contexts/languagueContext'
 import LanguagueContext from '../contexts/languagueContext';
 import styles from '../styles/reviews.module.css';
 
 const Reviews = (props: any) => {
     const { currentLanguage } = useContext(LanguagueContext);
     const t = useCallback((key: string) => { return useTranslations(currentLanguage).t(key) }, [currentLanguage, useTranslations]);
+    //    <LanguagueContextProvider></LanguagueContextProvider>
 
     return (
-        <LanguagueContextProvider>
-            <div className={`container-fluid ${styles.reviews}`}>
+        <>
+            <div className={`container ${styles.reviews}`}>
                 <h2>{t("reviews:header")}{" "}</h2>
                 <p>{t("reviews:miniheader")}{" "}</p>
                 <div className={styles.countries}>
@@ -87,7 +88,7 @@ const Reviews = (props: any) => {
                     </div>
                 </div>
             </div>
-            <div className={`container-fluid ${styles.reviews}`}>
+            <div className={`container ${styles.reviews}`}>
                 <h2>Customers Reviews</h2>
                 <div className={styles.reviewslist}>
                     <div className={styles.review}>
@@ -139,7 +140,7 @@ const Reviews = (props: any) => {
                     </div>
                 </div>
             </div>
-        </LanguagueContextProvider>
+        </>
     )
 }
 

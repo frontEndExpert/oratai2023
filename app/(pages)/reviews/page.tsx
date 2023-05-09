@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 };
 
 
-const ReviewsPage = (props: any) => {
-  console.log("props", props);
+const ReviewsPage = () => {
+
   return (
     <>
       <Reviews />

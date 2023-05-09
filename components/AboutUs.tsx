@@ -14,7 +14,7 @@ const AboutUs = (props: any) => {
 
     return (
         <div className="mainbody" dir={currentLanguage == "he" ? "rtl" : "ltr"}>
-            <div id="about-page" className={`container-fluid ${styles.aboutPage}`}>
+            <div id="about-page" className={`container ${styles.aboutPage}`}>
                 <div className={styles.header}>
                     <h1 >orataiphathai.work (formaly .com)</h1>
                     <h2 >{t("aboutus:heading")}{" "}</h2>

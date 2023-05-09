@@ -44,19 +44,19 @@ export const metadata = {
   }
 }
 
-
+{/* <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <Script type="text/javascript" id="jquery-cdn" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" />
+        <Script type="text/javascript" id="bootstrap-cdn" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" /> */}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <html lang="en">
       <head>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-        <Script type="text/javascript" id="jquery-cdn" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" />
-        <Script type="text/javascript" id="bootstrap-cdn" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" />
+
       </head>
 
-      <body className="bg-black">
+      <body className="bg-black debug-screens" >
         <Header />
         {children}
         <Footer />

@@ -1,31 +1,21 @@
 'use client'
 
-import React, { useState , useEffect, PropsWithChildren} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Button from './UI/Button';
-import axios from '../config/axios-firebase';
 import Input from './UI/Input';
 import { addProduct } from '../redux/features/productsReducer'
 import { updateObject, checkValidity } from '../shared/utility';
 import productGroupData from '../shared/productGroup.json';
-import type { RootState } from '../redux/store';
+import type { FireProduct } from "../redux/features/productsReducer";
 import type { FormElementConfig } from '../shared/types';
-import {productsSlice, authSlice } from '../redux/store';
+import { productsSlice, authSlice } from '../redux/store';
+import { AnyAction } from "redux";
 
 
-  type ProductForm = {
+type ProductForm = {
     [key: string]: FormElementConfig;
-  };
+};
 
-// type ThisState = {
-//     productForm: ProductForm
-//     formIsValid: boolean,
-//         productData: Object,
-//         productAdded: boolean,
-//         productId: string
-// }
-
-//type Props = PropsFromRedux & ThisState & PropsWithChildren;
 
 const initialState = {
     productForm: {
@@ -46,17 +36,17 @@ const initialState = {
             elementType: 'select',
             elementConfig: {
                 placeholder: 'Product Group',
-                options: [ 
-                    {value:'1', displayValue: productGroupData[0].title},
-                    {value:'2', displayValue: productGroupData[1].title},
-                    {value:'3', displayValue: productGroupData[2].title},
-                    {value:'4', displayValue: productGroupData[3].title},
-                    {value:'5', displayValue: productGroupData[4].title},
-                    {value:'6', displayValue: productGroupData[5].title},
-                    {value:'7', displayValue: productGroupData[6].title},
-                    {value:'8', displayValue: productGroupData[7].title},
-                    {value:'9', displayValue: productGroupData[8].title},
-                    {value:'10', displayValue: productGroupData[9].title}
+                options: [
+                    { value: '1', displayValue: productGroupData[0].title },
+                    { value: '2', displayValue: productGroupData[1].title },
+                    { value: '3', displayValue: productGroupData[2].title },
+                    { value: '4', displayValue: productGroupData[3].title },
+                    { value: '5', displayValue: productGroupData[4].title },
+                    { value: '6', displayValue: productGroupData[5].title },
+                    { value: '7', displayValue: productGroupData[6].title },
+                    { value: '8', displayValue: productGroupData[7].title },
+                    { value: '9', displayValue: productGroupData[8].title },
+                    { value: '10', displayValue: productGroupData[9].title }
                 ]
             },
             value: '1',
@@ -151,36 +141,32 @@ const Add2AllForm = (props: any) => {
 
     const dispatch = useDispatch();
     const { productAdded, allProducts, globalformIsValid, currentProductId, error, editShow } = useSelector(productsSlice);
-
-    
-    // state = {...initialState}
-
-    // useEffect(() => {
-
-    // }, []);
-
-    // componentDidUpdate = (prevProps: Props) => {
-    //     if(prevProps.productAdded !==props.productAdded){
-    //         setState({productAdded: props.productAdded})
-    //     }
-    // };
+    const { isAdmin, isAuthenticated } = useSelector(authSlice);
 
 
-    const productHandler = ( event: React.FormEvent<HTMLFormElement> ) => {
+    const productHandler = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        
-        const formData: {[key: string]: any} = {};
+
+        const formData: FireProduct = {
+            description: "",
+            group_id: "",
+            pattern_id: "",
+            photo_url: "",
+            retail_price: "",
+            title: "",
+            wholesale_price: ""
+        };
         for (let formElementIdentifier in prodForm) {
             formData[formElementIdentifier] = prodForm[formElementIdentifier].value;
         }
-        
-        props.onAddProduct2All(formData); 
-        setProdForm({...initialState.productForm})
-        setProductId("");
+
+        dispatch(addProduct(formData) as unknown as AnyAction);
+        setProdForm({ ...initialState.productForm })
+
         setFormIsValid(false);
     };
 
-   
+
     const inputChangedHandler = (event: React.ChangeEvent<HTMLInputElement>, inputIdentifier: string) => {
         const updatedFormElement = updateObject(prodForm[inputIdentifier], {
             value: event.target.value,
@@ -190,87 +176,86 @@ const Add2AllForm = (props: any) => {
         const updatedProductForm = updateObject(prodForm, {
             [inputIdentifier]: updatedFormElement
         });
-        
+
         let formIsValid = true;
         for (let inputIdentifier in updatedProductForm) {
             formIsValid = updatedProductForm[inputIdentifier].valid && formIsValid;
         }
-        setProdForm({...updatedProductForm});
+        setProdForm({ ...updatedProductForm });
         setFormIsValid(formIsValid);
     };
 
     const uploadFile = (event: React.ChangeEvent<HTMLInputElement>) => {
         let file = event.target.files && event.target.files[0];
         if (file) {
-           // updateObject(prodForm.photo_url, {value:file.name})
+            // updateObject(prodForm.photo_url, {value:file.name})
             const updatedFileName = updateObject(prodForm.photo_url, {
                 value: file.name,
                 valid: true,
                 touched: true
             });
             const updatedProductForm = updateObject(prodForm, {
-                photo_url: updatedFileName})
+                photo_url: updatedFileName
+            })
             let formIsValid = true;
             for (let inputIdentifier in updatedProductForm) {
                 formIsValid = updatedProductForm[inputIdentifier].valid && formIsValid;
             }
-            setProdForm({...updatedProductForm});
-            setFormIsValid(formIsValid);    
-         // let data = new FormData();
-         // data.append('file', file);
-          // axios.post('/files', data)...
+            setProdForm({ ...updatedProductForm });
+            setFormIsValid(formIsValid);
+            // let data = new FormData();
+            // data.append('file', file);
+            // axios.post('/files', data)...
         }
     }
 
 
-        const formElementsArray = [];
-        for (let key in prodForm) {
-            formElementsArray.push({
-                id: key,
-                config: prodForm[key]
-            });
-        }
+    const formElementsArray = [];
+    for (let key in prodForm) {
+        formElementsArray.push({
+            id: key,
+            config: prodForm[key]
+        });
+    }
 
-        let form = (
+    let form = <></>;
+
+    if (!isAuthenticated) {
+        form = <p key="errMsg">Please Login (Only Admin Can Add Products!)</p>
+    } else if (!isAdmin) {
+        form = <p key="errMsg">Only Admin Can Add Products!</p>
+    } else {
+        form = (
             <form className="text-black" onSubmit={productHandler}>
                 {formElementsArray.map(formElement => (
-                    <Input 
+                    <Input
                         key={formElement.id}
                         label={formElement.config.elementConfig.placeholder}
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
-                        
+
                         value={formElement.config.value}
                         invalid={!formElement.config.valid}
                         shouldValidate={formElement.config.validation}
                         touched={formElement.config.touched}
                         changed={(event: React.ChangeEvent<HTMLInputElement>) => inputChangedHandler(event, formElement.id)} />
                 ))}
-                
-                <input type="file"  name="myFile" onChange={uploadFile} />
-                <Button type='submit' btnType='Success' 
-                disabled={!formIsValid}>Add This Product</Button>
+
+                <input type="file" name="myFile" onChange={uploadFile} />
+                <button type='submit' className='Button Success'
+                    disabled={!formIsValid}>Add This Product</button>
             </form>
         );
-        
-        if ( props.loading ) {
-            form = <div className='Loader'>Loading...</div>;
-        } else if (props.token === null) {
-            form = <p key="errMsg">Please Login (Only Admin Can Add Products!)</p>
-        } else if (!props.isAdmin) {
-            form = <p key="errMsg">Only Admin Can Add Products!</p>
-        }
+    }
 
-        const form_height = '450px';
-
-        return (
-            <div className='text-black mx-auto my-0 sm:w-500 w-80% h-[${form_height}] text-center border-0 px-auto py-30px;'>
-                <h4>Add Product Here</h4>
-                <div className='text-black'>
+    return (
+        <div className='bg-white h-fit mx-auto px-auto border-0 my-0 text-black text-center py-30px; w-80% sm:w-200'>
+            <h4>Add Product Here</h4>
+            <div className='text-black'>
                 {form}
-                </div>
             </div>
-        );
+        </div>
+    );
 }
 
 
