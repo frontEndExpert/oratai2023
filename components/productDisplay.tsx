@@ -65,9 +65,7 @@ const ProductDisplay = (props: Props) => {
     }, [currentProductId, prodShow, allProducts, productAdded]);
 
     useEffect(() => {
-        console.log("currentProductId currentProductGroup1", currentProductId, currentProductGroup)
         if (currentProductId != "" && currentProductGroup.length > 0) {
-            console.log("currentProductId currentProductGroup2")
             setPindex(currentProductGroup.findIndex(p => p.id === currentProductId))
         }
     }, [currentProductId, currentProductGroup]);
