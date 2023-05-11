@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AnyAction } from "redux";
 import Button from './UI/Button';
-//import axios from '../config/axios-firebase';
 import Input from './UI/Input';
 import { fetchProducts, closeEdit, editProduct, closeAdded, openAdded } from '../redux/features/productsReducer';
 import type { Product, FireProduct } from '../redux/features/productsReducer';

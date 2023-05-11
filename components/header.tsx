@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 // 
 const Header = () => (
-  <div id='header' className="bg-red-800 m-0 w-full max-w-[1600px] p-0 <sm:w-full <sm:max-w-[1600px]">
+  <div id='header' className="object-cover bg-red-800 m-0 w-full p-0 <sm:w-full ">
     <Image src='/static/orataiphathai_bg.jpg'
       width={1600} height={270}
       className='h-full m-0 img-responsive myimg'

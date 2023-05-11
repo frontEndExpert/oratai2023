@@ -10,6 +10,8 @@ import { productsSlice, authSlice } from '../redux/store';
 import ReactPlayer from "react-player/lazy";
 import YouTube from 'react-youtube';
 import LanguagueContext from '../contexts/languagueContext';
+import AliceCarousel from 'react-alice-carousel';
+import 'react-alice-carousel/lib/alice-carousel.css';
 
 
 const Homepage = (props: any) => {
@@ -22,6 +24,18 @@ const Homepage = (props: any) => {
 
     }, [currentLanguage]);
 
+    const handleDragStart = (e: any) => e.preventDefault();
+
+    const items = [
+        <img src="/static/slider/slider-0001.jpg" onDragStart={handleDragStart} role="presentation" alt="thailand sarong wholesale" />,
+        <img src="/static/slider/slider-0002.jpg" onDragStart={handleDragStart} role="presentation" alt="thai sarong wholesale תאי סארונג בעברית" />,
+        <img src="/static/slider/slider-0003.jpg" onDragStart={handleDragStart} role="presentation" alt="thai sarong wholesale תאי סארונג בעברית" />,
+        <img src="/static/slider/slider-0004.jpg" onDragStart={handleDragStart} role="presentation" alt="thailand sarong wholesale" />,
+        <img src="/static/slider/slider-0005.jpg" onDragStart={handleDragStart} role="presentation" alt="thai sarong wholesale תאי סארונג בעברית" />,
+        <img src="/static/slider/slider-0006.jpg" onDragStart={handleDragStart} role="presentation" alt="thai sarong wholesale תאי סארונג בעברית" />,
+        <img src="/static/slider/slider-0007.jpg" onDragStart={handleDragStart} role="presentation" alt="thailand sarong wholesale" />,
+
+    ];
 
     return (
         <div className='container bg-black h-full m-0 text-white w-full p-20px home relative'>
@@ -50,61 +64,21 @@ const Homepage = (props: any) => {
                     </p>
 
                 </div>
-                <div id="myCarousel" className="carousel slide" data-ride="carousel">
-                    <ol className="carousel-indicators">
-                        <li data-target="#myCarousel" data-slide-to="0" className="active"></li>
-                        <li data-target="#myCarousel" data-slide-to="1"></li>
-                        <li data-target="#myCarousel" data-slide-to="2"></li>
-                        <li data-target="#myCarousel" data-slide-to="3"></li>
-                        <li data-target="#myCarousel" data-slide-to="4"></li>
-                        <li data-target="#myCarousel" data-slide-to="5"></li>
-                        <li data-target="#myCarousel" data-slide-to="6"></li>
-                    </ol>
-
-                    <div className="carousel-inner">
-
-                        <div className="text-center item active">
-                            <Image src="/static/slider/slider-0001.jpg"
-                                className="h-auto mx-auto my-0 w-120 "
-                                width={480} height={300}
-                                priority={true}
-                                alt="Oratai Phathai Thai Sarong fabric" />
-                        </div>
-                        <div className="text-center  item">
-                            <Image src="/static/slider/slider-0002.jpg"
-                                className="h-auto mx-auto my-0 w-120" width={480} height={300}
-                                priority={true}
-                                alt="Oratai Phathai thai sarong wholesale" />
-                        </div>
-                        <div className="text-center  item">
-                            <Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0003.jpg" width={480} height={300} alt="thailand sarong wholesale" priority={true} />
-                        </div>
-                        <div className="text-center  item">
-                            <Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0004.jpg" width={480} height={300} alt="Oratai Phathai thailand sarong wholesale" priority={true} />
-                        </div>
-                        <div className="text-center  item">
-                            <Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0005.jpg" width={480} height={300} alt="Oratai Phathai Thai Sarong" priority={true} />
-                        </div>
-
-                        <div className="text-center item">
-                            <Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0006.jpg" width={480} height={300} alt="Oratai Phathai Thai Sarong" priority={true} />
-                        </div>
-
-                        <div className="text-center item">
-                            <Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0007.jpg" width={480} height={300} alt="Oratai Phathai Thai Sarong" priority={true} />
-                        </div>
-                    </div>
-
-
-                    <a className="left carousel-control" href="#myCarousel" data-slide="prev">
-                        <span className="glyphicon glyphicon-chevron-left"></span>
-                        <span className="sr-only">Previous</span>
-                    </a>
-                    <a className="right carousel-control" href="#myCarousel" data-slide="next">
-                        <span className="glyphicon glyphicon-chevron-right"></span>
-                        <span className="sr-only">Next</span>
-                    </a>
-                </div>
+                <AliceCarousel mouseTracking items={items} />
+                {/* <Swiper>
+                    <div><Image src="/static/slider/slider-0001.jpg" className="h-auto mx-auto my-0 w-120 " width={480} height={300} priority={true} alt="Oratai Phathai Thai Sarong fabric" /></div>
+                    <div><Image src="/static/slider/slider-0002.jpg" className="h-auto mx-auto my-0 w-120" width={480} height={300}
+                        priority={true} alt="Oratai Phathai thai sarong wholesale" /></div>
+                    <div><Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0003.jpg" width={480} height={300} alt="thailand sarong wholesale" priority={true} /></div>
+                    <div><Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0003.jpg" width={480} height={300} alt="thailand sarong wholesale" priority={true} /></div>
+                    <div><Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0003.jpg" width={480} height={300} alt="thailand sarong wholesale" priority={true} /></div>
+                    <div><Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0003.jpg" width={480} height={300} alt="thailand sarong wholesale" priority={true} /></div>
+                    <div><Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0003.jpg" width={480} height={300} alt="thailand sarong wholesale" priority={true} /></div>
+                    <div><Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0004.jpg" width={480} height={300} alt="Oratai Phathai thailand sarong wholesale" priority={true} /></div>
+                    <div><Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0005.jpg" width={480} height={300} alt="Oratai Phathai Thai Sarong" priority={true} /></div>
+                    <div><Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0006.jpg" width={480} height={300} alt="Oratai Phathai Thai Sarong" priority={true} /></div>
+                    <div><Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0007.jpg" width={480} height={300} alt="Oratai Phathai Thai Sarong" priority={true} /></div>
+                </Swiper> */}
             </div>
 
             <div className='flex flex-row flex-nowrap m-10 text-center gap-3 ads '>

@@ -15,7 +15,7 @@ import { AnyAction } from "redux";
 const ProductsGroup = (props: { groupid: string }) => {
     const [currentProductGroup, setCurrentProductGroup] = useState([] as Product[]);
     const [currentArrSize, setCurrentArrSize] = useState(0);
-    const [pin, setPin] = useState("");
+    const [pin, setPin] = useState(0);
     const [revealText, setRevealText] = useState(false);
     const { currentLanguage } = useContext(LanguagueContext);
     const { productAdded, allProducts, prodShow } = useSelector(productsSlice);
@@ -28,10 +28,16 @@ const ProductsGroup = (props: { groupid: string }) => {
         if (allProducts.length == 0) {
             dispatch(fetchProducts() as unknown as AnyAction);
         }
+        if (props.groupid != "" && allProducts.length > 0) {
+            setCurrentProductGroup([...allProducts.filter((item) => item.group_id == props.groupid)]);
+            dispatch(updateCurrentProductGroup([...allProducts.filter((item) => item.group_id == props.groupid)]));
+        }
+
     }, []);
 
     useEffect(() => {
         setCurrentProductGroup([...allProducts.filter((item) => item.group_id == props.groupid)]);
+        dispatch(updateCurrentProductGroup([...allProducts.filter((item) => item.group_id == props.groupid)]));
     }, [props.groupid, allProducts]);
 
     useEffect(() => {
@@ -42,8 +48,10 @@ const ProductsGroup = (props: { groupid: string }) => {
         }
     }, [productAdded]);
 
-    const openProductModal = (pid: string, p_in: string) => {
+    const openProductModal = (pid: string) => {
         dispatch(updateCurrentProductId(pid))
+        let p_in = currentProductGroup.findIndex(product => product.id == pid);
+        console.log("p_in", p_in)
         setPin(p_in);
         dispatch(openProductPage());
     };
@@ -66,10 +74,10 @@ const ProductsGroup = (props: { groupid: string }) => {
                             <div
                                 key={product.id}
                                 className="productMenuButton"
-                                onClick={() => openProductModal(product.id, index.toString())}
+                                onClick={() => openProductModal(product.id)}
                             >
                                 <span>{product.title}</span>
-                                <Image width="97" height="97"
+                                <Image width={100} height={100}
                                     src={"/static/" + product.photo_url}
                                     alt={'Thai Sarong-' + product.title}
                                     sizes="10vw"

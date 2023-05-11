@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
-import { AnyAction } from "redux";
+import { AnyAction } from "@reduxjs/toolkit";
 import { authClose, authLogout, authOpen } from '../redux/features/authReducer'
-import { closeEdit, add2AllClose } from '../redux/features/productsReducer';
-import styles from '../styles/nav.module.scss'
+import { closeEdit, add2AllClose, fetchProducts } from '../redux/features/productsReducer';
+import styles from '@/styles/nav.module.scss';
 import { productsSlice, authSlice } from '../redux/store';
 import LanguagueContext from '../contexts/languagueContext';
 import { withReduxStore } from "../redux/withReduxStore";
@@ -30,12 +30,20 @@ interface SelectChangeEvent extends React.ChangeEvent<HTMLSelectElement> {
 const Nav = (props: any) => {
   const pathname = usePathname();
 
-  const { editShow, add2AllShow } = useSelector(productsSlice);
+  const { editShow, add2AllShow, allProducts } = useSelector(productsSlice);
   const { isAdmin, isAuthenticated } = useSelector(authSlice);
   const dispatch = useDispatch();
 
   const { currentLanguage, setCurrentLanguage } = useContext(LanguagueContext);
 
+  useEffect(() => {
+    console.log("pathname", pathname);
+    dispatch(fetchProducts() as unknown as AnyAction)
+  }, []);
+
+  useEffect(() => {
+    console.log("pathname", pathname);
+  }, [pathname]);
 
   const handleEditClose = () => {
     dispatch(closeEdit())
@@ -131,39 +139,39 @@ const Nav = (props: any) => {
         <div className="flex flex-row flex-nowrap m-0 p-0 px-1 justify-between items-center">
           <ul role="navigation list" className="flex flex-row flex-nowrap h-15 my-1 w-60 justify-items-center items-center " id="mynavbar">
             <li role="listitem" aria-label="home" className="h-14 my-0 mx-1 w-15">
-              <Link className={"font-500 text-black text-center w-13 decoration-none cursor-pointer" + (pathname === '/') ? styles.active : ""} href={'/'}
+              <Link className="cursor-pointer font-500 text-black text-center w-13 decoration-none" href={'/'} //</li>styles.active 
               >
                 <Image className="mx-auto" src={home} width={30} height={30} alt="home" />
-                <span className="link-text" >Home</span>
+                <span className={(pathname == '/') ? "text-[14px] decoration-0 font-bold" : "text-[14px] text-black decoration-0"} >Home</span>
               </Link>
             </li>
             <li id="aboutus" role="listitem" aria-label="about us" className="h-15 my-0 mx-1 w-18">
-              <Link className={" font-500 text-black text-center w-15 decoration-none cursor-pointer " + (pathname === '/aboutus/') ? styles.active : ""}
-                href={{ pathname: "/aboutus/" }} >
+              <Link className=" cursor-pointer font-500 text-black text-center w-15 decoration-none "
+                href={{ pathname: "/aboutus" }} >
                 <span className=" font-500 text-black text-center  min-w-15 decoration-none">
                   <Image className="mx-auto" src={aboutus} width={30} height={30} alt="about us" />
-                  <span className="link-text" >About Us</span>
+                  <span className={(pathname == '/aboutus') ? "text-[14px] decoration-0 font-bold whitespace-nowrap" : "text-[14px] text-black decoration-0"} >About Us</span>
                 </span>
               </Link>
 
             </li>
 
             <li id="productscat" role="listitem" aria-label="product catalog" className="h-15 my-0 mx-1 w-15">
-              <Link className={"cursor-pointer" + (pathname === '/products/') ? styles.active : ""}
-                href={{ pathname: "/products/" }}>
+              <Link className="cursor-pointer"
+                href={{ pathname: "/products" }}>
                 <span className=" font-500 text-black text-center w-13 decoration-none ">
                   <Image className="mx-auto" src={cart} width={30} height={30} alt="product catalog" />
-                  <span className="link-text" >Products</span>
+                  <span className={(pathname == '/products') ? "text-[14px] decoration-0 font-bold" : "text-[14px] text-black decoration-0"} >Products</span>
                 </span>
               </Link>
 
             </li>
             <li id="reviews" role="listitem" aria-label="reviews" className="h-15 my-0 mx-1 w-15">
-              <Link className={"cursor-pointer" + (pathname === '/reviews/') ? styles.active : ""}
-                href={{ pathname: "/reviews/" }}>
+              <Link className="cursor-pointer "
+                href={{ pathname: "/reviews" }}>
                 <span className=" font-500 text-black text-center w-13 decoration-none">
                   <Image className="mx-auto" src={reviews} width={30} height={30} alt="reviews" />
-                  <span className="link-text" >Reviews</span>
+                  <span className={(pathname == '/reviews') ? "text-[14px] decoration-0 font-bold " : "text-[14px] text-black decoration-0"}>Reviews</span>
                 </span>
               </Link>
 

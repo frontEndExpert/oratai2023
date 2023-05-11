@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withReduxStore } from "../redux/withReduxStore";
 import { AnyAction } from "redux";
 import Modal from './UI/Modal'
-import { fetchProducts, updateAllProducts, add2AllOpen, add2AllClose, closeProductPage, openProductPage, closeEdit, updateCurrentProductId, updateCurrentProductGroup, closeAdded } from '../redux/features/productsReducer';
+import { fetchProducts, updateAllProducts, add2AllOpen, add2AllClose, updateCurrentProductGroup, closeProductPage, openProductPage, closeEdit, updateCurrentProductId, closeAdded } from '../redux/features/productsReducer';
 import ProductDisplay from './productDisplay';
 import { auth } from "@/redux/features/authReducer";
 
@@ -18,7 +18,7 @@ const GroupMenu = (props: any) => {
     const [currentGroupId, setCurrentGroupId] = useState("1");
 
     const router = useRouter();
-    const { productAdded, allProducts, currentProductId, loading, prodShow } = useSelector(productsSlice);
+    const { productAdded, allProducts, currentProductId, currentProductGroup, loading, prodShow } = useSelector(productsSlice);
     const { isAdmin } = useSelector(authSlice)
     const dispatch = useDispatch();
 
@@ -31,6 +31,7 @@ const GroupMenu = (props: any) => {
 
     const OpenMenu = (id: string) => {
         setCurrentGroupId(id);
+        dispatch(updateCurrentProductGroup([...allProducts.filter((item) => item.group_id == id)]));
         router.push(`/products/${id}`);
     };
 

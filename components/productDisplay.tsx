@@ -7,7 +7,7 @@ import {
     updateCurrentProductGroup, closeProductPage, closeAdded, add2AllClose
 } from '../redux/features/productsReducer';
 
-import axios from '../config/axios-firebase';
+
 import productGroupData from "../shared/productGroup.json";
 import { isMobile } from 'react-device-detect';
 import styles from '../styles/productDisplay.module.scss'
@@ -43,11 +43,14 @@ const ProductDisplay = (props: Props) => {
     const dispatch = useDispatch();
     const { productAdded, allProducts, currentProductGroup, prodShow, currentProductId, editShow, add2AllShow } = useSelector(productsSlice);
     const { isAuthenticated, isAdmin, loading } = useSelector(authSlice);
+    const [pIndex, setPindex] = useState(0);
+
 
     useEffect(() => {
         if (allProducts.length == 0) {
             dispatch(fetchProducts() as unknown as AnyAction);
         }
+        setPindex(currentProductGroup.findIndex(p => p.id === currentProductId))
     }, []);
 
     useEffect(() => {
@@ -61,20 +64,14 @@ const ProductDisplay = (props: Props) => {
 
     }, [currentProductId, prodShow, allProducts, productAdded]);
 
-    // useEffect(() => {
-    //     setIsAuthenticated(token.length > 0)
-    // }, [token]);
+    useEffect(() => {
+        console.log("currentProductId currentProductGroup1", currentProductId, currentProductGroup)
+        if (currentProductId != "" && currentProductGroup.length > 0) {
+            console.log("currentProductId currentProductGroup2")
+            setPindex(currentProductGroup.findIndex(p => p.id === currentProductId))
+        }
+    }, [currentProductId, currentProductGroup]);
 
-    // componentDidMount() {
-    //     if(props.pin){
-    //         setState({
-    //             currentArrSize: props.currentArrSize,
-    //             current_product_index: props.pin,
-    //             current_product_id: props.pid,
-    //             product: props.currentProductGroup[props.pin]
-    //         })
-    //     }
-    // }
 
     const onError = () => {
         setIsImageError(true)
@@ -87,20 +84,19 @@ const ProductDisplay = (props: Props) => {
     };
 
 
-    // const prevProd = () => {
-    //     if (parseInt(props.pin) >= 1) {
+    const prevProd = () => {
+        if (pIndex >= 1) {
+            dispatch(updateCurrentProductId((currentProductGroup[pIndex - 1].id)));
+            setProduct({ ...currentProductGroup[pIndex - 1] })
+        }
+    };
 
-    //         dispatch(updateCurrentProductId((currentProductGroup[parseInt(props.pin) - 1].id)));
-    //         setProduct({ ...currentProductGroup[parseInt(props.pin) - 1] })
-    //     }
-    // };
-
-    // const nextProd = () => {
-    //     if (parseInt(props.pin) < props.currentArrSize - 1) {
-    //         dispatch(updateCurrentProductId((currentProductGroup[parseInt(props.pin) + 1].id)));
-    //         setProduct({ ...currentProductGroup[parseInt(props.pin) + 1] })
-    //     }
-    // };
+    const nextProd = () => {
+        if (pIndex < currentProductGroup.length - 1) {
+            dispatch(updateCurrentProductId((currentProductGroup[pIndex + 1].id)));
+            setProduct({ ...currentProductGroup[pIndex + 1] })
+        }
+    };
 
     const handleDelProd = (pid: string) => {
         dispatch(delProduct(pid) as unknown as AnyAction)
@@ -124,15 +120,15 @@ const ProductDisplay = (props: Props) => {
             style={{ visibility: prodShow ? 'visible' : 'hidden' }}
             className={styles.productDetailsContainer}>
 
-            {/*<div className={styles.productPager}>
-                <button className={(parseInt(currentProductId) >= 1) ? styles.active : styles.disabled}
+            <div className={styles.productPager}>
+                <button className={(pIndex > 0) ? styles.active : styles.disabled}
                     onClick={() => prevProd()}> <span className="glyphicon glyphicon-arrow-left"></span>
                     {isMobile ? "" : "Previous Product"}
                 </button>
                 <span className="grouptitle">Group: {productGroupData[parseInt(product.group_id) - 1].title}</span>
-                <button className={(parseInt(props.pin) < props.currentArrSize - 1) ? styles.active : styles.disabled}
+                <button className={(pIndex < currentProductGroup.length - 1) ? styles.active : styles.disabled}
                     onClick={() => nextProd()}>{isMobile ? "" : "Next Product"}<span className="glyphicon glyphicon-arrow-right"></span></button>
-</div>*/}
+            </div>
 
             {(isAdmin === true)
                 ? <div className={styles.adminbtn}>

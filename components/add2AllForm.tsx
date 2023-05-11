@@ -203,9 +203,6 @@ const Add2AllForm = (props: any) => {
             }
             setProdForm({ ...updatedProductForm });
             setFormIsValid(formIsValid);
-            // let data = new FormData();
-            // data.append('file', file);
-            // axios.post('/files', data)...
         }
     }
 

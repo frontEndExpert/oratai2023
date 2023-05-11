@@ -5,8 +5,8 @@ import Reviews from '../../../components/Reviews'
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "About Orataiphathai Thai Sarong",
-  description: "Everything you need to know about OraTai Thai Sarong website: how to get the most out of our website or contact us with any question.",
+  title: "Reviews For Orataiphathai Thai Sarong",
+  description: "Customers reviews of our service and reviews of some of our customers and the possibilities of end products from our Thai Sarong fabric.",
 };
 
 

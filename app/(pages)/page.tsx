@@ -4,8 +4,8 @@ import { Metadata } from 'next';
 
 
 export const metadata: Metadata = {
-  title: "About Orataiphathai Thai Sarong",
-  description: "Everything you need to know about OraTai Thai Sarong website: how to get the most out of our website or contact us with any question.",
+  title: "Orataiphathai Thai Sarong",
+  description: "Procutment service for Thai Sarong fabric: We find the pattern of your choice at wholesale prices and ship it to you oversea. You can browse our catalog to get idea of the past patterns as they always evolve. Contact us for more information.",
 };
 
 export default function Page() {
