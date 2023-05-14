@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import Image from 'next/image';
-import _ from "lodash";
 import type { Product } from "../redux/features/productsReducer";
 import LanguagueContext from '../contexts/languagueContext';
 import { fetchProducts, updateAllProducts, add2AllOpen, openAdded, add2AllClose, closeProductPage, openProductPage, closeEdit, updateCurrentProductId, updateCurrentProductGroup, closeAdded } from '../redux/features/productsReducer';
@@ -22,7 +21,7 @@ const ProductsGroup = (props: { groupid: string }) => {
     //const currentLanguage = "en"
     const dispatch = useDispatch();
 
-    const t = useCallback((key: string) => { return useTranslations(currentLanguage).t(key) }, [currentLanguage, useTranslations]);
+    const { t } = useTranslations(currentLanguage);
 
     useEffect(() => {
         if (allProducts.length == 0) {
@@ -42,7 +41,6 @@ const ProductsGroup = (props: { groupid: string }) => {
 
     useEffect(() => {
         if (productAdded) {
-            console.log("productGroup fetchProducts",)
             dispatch(fetchProducts() as unknown as AnyAction);
             dispatch(openAdded() as unknown as AnyAction)
         }
@@ -51,7 +49,6 @@ const ProductsGroup = (props: { groupid: string }) => {
     const openProductModal = (pid: string) => {
         dispatch(updateCurrentProductId(pid))
         let p_in = currentProductGroup.findIndex(product => product.id == pid);
-        console.log("p_in", p_in)
         setPin(p_in);
         dispatch(openProductPage());
     };

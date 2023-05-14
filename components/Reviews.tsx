@@ -5,12 +5,11 @@ import useTranslations from '../hooks/useTranslations'
 import Image from 'next/image';
 // import { LanguagueContextProvider } from '../contexts/languagueContext'
 import LanguagueContext from '../contexts/languagueContext';
-import styles from '../styles/reviews.module.css';
+import styles from '../styles/reviews.module.scss';
 
 const Reviews = (props: any) => {
     const { currentLanguage } = useContext(LanguagueContext);
-    const t = useCallback((key: string) => { return useTranslations(currentLanguage).t(key) }, [currentLanguage, useTranslations]);
-    //    <LanguagueContextProvider></LanguagueContextProvider>
+    const { t } = useTranslations(currentLanguage);
 
     return (
         <>

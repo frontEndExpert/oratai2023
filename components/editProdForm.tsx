@@ -3,17 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AnyAction } from "redux";
-import Button from './UI/Button';
 import Input from './UI/Input';
 import { fetchProducts, closeEdit, editProduct, closeAdded, openAdded } from '../redux/features/productsReducer';
 import type { Product, FireProduct } from '../redux/features/productsReducer';
-
 import { productsSlice, authSlice } from '../redux/store';
-import type { RootState } from '../redux/store';
 import { updateObject, checkValidity } from '../shared/utility';
-import update from 'immutability-helper';
 import productGroupData from '../shared/productGroup.json';
-import _ from 'lodash';
 import type { FormElementConfig } from '../shared/types';
 
 type ProductForm = {
@@ -163,19 +158,11 @@ const EditProdForm = (props: any) => {
                 setProductArray(allProducts, currentProductId)
             }
         };
-    }, [currentProductId, editShow]);
+    }, [currentProductId, editShow, allProducts, productId]);
 
     useEffect(() => {
         setProductArray(allProducts, currentProductId)
-    }, [allProducts, productId]);
-
-    // useEffect(() => {
-    //     if (productAdded) {
-    //         console.log("editProdForm fetchProducts")
-    //         dispatch(fetchProducts() as unknown as AnyAction);
-    //         dispatch(openAdded() as unknown as AnyAction)
-    //     }
-    // }, [productAdded]);
+    }, [allProducts, currentProductId]);
 
 
     function setProductArray(productArray: Product[], prodId: string) {
@@ -216,13 +203,11 @@ const EditProdForm = (props: any) => {
         dispatch(editProduct({ id: productId, fireProduct: { ...formData } } as { id: string, fireProduct: FireProduct }) as unknown as AnyAction);
         dispatch(openAdded());
         if (productAdded) {
-            console.log("editProdForm productHandler fetchProducts")
             dispatch(fetchProducts() as unknown as AnyAction);
 
             setProductArray(allProducts, productId)
         }
         dispatch(closeEdit());
-        // form.reset();
         setProdForm(initialState.productForm);
         setFormIsValid(initialState.formIsValid);
         setCurrentProduct(initialState.currentProduct);

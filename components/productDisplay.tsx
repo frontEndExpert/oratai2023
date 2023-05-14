@@ -1,22 +1,16 @@
+'use client';
+
 import React, { useState, useEffect, use } from 'react';
 import Image from 'next/image';
 import { useSelector, useDispatch } from 'react-redux';
 import { AnyAction } from 'redux';
-import {
-    delProduct, fetchProducts, openEdit, closeEdit, updateCurrentProductId,
-    updateCurrentProductGroup, closeProductPage, closeAdded, add2AllClose
-} from '../redux/features/productsReducer';
-
-
+import { delProduct, fetchProducts, openEdit, updateCurrentProductId, closeProductPage } from '../redux/features/productsReducer';
 import productGroupData from "../shared/productGroup.json";
 import { isMobile } from 'react-device-detect';
 import styles from '../styles/productDisplay.module.scss'
-import * as _ from 'lodash';
 import { productsSlice, authSlice } from '../redux/store';
 import type { Product } from "../redux/features/productsReducer";
-import EditModal from "./UI/EditModal";
-import EditProdForm from "./editProdForm";
-import Add2AllForm from "./add2AllForm";
+
 
 type Props = {
     prodShow?: boolean;
@@ -34,10 +28,16 @@ interface InputChangeEvent extends React.ChangeEvent<HTMLInputElement> {
 
 const ProductDisplay = (props: Props) => {
     const [formIsValid, setFormIsValid] = useState(true);
-    //const [isAuthenticated, setIsAuthenticated] = useState(false);
-    //const [current_product_index, setCurrent_product_index] = useState(null);
-    //const [current_product_id, setCurrent_product_id] = useState(null);
-    const [product, setProduct] = useState<Product>();
+    const [product, setProduct] = useState<Product>({
+        id: "",
+        title: "",
+        description: "",
+        pattern_id: "",
+        retail_price: "",
+        wholesale_price: "",
+        photo_url: "",
+        group_id: "",
+    });
     const [isImageError, setIsImageError] = useState(false);
 
     const dispatch = useDispatch();
@@ -50,12 +50,21 @@ const ProductDisplay = (props: Props) => {
         if (allProducts.length == 0) {
             dispatch(fetchProducts() as unknown as AnyAction);
         }
-        setPindex(currentProductGroup.findIndex(p => p.id === currentProductId))
+        setPindex(currentProductGroup.findIndex((p: Product) => p.id === currentProductId))
     }, []);
 
     useEffect(() => {
         if (prodShow && currentProductId != "") {
-            const temp = allProducts.find((p: Product) => p.id === props.pid)
+            const temp = allProducts.find((p: Product) => p.id === props.pid) || {
+                id: "",
+                title: "",
+                description: "",
+                pattern_id: "",
+                retail_price: "",
+                wholesale_price: "",
+                photo_url: "",
+                group_id: ""
+            }
             setProduct(temp);
         }
         if (prodShow === false) {
@@ -66,7 +75,7 @@ const ProductDisplay = (props: Props) => {
 
     useEffect(() => {
         if (currentProductId != "" && currentProductGroup.length > 0) {
-            setPindex(currentProductGroup.findIndex(p => p.id === currentProductId))
+            setPindex(currentProductGroup.findIndex((p: Product) => p.id === currentProductId))
         }
     }, [currentProductId, currentProductGroup]);
 
@@ -99,22 +108,15 @@ const ProductDisplay = (props: Props) => {
     const handleDelProd = (pid: string) => {
         dispatch(delProduct(pid) as unknown as AnyAction)
         dispatch<any>(fetchProducts())
-        // props.modalClose();
     };
 
     const handleEditProd = (pid: string) => {
         dispatch(openEdit(pid));
     };
 
-    // const handleEditClose = () => {
-    //     dispatch(closeEdit())
-    // };
-
     // onError={(event: InputChangeEvent) => {event.target.src="/static/colors1.jpg"}}
-    // current_product_index = props.pin,
-
     return <>
-        {!_.isEmpty(product) && <div key={product.id}
+        {product.id != "" && <div key={product.id}
             style={{ visibility: prodShow ? 'visible' : 'hidden' }}
             className={styles.productDetailsContainer}>
 

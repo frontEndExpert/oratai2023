@@ -2,8 +2,14 @@
 
 import React from 'react';
 import { createSlice, createAsyncThunk, ActionReducerMapBuilder, PayloadAction } from "@reduxjs/toolkit";
+import type { Dispatch } from '@reduxjs/toolkit';
+import { AppDispatch } from '../store';
 import firebase from 'firebase/app';
 import "firebase/database";
+import { RootState } from '../store';
+import { ThunkApiMetaConfig } from '@reduxjs/toolkit/dist/query/core/buildThunks';
+import { BaseThunkAPI } from '@reduxjs/toolkit/dist/createAsyncThunk';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyDW7ozYaZ9Z8_6pqHnyeVIJFNgwEkKrD_A",
@@ -19,6 +25,36 @@ if (!firebase.apps.length) {
 }
 // Initialize Realtime Database and get a reference to the service
 const database = firebase.database();
+
+type AsyncThunkConfig = {
+  /** return type for `thunkApi.getState` */
+  state?: RootState
+  /** type for `thunkApi.dispatch` */
+  dispatch?: Dispatch
+  /** type of the `extra` argument for the thunk middleware, which will be passed in as `thunkApi.extra` */
+  extra?: unknown
+  /** type to be passed into `rejectWithValue`'s first argument that will end up on `rejectedAction.payload` */
+  rejectValue?: unknown
+  /** return type of the `serializeError` option callback */
+  serializedErrorType?: unknown
+  /** type to be returned from the `getPendingMeta` option callback & merged into `pendingAction.meta` */
+  pendingMeta?: unknown
+  /** type to be passed into the second argument of `fulfillWithValue` to finally be merged into `fulfilledAction.meta` */
+  fulfilledMeta?: unknown
+  /** type to be passed into the second argument of `rejectWithValue` to finally be merged into `rejectedAction.meta` */
+  rejectedMeta?: unknown
+}
+
+// interface ThunkAPI<ReturnValue = any, State = RootState, ExtraArgument = any, SerializedErrorType = {}> {
+//   dispatch: (action: PayloadAction) => Promise<ReturnValue>;
+//   getState: () => State;
+//   extra: ExtraArgument;
+//   requestId: string;
+//   signal: AbortSignal;
+//   rejectWithValue: (
+//       value: SerializedErrorType | ReturnType<SerializedError['toString']>,
+//   ) => Promise<ReturnValue>;
+// }
 
 export type Product = {
   id: string;
@@ -58,10 +94,10 @@ export type ProductReducer = {
   pathname: string;
 }
 
-
-export const fetchProducts = createAsyncThunk<Promise<Product[] | Object>, void, { rejectValue: string }>(
+//<Promise<Product[] | Object>, void, ThunkAPI>
+export const fetchProducts = createAsyncThunk<Product[], void, any>(
   'products/fetchProducts',
-  async (_, thunkAPI): Promise<Product[] | Object> => {
+  async (_, thunkAPI: any): Promise<any> => {
     let fetchedProducts: Product[] = [];
     try {
       database.ref('allProducts').on('value', (snapshot) => {
@@ -85,7 +121,7 @@ export const fetchProducts = createAsyncThunk<Promise<Product[] | Object>, void,
 
 export const addProduct = createAsyncThunk(
   'products/addProduct',
-  async (product: FireProduct, thunkAPI) => {
+  async (product: FireProduct, thunkAPI: any) => {
     try {
       const ref = database.ref('allProducts');
       const newProductRef = ref.push();
@@ -113,7 +149,7 @@ export const addProduct = createAsyncThunk(
 
 export const delProduct = createAsyncThunk(
   'products/delProduct',
-  async (id: string, thunkAPI) => {
+  async (id: string, thunkAPI: any) => {
     try {
       if (!id) {
         throw new Error('id of product is invalid or missing')
@@ -132,7 +168,7 @@ export const delProduct = createAsyncThunk(
 
 export const editProduct = createAsyncThunk(
   'products/editProduct',
-  async (productObj: { id: string, fireProduct: FireProduct }, thunkAPI) => {
+  async (productObj: { id: string, fireProduct: FireProduct }, thunkAPI: any) => {
 
     var updates: { [key: string]: FireProduct } = {};
     updates['/allProducts/' + productObj.id] = productObj.fireProduct;
@@ -172,100 +208,100 @@ export const productsReducer = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    add2AllOpen: (state) => {
+    add2AllOpen: (state: ProductReducer) => {
       state.add2AllShow = true;
     },
-    add2AllClose: (state) => {
+    add2AllClose: (state: ProductReducer) => {
       state.add2AllShow = false;
     },
-    openProductPage: (state) => {
+    openProductPage: (state: ProductReducer) => {
       state.prodShow = true;
     },
-    closeProductPage: (state) => {
+    closeProductPage: (state: ProductReducer) => {
       state.prodShow = false;
     },
-    openEdit: (state, action: PayloadAction<string>) => {
+    openEdit: (state: ProductReducer, action: PayloadAction<string>) => {
       state.currentProductId = action.payload;
       state.editShow = true;
     },
-    closeEdit: (state) => {
+    closeEdit: (state: ProductReducer) => {
       state.editShow = false;
     },
-    updateCurrentProductId: (state, action: PayloadAction<string>) => {
+    updateCurrentProductId: (state: ProductReducer, action: PayloadAction<string>) => {
       state.currentProductId = action.payload;
     },
-    updateCurrentProductGroup: (state, action: PayloadAction<Product[]>) => {
+    updateCurrentProductGroup: (state: ProductReducer, action: PayloadAction<Product[]>) => {
       state.currentProductGroup = action.payload;
       state.loading = false;
     },
-    changeLanguages: (state, action: PayloadAction<string>) => {
+    changeLanguages: (state: ProductReducer, action: PayloadAction<string>) => {
       state.currentLanguage = action.payload
     },
-    updateAllProducts: (state, action: PayloadAction<Product[]>) => {
+    updateAllProducts: (state: ProductReducer, action: PayloadAction<Product[]>) => {
       state.allProducts = action.payload;
     },
-    closeAdded: (state) => {
+    closeAdded: (state: ProductReducer) => {
       state.productAdded = false
     },
-    openAdded: (state) => {
+    openAdded: (state: ProductReducer) => {
       state.productAdded = true;
     },
-    setPathname: (state, action: PayloadAction<string>) => {
+    setPathname: (state: ProductReducer, action: PayloadAction<string>) => {
       state.pathname = action.payload;
     },
-    setgFormIsValid: (state, action: PayloadAction<boolean>) => {
+    setgFormIsValid: (state: ProductReducer, action: PayloadAction<boolean>) => {
       state.globalformIsValid = action.payload;
     },
   },
   extraReducers: (builder: ActionReducerMapBuilder<ProductReducer>) => {
-    builder.addCase(fetchProducts.pending, (state) => {
+    builder.addCase(fetchProducts.pending, (state: ProductReducer) => {
       state.loading = true;
     }),
-      builder.addCase(fetchProducts.fulfilled, (state, action) => {
+      builder.addCase(fetchProducts.fulfilled, (state: ProductReducer, action: PayloadAction<Product[]>) => {
         state.allProducts = action.payload as unknown as Product[];
         state.loading = false;
       }),
-      builder.addCase(fetchProducts.rejected, (state, action) => {
-        state.error = action.payload ? action.payload.toString() : action.error.toString();
+      builder.addCase(fetchProducts.rejected, (state: ProductReducer, action: PayloadAction<any>) => {
+        state.error = action.payload; //? action.payload.toString() : action.error.toString();
         state.loading = false;
       });
-    builder.addCase(editProduct.pending, (state) => {
+    builder.addCase(editProduct.pending, (state: ProductReducer) => {
       state.productAdded = false;
       state.loading = true;
     }),
-      builder.addCase(editProduct.fulfilled, (state) => {
+      builder.addCase(editProduct.fulfilled, (state: ProductReducer) => {
         state.productAdded = true;
         state.loading = false;
       }),
-      builder.addCase(editProduct.rejected, (state, action) => {
-        state.error = action.payload ? action.payload.toString() : action.error.toString();
+      builder.addCase(editProduct.rejected, (state: ProductReducer, action: PayloadAction<any>) => {
+        state.error = action.payload; //? action.payload.toString() : action.error.toString();
       }),
-      builder.addCase(addProduct.pending, (state, action) => {
+      builder.addCase(addProduct.pending, (state: ProductReducer) => {
         state.productAdded = false;
         state.loading = true;
       }),
-      builder.addCase(addProduct.fulfilled, (state, action) => {
+      builder.addCase(addProduct.fulfilled, (state: ProductReducer) => {
         state.productAdded = true;
         state.loading = false;
         state.add2AllShow = false
       }),
-      builder.addCase(addProduct.rejected, (state, action) => {
-        state.error = action.error.toString();
+      builder.addCase(addProduct.rejected, (state: ProductReducer, action: PayloadAction<any>) => {
+        state.error = action.payload.error;
         state.productAdded = false;
         state.loading = false;
       }),
-      builder.addCase(delProduct.pending, (state) => {
+      builder.addCase(delProduct.pending, (state: ProductReducer) => {
         state.loading = true;
         state.productAdded = false;
       }),
-      builder.addCase(delProduct.fulfilled, (state) => {
+      builder.addCase(delProduct.fulfilled, (state: ProductReducer) => {
         state.loading = false;
         state.productAdded = true;
         state.editShow = false;
         state.prodShow = false;
       }),
-      builder.addCase(delProduct.rejected, (state) => {
-        state.error = "" // action.payload ? action.payload.toString() : action.error.toString();
+      builder.addCase(delProduct.rejected, (state: ProductReducer) => {
+        state.error = ""
         state.loading = false;
       })
   }

@@ -2,7 +2,7 @@
 import React from 'react';
 import AboutUs from '../../components/AboutUs'
 import { Metadata } from 'next';
-import styles from '../../styles/privacy.module.css';
+import styles from '../../styles/privacy.module.scss';
 
 export const metadata: Metadata = {
   title: "Orataiphathai Thai Sarong - Privacy Policy",

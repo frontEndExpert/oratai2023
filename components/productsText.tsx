@@ -9,7 +9,7 @@ const ProductsText = () => {
     const [revealText, setRevealText] = useState(false);
 
     const { currentLanguage } = useContext(LanguagueContext);
-    const t = useCallback((key: string) => { return useTranslations(currentLanguage).t(key) }, [currentLanguage, useTranslations]);
+    const { t } = useTranslations(currentLanguage);
 
 
     const toggleText = () => {

@@ -37,12 +37,10 @@ const Nav = (props: any) => {
   const { currentLanguage, setCurrentLanguage } = useContext(LanguagueContext);
 
   useEffect(() => {
-    console.log("pathname", pathname);
     dispatch(fetchProducts() as unknown as AnyAction)
   }, []);
 
   useEffect(() => {
-    console.log("pathname", pathname);
   }, [pathname]);
 
   const handleEditClose = () => {

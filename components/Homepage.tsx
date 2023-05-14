@@ -3,12 +3,7 @@
 import React, { useContext, useEffect, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import useTranslations from '../hooks/useTranslations'
-//import { useSelector, useDispatch  } from 'react-redux';
-import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import Image from 'next/image';
-import { productsSlice, authSlice } from '../redux/store';
-import ReactPlayer from "react-player/lazy";
-import YouTube from 'react-youtube';
 import LanguagueContext from '../contexts/languagueContext';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
@@ -16,26 +11,29 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 
 const Homepage = (props: any) => {
     const { currentLanguage } = useContext(LanguagueContext);
-
-    const t = useCallback((key: string) => { return useTranslations(currentLanguage).t(key) }, [currentLanguage, useTranslations]);
-
-    useEffect(() => {
-        console.log("homepage currentLanguage", currentLanguage, t("homepage:focus"));
-
-    }, [currentLanguage]);
+    const { t } = useTranslations(currentLanguage);
 
     const handleDragStart = (e: any) => e.preventDefault();
 
     const items = [
-        <img src="/static/slider/slider-0001.jpg" onDragStart={handleDragStart} role="presentation" alt="thailand sarong wholesale" />,
-        <img src="/static/slider/slider-0002.jpg" onDragStart={handleDragStart} role="presentation" alt="thai sarong wholesale תאי סארונג בעברית" />,
-        <img src="/static/slider/slider-0003.jpg" onDragStart={handleDragStart} role="presentation" alt="thai sarong wholesale תאי סארונג בעברית" />,
-        <img src="/static/slider/slider-0004.jpg" onDragStart={handleDragStart} role="presentation" alt="thailand sarong wholesale" />,
-        <img src="/static/slider/slider-0005.jpg" onDragStart={handleDragStart} role="presentation" alt="thai sarong wholesale תאי סארונג בעברית" />,
-        <img src="/static/slider/slider-0006.jpg" onDragStart={handleDragStart} role="presentation" alt="thai sarong wholesale תאי סארונג בעברית" />,
-        <img src="/static/slider/slider-0007.jpg" onDragStart={handleDragStart} role="presentation" alt="thailand sarong wholesale" />,
-
+        <Image src="/static/slider/slider-0001.jpg"
+            className="h-auto mx-auto my-0 w-120"
+            width={800} height={500}
+            onDragStart={handleDragStart} key="1"
+            role="presentation"
+            alt="thailand sarong wholesale" />,
+        <Image width={800} height={500} src="/static/slider/slider-0002.jpg" className="h-auto mx-auto my-0 w-120" onDragStart={handleDragStart} key="2" role="presentation" alt="thai sarong wholesale תאי סארונג בעברית" />,
+        <Image width={800} height={500} src="/static/slider/slider-0003.jpg" className="h-auto mx-auto my-0 w-120" onDragStart={handleDragStart} key="3" role="presentation" alt="thai sarong wholesale תאי סארונג בעברית" />,
+        <Image width={800} height={500} src="/static/slider/slider-0004.jpg" className="h-auto mx-auto my-0 w-120" onDragStart={handleDragStart} key="4" role="presentation" alt="thailand sarong wholesale" />,
+        <Image width={800} height={500} src="/static/slider/slider-0005.jpg" className="h-auto mx-auto my-0 w-120" onDragStart={handleDragStart} key="5" role="presentation" alt="thai sarong wholesale תאי סארונג בעברית" />,
+        <Image width={800} height={500} src="/static/slider/slider-0006.jpg" className="h-auto mx-auto my-0 w-120" onDragStart={handleDragStart} key="6" role="presentation" alt="thai sarong wholesale תאי סארונג בעברית" />,
+        <Image width={800} height={500} src="/static/slider/slider-0007.jpg" className="h-auto mx-auto my-0 w-120" onDragStart={handleDragStart} key="7" role="presentation" alt="thailand sarong wholesale" />,
+        <Image width={800} height={500} src="/static/slider/slider-0008.jpg" className="h-auto mx-auto my-0 w-120" onDragStart={handleDragStart} key="7" role="presentation" alt="thailand sarong wholesale" />,
+        <Image width={800} height={500} src="/static/slider/slider-0009.jpg" className="h-auto mx-auto my-0 w-120" onDragStart={handleDragStart} key="7" role="presentation" alt="thailand sarong wholesale" />,
+        <Image width={800} height={500} src="/static/slider/slider-0010.jpg" className="h-auto mx-auto my-0 w-120" onDragStart={handleDragStart} key="7" role="presentation" alt="thailand sarong wholesale" />,
+        <Image width={800} height={500} src="/static/slider/slider-0011.jpg" className="h-auto mx-auto my-0 w-120" onDragStart={handleDragStart} key="7" role="presentation" alt="thailand sarong wholesale" />
     ];
+
 
     return (
         <div className='container bg-black h-full m-0 text-white w-full p-20px home relative'>
@@ -65,43 +63,26 @@ const Homepage = (props: any) => {
 
                 </div>
                 <AliceCarousel mouseTracking items={items} />
-                {/* <Swiper>
-                    <div><Image src="/static/slider/slider-0001.jpg" className="h-auto mx-auto my-0 w-120 " width={480} height={300} priority={true} alt="Oratai Phathai Thai Sarong fabric" /></div>
-                    <div><Image src="/static/slider/slider-0002.jpg" className="h-auto mx-auto my-0 w-120" width={480} height={300}
-                        priority={true} alt="Oratai Phathai thai sarong wholesale" /></div>
-                    <div><Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0003.jpg" width={480} height={300} alt="thailand sarong wholesale" priority={true} /></div>
-                    <div><Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0003.jpg" width={480} height={300} alt="thailand sarong wholesale" priority={true} /></div>
-                    <div><Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0003.jpg" width={480} height={300} alt="thailand sarong wholesale" priority={true} /></div>
-                    <div><Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0003.jpg" width={480} height={300} alt="thailand sarong wholesale" priority={true} /></div>
-                    <div><Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0003.jpg" width={480} height={300} alt="thailand sarong wholesale" priority={true} /></div>
-                    <div><Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0004.jpg" width={480} height={300} alt="Oratai Phathai thailand sarong wholesale" priority={true} /></div>
-                    <div><Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0005.jpg" width={480} height={300} alt="Oratai Phathai Thai Sarong" priority={true} /></div>
-                    <div><Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0006.jpg" width={480} height={300} alt="Oratai Phathai Thai Sarong" priority={true} /></div>
-                    <div><Image className="h-auto mx-auto my-0 w-120" src="/static/slider/slider-0007.jpg" width={480} height={300} alt="Oratai Phathai Thai Sarong" priority={true} /></div>
-                </Swiper> */}
             </div>
 
             <div className='flex flex-row flex-nowrap m-10 text-center gap-3 ads '>
                 <Image className="h-auto hebrew-img"
                     src="/static/thaisarong1.png "
-                    width={530} height={520}
+                    width={550} height={520}
                     alt="thai sarong wholesale תאי סארונג בעברית" />
-                <div className="flex flex-col flex-wrap gap-3">
-                    <Image className="h-auto"
-                        src="/static/normal-sarong-0007.jpg"
-                        width={530} height={300}
-                        alt="thai sarong wholesale תאי סארונג בעברית" />
-                    <Image className="h-auto"
-                        src="/static/batik-video.png"
-                        width={500} height={300}
-                        alt="thai sarong wholesale תאי סארונג בעברית" />
-                </div>
+
+                <video
+                    className="h-auto w-full z-2 relative sm:w-150"
+                    src="/static/batik.mp4"
+                    autoPlay
+                    controls
+                >
+                </video>
+
             </div>
-        </div>
+        </div >
 
     )
 }
 
-
 export default Homepage;
-

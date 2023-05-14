@@ -6,15 +6,12 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import "firebase/database";
 
-// import { RejectedActionFromAsyncThunk } from '@reduxjs/toolkit/dist/matchers';
-
 
 export type AuthState = {
     isAuthenticated: boolean;
     userId: string;
     error: string;
     loading: boolean;
-    authRedirectPath: string;
     authShow: boolean;
     isAdmin: boolean;
     userDetails: any;
@@ -28,7 +25,6 @@ const initialState = {
     userId: "",
     error: "",
     loading: false,
-    authRedirectPath: '/',
     authShow: false,
     isAdmin: false,
     userDetails: null,
@@ -55,7 +51,8 @@ const database = firebase.database();
 
 export const auth = createAsyncThunk(
     'auth/auth',
-    async (emailObj: { email: string, password: string, isSignup: boolean }, { dispatch }) => {
+    async (emailObj: { email: string, password: string, isSignup: boolean }, thunkAPI: any) => {
+        const { dispatch } = thunkAPI
         const { email, password, isSignup } = emailObj;
 
         try {
@@ -76,7 +73,6 @@ export const auth = createAsyncThunk(
                 if (userCredential.user) {
                     const uid = userCredential.user.uid;
                     const isAdmin = await dispatch(getisAdmin(uid)).unwrap();
-                    console.log("isAdmin", isAdmin);
                     userData.localId = uid;
                     userData.email = email;
                     userData.isAuthenticated = true;
@@ -97,15 +93,15 @@ export const auth = createAsyncThunk(
 );
 
 
-export const getisAdmin = createAsyncThunk<boolean, string, { rejectValue: string }>(
+export const getisAdmin = createAsyncThunk(
     'auth/getisAdmin',
-    async (uid, { rejectWithValue, fulfillWithValue, getState }) => {
+    async (uid: string, thunkAPI: any) => {
+        const { rejectWithValue, fulfillWithValue } = thunkAPI;
         let isAdmin = false;
         try {
             await firebase.database().ref('users/' + uid).once('value').then((snapshot) => {
                 isAdmin = snapshot.val().isAdmin
             })
-            //console.log("isAdmin", isAdmin)
             return fulfillWithValue(isAdmin)
         }
         catch (error: any) {
@@ -118,9 +114,10 @@ export const getisAdmin = createAsyncThunk<boolean, string, { rejectValue: strin
     }
 );
 
-export const authLogout = createAsyncThunk<void, void, { rejectValue: string }>(
+export const authLogout = createAsyncThunk<void, void, any>(
     'auth/authLogout',
-    async (_, { rejectWithValue }) => {
+    async (_: void, thunkAPI: any) => {
+        const { rejectWithValue } = thunkAPI;
         try {
             await firebase.auth().signOut();
             console.log('User signed out');
@@ -136,59 +133,53 @@ const authReducer = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        // setToken: (state, action) => {
-        //     state.token = action.payload;
-        // },
         authOpen: (state: AuthState) => {
             state.authShow = true;
             state.loading = false;
         },
-        authClose: (state) => {
+        authClose: (state: AuthState) => {
             state.authShow = false;
             state.loading = true;
         },
-        setAuthRedirectPath: (state, action: PayloadAction<string>) => {
-            state.authRedirectPath = action.payload;
-        },
     },
     extraReducers: (builder: ActionReducerMapBuilder<AuthState>) => {
-        builder.addCase(auth.pending, (state) => {
+        builder.addCase(auth.pending, (state: AuthState) => {
             state.error = "";
             state.loading = true;
         }),
-            builder.addCase(auth.fulfilled, (state, action) => {
+            builder.addCase(auth.fulfilled, (state: AuthState, action: PayloadAction<any>) => {
                 state.isAuthenticated = true;
                 state.userId = action.payload.localId;
                 state.error = "";
                 state.isAdmin = action.payload.isAdmin;
                 state.loading = false;
             }),
-            builder.addCase(auth.rejected, (state, action: any) => {
+            builder.addCase(auth.rejected, (state: AuthState, action: PayloadAction<any>) => {
                 state.error = action.payload.toString();
                 state.isAuthenticated = false;
                 state.isAdmin = false;
             }),
 
-            builder.addCase(getisAdmin.pending, (state) => {
+            builder.addCase(getisAdmin.pending, (state: AuthState) => {
                 state.error = "";
                 state.loading = true;
             }),
-            builder.addCase(getisAdmin.fulfilled, (state, action) => {
+            builder.addCase(getisAdmin.fulfilled, (state: AuthState, action: PayloadAction<boolean>) => {
                 state.isAdmin = action.payload;
                 state.error = "";
                 state.loading = false;
             }),
-            builder.addCase(getisAdmin.rejected, (state, action: any) => {
+            builder.addCase(getisAdmin.rejected, (state: AuthState, action: any) => {
                 state.isAdmin = false;
                 state.error = action.payload.toString();
                 state.loading = false;
             })
 
-        builder.addCase(authLogout.pending, (state) => {
+        builder.addCase(authLogout.pending, (state: AuthState) => {
             state.error = "";
             state.loading = true;
         }),
-            builder.addCase(authLogout.fulfilled, (state, action) => {
+            builder.addCase(authLogout.fulfilled, (state: AuthState) => {
                 console.log('User signed out');
                 state.isAuthenticated = false;
                 state.userId = "";
@@ -196,13 +187,13 @@ const authReducer = createSlice({
                 state.error = "";
                 state.loading = false;
             }),
-            builder.addCase(authLogout.rejected, (state, action: any) => {
+            builder.addCase(authLogout.rejected, (state: AuthState, action: PayloadAction<any>) => {
                 state.error = action.payload.toString();
             })
     }
 })
 
 
-export const { authOpen, authClose, setAuthRedirectPath } = authReducer.actions;
+export const { authOpen, authClose } = authReducer.actions;
 
 export default authReducer.reducer;

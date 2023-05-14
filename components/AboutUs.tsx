@@ -3,14 +3,12 @@
 import React, { useContext, useCallback } from 'react';
 import Image from 'next/image';
 import useTranslations from '../hooks/useTranslations';
-import { useSelector } from 'react-redux';
-//import { productsSlice } from '../redux/store';
-import styles from '../styles/aboutus.module.css'
+import styles from '../styles/aboutus.module.scss'
 import LanguagueContext from '../contexts/languagueContext';
 
 const AboutUs = (props: any) => {
     const { currentLanguage } = useContext(LanguagueContext);
-    const t = useCallback((key: string) => { return useTranslations(currentLanguage).t(key) }, [currentLanguage, useTranslations]);
+    const { t } = useTranslations(currentLanguage);
 
     return (
         <div className="mainbody" dir={currentLanguage == "he" ? "rtl" : "ltr"}>

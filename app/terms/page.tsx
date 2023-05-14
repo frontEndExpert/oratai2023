@@ -1,7 +1,7 @@
 import React from 'react';
 import AboutUs from '../../components/AboutUs'
 import { Metadata } from 'next';
-import styles from '../../styles/terms.module.css';
+import styles from '../../styles/terms.module.scss';
 
 export const metadata: Metadata = {
   title: "Orataiphathai Thai Sarong - Terms of Use",

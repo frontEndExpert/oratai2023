@@ -13,13 +13,14 @@ export const metadata = {
     },
   ],
   creator: "Aylon-Spigel",
+  metadataBase: new URL("https://orataiphathai.work/static"),
   openGraph: {
     title: "OraTai PhaThai wholesale Thai Sarong Fabric",
     description: "OraTai PhaThai Page",
     url: 'http://www.orataiphathai.work',
     images: [
       {
-        url: 'https://orataiphathai.work/static/slider/slider-0003.jpg',
+        url: './slider/slider-0003.jpg',
         width: 800,
         height: 600
       }
@@ -30,30 +31,28 @@ export const metadata = {
     card: "summary_large_image",
     images: [
       {
-        url: 'https://orataiphathai.work/static/slider/slider-0003.jpg',
+        url: './slider/slider-0003.jpg',
         width: 1200,
         height: 630
       }
     ]
   },
-  icons: {
-    icon: '../public/static/favicon.ico',
-  },
+  // icons: {
+  //   icon: '../public/static/favicon.ico',
+  // },
   robots: {
     index: true
   }
 }
-
-{/* <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-        <Script type="text/javascript" id="jquery-cdn" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" />
-        <Script type="text/javascript" id="bootstrap-cdn" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" /> */}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <html lang="en">
       <head>
-
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title >Oratai Pha Tai - Wholesale Thai Sarong Fabric, worldwide service.</title>
       </head>
 
       <body className="bg-black debug-screens" >

@@ -5,14 +5,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AnyAction } from "redux";
 import { useRouter, usePathname } from 'next/navigation';
 import LanguagueContext from '../contexts/languagueContext';
-import { auth, authClose, authOpen, authLogout, setAuthRedirectPath } from '../redux/features/authReducer'
+import { auth, authClose } from '../redux/features/authReducer'
 import Input from './UI/Input';
 import Button from './UI/Button';
 import { updateObject, checkValidity } from '../shared/utility';
 import useTranslations from "../hooks/useTranslations";
 import { productsSlice, authSlice } from '../redux/store';
 import type { FormElementConfig } from '../shared/types';
-import styles from '../styles/auth.module.css';
+import styles from '../styles/auth.module.scss';
 
 
 type Controls = {
@@ -61,19 +61,19 @@ const Auth = (props: any) => {
     //const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
     const { currentLanguage, setCurrentLanguage } = useContext(LanguagueContext);
-    const t = useCallback((key: string) => { return useTranslations(currentLanguage).t(key) }, [currentLanguage, useTranslations]);
+    const { t } = useTranslations(currentLanguage);
 
     const router: any = useRouter();
     const pathname = usePathname();
 
     const dispatch = useDispatch();
-    const { isAuthenticated, loading, authRedirectPath, authShow, isAdmin } = useSelector(authSlice);
+    const { isAuthenticated, loading, authShow, isAdmin } = useSelector(authSlice);
 
-    useEffect(() => {
-        if (authRedirectPath !== '/') {
-            dispatch(setAuthRedirectPath('/products/'))
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (authRedirectPath !== '/') {
+    //         dispatch(setAuthRedirectPath('/products/'))
+    //     }
+    // }, []);
 
     useEffect(() => {
         if (currentLanguage && authShow) {
