@@ -8,9 +8,9 @@
     "lint": "next lint",
     "export": "npm run build && next export -o _static",
     "serve": "next out",
-    "start": "next start -H 0.0.0.0 -p ${PORT: 8080}",
+    "start": "next start -H 0.0.0.0 -p ${PORT:-8080}",
     "start2": "npm run build && node serverNext.js",
-    "start3": "next start"
+    "start3": "next build && next start"
   },
   "dependencies": {
     "@next-auth/firebase-adapter": "^0.0.2-canary.207",
