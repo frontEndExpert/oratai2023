@@ -1,7 +1,8 @@
 // 'use client';
 
 import React from 'react';
-import AboutUs from '../../../components/AboutUs'
+import AboutUs from '../../../components/AboutUs';
+// @ts-ignore
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
