@@ -1,6 +1,5 @@
 
 import React from 'react';
-import AboutUs from '../../components/AboutUs'
 import { Metadata } from 'next';
 import styles from '../../styles/privacy.module.scss';
 

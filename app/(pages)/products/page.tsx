@@ -1,5 +1,4 @@
 import React from 'react';
-// @ts-ignore
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

@@ -4,11 +4,10 @@ import React from 'react';
 import { createSlice, createAsyncThunk, ActionReducerMapBuilder, PayloadAction } from "@reduxjs/toolkit";
 import type { Dispatch } from '@reduxjs/toolkit';
 import { AppDispatch } from '../store';
-import firebase from 'firebase/app';
-import "firebase/database";
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import "firebase/compat/database";
 import { RootState } from '../store';
-import { ThunkApiMetaConfig } from '@reduxjs/toolkit/dist/query/core/buildThunks';
-import { BaseThunkAPI } from '@reduxjs/toolkit/dist/createAsyncThunk';
 
 
 const firebaseConfig = {

@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ["ts", "tsx"],
-  output: "standalone",
+  output: "export",
+  trailingSlash: true,
   experimental: {
     appDir: true,
     typedRoutes: true
@@ -9,3 +10,7 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
+
+//
+// reactStrictMode: false,
+//

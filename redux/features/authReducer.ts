@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { createSlice, createAsyncThunk, ActionReducerMapBuilder, PayloadAction } from "@reduxjs/toolkit";
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import "firebase/database";
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import "firebase/compat/database";
 
 
 export type AuthState = {

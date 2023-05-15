@@ -1,6 +1,5 @@
 import '../styles/globals.scss'
 import React from 'react'
-import Script from 'next/script'
 import Header from '../components/header'
 import Footer from '../components/footer'
 
@@ -37,9 +36,9 @@ export const metadata = {
       }
     ]
   },
-  // icons: {
-  //   icon: '../public/static/favicon.ico',
-  // },
+  icons: {
+    icon: '../public/favicon.ico',
+  },
   robots: {
     index: true
   }
@@ -52,6 +51,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
         <title >Oratai Pha Tai - Wholesale Thai Sarong Fabric, worldwide service.</title>
       </head>
 

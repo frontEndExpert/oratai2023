@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Reviews from '../../../components/Reviews'
-// @ts-ignore
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

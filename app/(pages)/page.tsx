@@ -1,6 +1,5 @@
 import React from 'react';
 import HomePage from '../../components/Homepage';
-// @ts-ignore
 import { Metadata } from 'next';
 
 
