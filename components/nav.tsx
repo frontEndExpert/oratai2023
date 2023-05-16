@@ -148,7 +148,7 @@ const Nav = (props: any) => {
                 href={{ pathname: "/aboutus" }} >
                 <span className=" font-500 text-black text-center  min-w-15 decoration-none">
                   <Image className="mx-auto" src={aboutus} width={30} height={30} alt="about us" />
-                  <span className={(pathname == '/aboutus') ? "text-[14px] decoration-0 font-bold whitespace-nowrap" : "text-[14px] text-black decoration-0"} >About Us</span>
+                  <span className={(pathname == '/aboutus/') ? "text-[14px] decoration-0 font-bold whitespace-nowrap" : "text-[14px] text-black decoration-0"} >About Us</span>
                 </span>
               </Link>
 
@@ -159,7 +159,7 @@ const Nav = (props: any) => {
                 href={{ pathname: "/products" }}>
                 <span className=" font-500 text-black text-center w-13 decoration-none ">
                   <Image className="mx-auto" src={cart} width={30} height={30} alt="product catalog" />
-                  <span className={(pathname == '/products') ? "text-[14px] decoration-0 font-bold" : "text-[14px] text-black decoration-0"} >Products</span>
+                  <span className={(pathname == '/products/') ? "text-[14px] decoration-0 font-bold" : "text-[14px] text-black decoration-0"} >Products</span>
                 </span>
               </Link>
 
@@ -169,7 +169,7 @@ const Nav = (props: any) => {
                 href={{ pathname: "/reviews" }}>
                 <span className=" font-500 text-black text-center w-13 decoration-none">
                   <Image className="mx-auto" src={reviews} width={30} height={30} alt="reviews" />
-                  <span className={(pathname == '/reviews') ? "text-[14px] decoration-0 font-bold " : "text-[14px] text-black decoration-0"}>Reviews</span>
+                  <span className={(pathname == '/reviews/') ? "text-[14px] decoration-0 font-bold " : "text-[14px] text-black decoration-0"}>Reviews</span>
                 </span>
               </Link>
 

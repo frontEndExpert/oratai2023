@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import { useRouter } from 'next/navigation';
 import productGroupData from "../shared/productGroup.json";
-import Link from 'next/link';
 import Image from 'next/image';
 import { authSlice, productsSlice } from '../redux/store';
 import { useSelector, useDispatch } from 'react-redux';
@@ -12,7 +11,6 @@ import { AnyAction } from "redux";
 import Modal from './UI/Modal'
 import { fetchProducts, updateAllProducts, add2AllOpen, add2AllClose, updateCurrentProductGroup, closeProductPage, openProductPage, closeEdit, updateCurrentProductId, closeAdded } from '../redux/features/productsReducer';
 import ProductDisplay from './productDisplay';
-import { auth } from "@/redux/features/authReducer";
 
 const GroupMenu = (props: any) => {
     const [currentGroupId, setCurrentGroupId] = useState("1");
@@ -32,13 +30,13 @@ const GroupMenu = (props: any) => {
     const OpenMenu = (id: string) => {
         setCurrentGroupId(id);
         dispatch(updateCurrentProductGroup([...allProducts.filter((item) => item.group_id == id)]));
-        router.push(`/products/${id}`);
+        router.push(`/products/${id}/#divider1`);
     };
 
     const handleAddProduct = () => {
         dispatch(add2AllOpen());
     };
-    // <Link href={{ pathname: `/products/${productGroup.id}` }}
+
     return (
         <div className="bg-black">
             {loading && <div className="text-white loading">Loading...</div>}
@@ -82,12 +80,13 @@ const GroupMenu = (props: any) => {
 
                 </ul>
             </div>
+
             {isAdmin && <div className="" >
                 <div className="border-white border-solid rounded cursor-pointer flex bg-orange-700 border-1 h-9 text-center w-60 justify-center items-center align-middle"
                     onClick={handleAddProduct}
                 >Add New Product</div>
             </div>}
-            <div className="bg-black strike">
+            <div id="divider1" className="bg-black strike">
                 <Image
                     src={"/static/divider1.svg"}
                     className="img-responsive"

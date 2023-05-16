@@ -13,14 +13,10 @@ import { AnyAction } from "redux";
 
 const ProductsGroup = (props: { groupid: string }) => {
     const [currentProductGroup, setCurrentProductGroup] = useState([] as Product[]);
-    const [currentArrSize, setCurrentArrSize] = useState(0);
     const [pin, setPin] = useState(0);
-    const [revealText, setRevealText] = useState(false);
     const { currentLanguage } = useContext(LanguagueContext);
     const { productAdded, allProducts, prodShow } = useSelector(productsSlice);
-    //const currentLanguage = "en"
     const dispatch = useDispatch();
-
     const { t } = useTranslations(currentLanguage);
 
     useEffect(() => {
@@ -52,13 +48,6 @@ const ProductsGroup = (props: { groupid: string }) => {
         setPin(p_in);
         dispatch(openProductPage());
     };
-
-    // const productGroup = (): JSX.Element => {
-    //     let productMap = null;
-    // if (!props.loading && props.currentProductGroup) {
-    //     const group = (currentGroupId == 'all') ? [{ "id": 'all', "title": "", "description": "", "url": "/static/golden2951.jpg" }]
-    //         : productGroupData.filter(item => item.id == currentGroupId);
-
 
 
     return (

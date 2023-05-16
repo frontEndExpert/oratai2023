@@ -66,12 +66,12 @@ const AboutUs = (props: any) => {
                             </div>
                         </div>
                         <div className="styles.contact-right">
-                            <div className={styles.mediaPpair}>
-                                <Image src="/static/line.gif" width={40} height={40} className={`img-responsive ${styles.imgIcon}`} alt="Thai Sarong Orataiphathai on LINE QR code" />
+                            <div className={styles.mediaPair}>
+                                <Image src="/static/line.gif" width={40} height={40} className={styles.imgIcon} alt="Thai Sarong Orataiphathai on LINE QR code" />
                                 <p className="styles.p-info-text">{t("aboutus:qrcode")}{" "}</p>
                             </div>
                             <div className="code-img">
-                                <Image src="/static/LINE_QR_CODE1.jpg" width={160} height={160} className={`img-responsive ${styles.codeImg}`} alt="Thai Sarong Orataiphathai on LINE QR code" />
+                                <Image src="/static/LINE_QR_CODE1.jpg" width={160} height={160} className={styles.codeImg} alt="Thai Sarong Orataiphathai on LINE QR code" />
                             </div>
                         </div>
                     </div>

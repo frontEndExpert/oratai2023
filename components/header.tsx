@@ -1,7 +1,7 @@
 import React from "react";
 import Image from 'next/image';
 
-// 
+
 const Header = () => (
   <div id='header' className="object-cover bg-red-800 m-0 w-full p-0 <sm:w-full ">
     <Image src='/static/orataiphathai_bg.jpg'
