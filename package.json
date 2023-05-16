@@ -9,6 +9,7 @@
     "export": "npm run build && next export -o _static",
     "export2": "next export -o _static",
     "serve": "next out",
+    "serve1": "next serve out",
     "start": "next start -H 0.0.0.0 -p ${PORT:-8080}",
     "start2": "npm run build && node serverNext.js",
     "start3": "next build && next start"
