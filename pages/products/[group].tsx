@@ -4,7 +4,6 @@ import App from '../../components/App';
 import ProductsGroup from "../../components/productsGroup";
 import ProductsText from '../../components/productsText';
 import GroupMenu from '../../components/groupMenu';
-//import { useParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 
 export default function ProductsPage() {

@@ -15,7 +15,5 @@ export default function ProductsPage({ children }: { children: React.ReactNode }
                 {children}
             </div>
         </App>
-
     )
-
 }
