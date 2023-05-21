@@ -11,6 +11,7 @@ import { AnyAction } from "redux";
 import Modal from './UI/Modal'
 import { fetchProducts, updateAllProducts, add2AllOpen, add2AllClose, updateCurrentProductGroup, closeProductPage, openProductPage, closeEdit, updateCurrentProductId, closeAdded } from '../redux/features/productsReducer';
 import ProductDisplay from './productDisplay';
+import type { Product } from '../redux/features/productsReducer';
 
 const GroupMenu = (props: any) => {
     const [currentGroupId, setCurrentGroupId] = useState("1");
@@ -29,7 +30,7 @@ const GroupMenu = (props: any) => {
 
     const OpenMenu = (id: string) => {
         setCurrentGroupId(id);
-        dispatch(updateCurrentProductGroup([...allProducts.filter((item) => item.group_id == id)]));
+        dispatch(updateCurrentProductGroup([...allProducts.filter((item: Product) => item.group_id == id)]));
         router.push(`/products/${id}/#divider1`);
     };
 

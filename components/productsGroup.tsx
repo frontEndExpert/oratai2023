@@ -24,15 +24,15 @@ const ProductsGroup = (props: { groupid: string }) => {
             dispatch(fetchProducts() as unknown as AnyAction);
         }
         if (props.groupid != "" && allProducts.length > 0) {
-            setCurrentProductGroup([...allProducts.filter((item) => item.group_id == props.groupid)]);
-            dispatch(updateCurrentProductGroup([...allProducts.filter((item) => item.group_id == props.groupid)]));
+            setCurrentProductGroup([...allProducts.filter((item: Product) => item.group_id == props.groupid)]);
+            dispatch(updateCurrentProductGroup([...allProducts.filter((item: Product) => item.group_id == props.groupid)]));
         }
 
     }, []);
 
     useEffect(() => {
-        setCurrentProductGroup([...allProducts.filter((item) => item.group_id == props.groupid)]);
-        dispatch(updateCurrentProductGroup([...allProducts.filter((item) => item.group_id == props.groupid)]));
+        setCurrentProductGroup([...allProducts.filter((item: Product) => item.group_id == props.groupid)]);
+        dispatch(updateCurrentProductGroup([...allProducts.filter((item: Product) => item.group_id == props.groupid)]));
     }, [props.groupid, allProducts]);
 
     useEffect(() => {
