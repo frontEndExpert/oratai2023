@@ -11,12 +11,12 @@ import { RootState } from '../store';
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDW7ozYaZ9Z8_6pqHnyeVIJFNgwEkKrD_A",
-  authDomain: "oratai-2018.firebaseapp.com",
-  projectId: "oratai-2018",
-  messagingSenderId: "376642946923",
-  appId: "oratai-2018",
-  databaseURL: "https://oratai-2018.firebaseio.com",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
 };
 
 if (!firebase.apps.length) {
