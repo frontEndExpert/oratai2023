@@ -34,13 +34,6 @@ const initialState = {
 };
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDW7ozYaZ9Z8_6pqHnyeVIJFNgwEkKrD_A",
-    authDomain: "oratai-2018.firebaseapp.com",
-    projectId: "oratai-2018",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "376642946923",
-    appId: "oratai-2018",
-    databaseURL: "https://oratai-2018.firebaseio.com",
 };
 
 if (!firebase.apps.length) {
