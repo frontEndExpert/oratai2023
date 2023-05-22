@@ -11,12 +11,6 @@ import { RootState } from '../store';
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDW7ozYaZ9Z8_6pqHnyeVIJFNgwEkKrD_A",
-  authDomain: "oratai-2018.firebaseapp.com",
-  projectId: "oratai-2018",
-  messagingSenderId: "376642946923",
-  appId: "oratai-2018",
-  databaseURL: "https://oratai-2018.firebaseio.com",
 };
 
 if (!firebase.apps.length) {
