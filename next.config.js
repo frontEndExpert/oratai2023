@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ["ts", "tsx"],
-  output: "export",
+
   trailingSlash: true,
   experimental: {
     appDir: true,
@@ -13,4 +13,4 @@ module.exports = nextConfig
 
 //
 // reactStrictMode: false,
-//
+//  output: "export",

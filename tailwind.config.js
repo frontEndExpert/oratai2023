@@ -30,10 +30,6 @@ module.exports = {
         lightgold: "#f4eacf",
         gold: "#ad966c"
       },
-      // linearGradientColors: (theme) => theme("colors"),
-      // radialGradientColors: (theme) => theme("colors"),
-      // conicGradientColors: (theme) => theme("colors")
-
       linearGradientColors: {
         "gold-w-gold": ["#ad966c", "#f4eacf", "#ad966c"]
       }

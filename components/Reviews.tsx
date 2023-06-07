@@ -13,7 +13,7 @@ const Reviews = (props: any) => {
 
     return (
         <>
-            <div className={`container ${styles.reviews}`}>
+            <div className={`container ${styles.reviews}`} >
                 <h2>{t("reviews:header")}{" "}</h2>
                 <p>{t("reviews:miniheader")}{" "}</p>
                 <div className={styles.countries}>

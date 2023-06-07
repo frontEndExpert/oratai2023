@@ -38,7 +38,7 @@ const GroupMenu = (props: any) => {
     const handleAddProduct = () => {
         dispatch(add2AllOpen());
     };
-    // <Link href={{ pathname: `/products/${productGroup.id}` }}
+
     return (
         <div className="bg-black">
             {loading && <div className="text-white loading">Loading...</div>}
