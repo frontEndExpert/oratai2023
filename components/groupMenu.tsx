@@ -25,6 +25,7 @@ const GroupMenu = (props: any) => {
         if (allProducts.length == 0) {
             dispatch(fetchProducts() as unknown as AnyAction);
         }
+        // eslint-disable-next-line 
     }, []);
 
     const OpenMenu = (id: string) => {

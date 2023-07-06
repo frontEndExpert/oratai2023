@@ -57,6 +57,8 @@ interface InputChangeEvent extends React.ChangeEvent<HTMLInputElement> {
 const Auth = (props: any) => {
     const [controls, setControls] = useState<Controls>({ ...initialControls });
     const [isSignup, setSignup] = useState<boolean>(true);
+    const [form, setForm] = useState<JSX.Element>(<></>);
+    //const [authRedirectPath, setAuthRedirectPath] = useState('/
     //const [currentLanguage, setCurrentLanguage] = useState('en');
     //const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
@@ -82,7 +84,7 @@ const Auth = (props: any) => {
                     elementType: 'input',
                     elementConfig: {
                         type: 'email',
-                        placeholder: t("auth:email") // "Email"
+                        placeholder: t("auth:email")
                     },
                     value: '',
                     validation: {
@@ -112,6 +114,7 @@ const Auth = (props: any) => {
         if (isAuthenticated) {
             router.push("/products/");
         }
+        //eslint-disable-next-line
     }, [currentLanguage, authShow, isAuthenticated]);
 
 
@@ -142,34 +145,39 @@ const Auth = (props: any) => {
         setSignup(!isSignup);
     }
 
-    const formElementsArray = [];
-    for (let key in controls) {
-        formElementsArray.push({
-            id: key,
-            config: controls[key]
-        });
-    }
+    useEffect(() => {
+        const formElementsArray = [];
+        for (let key in controls) {
+            formElementsArray.push({
+                id: key,
+                config: controls[key]
+            });
+        }
 
-    let form = <>{formElementsArray.map(formElement => (
-        <Input
-            key={formElement.id}
-            elementType={formElement.config.elementType}
-            elementConfig={formElement.config.elementConfig}
-            label={formElement.config.elementConfig.placeholder}
-            value={formElement.config.value}
-            invalid={!formElement.config.valid}
-            inline='true'
-            shouldValidate={formElement.config.validation}
-            touched={formElement.config.touched}
-            autoC={formElement.config.elementConfig.type}
-            changed={(event: InputChangeEvent) => inputChangedHandler(event, formElement.id)} />
-    ))}</>;
+        if (loading) {
+            setForm(<div className='Loader'>Loading...</div>)
+        } else {
+            setForm(<>
+                {formElementsArray.map(formElement => (
+                    <Input
+                        key={formElement.id}
+                        elementType={formElement.config.elementType}
+                        elementConfig={formElement.config.elementConfig}
+                        label={formElement.config.elementConfig.placeholder}
+                        value={formElement.config.value}
+                        invalid={!formElement.config.valid}
+                        inline='true'
+                        shouldValidate={formElement.config.validation}
+                        touched={formElement.config.touched}
+                        autoC={formElement.config.elementConfig.type}
+                        changed={(event: InputChangeEvent) => inputChangedHandler(event, formElement.id)} />
+                ))}
+            </>);
+
+        }
 
 
-
-    if (loading) {
-        form = <div className='Loader'>Loading...</div> as JSX.Element
-    }
+    }, [controls, loading]);
 
     let errorMessage = null;
 

@@ -38,6 +38,7 @@ const Nav = (props: any) => {
 
   useEffect(() => {
     dispatch(fetchProducts() as unknown as AnyAction)
+    // eslint-disable-next-line 
   }, []);
 
   useEffect(() => {
@@ -137,7 +138,7 @@ const Nav = (props: any) => {
         <div className="flex flex-row flex-nowrap m-0 p-0 px-1 justify-between items-center">
           <ul role="navigation list" className="flex flex-row flex-nowrap h-15 my-1 w-60 justify-items-center items-center " id="mynavbar">
             <li role="listitem" aria-label="home" className="h-14 my-0 mx-1 w-15">
-              <Link className="cursor-pointer font-500 text-black text-center w-13 decoration-none" href={'/'} //</li>styles.active 
+              <Link className="cursor-pointer font-500 text-black text-center w-13 decoration-none" href={'/'} passHref //</li>styles.active 
               >
                 <Image className="mx-auto" src={home} width={30} height={30} alt="home" />
                 <span className={(pathname == '/') ? "text-[14px] decoration-0 font-bold" : "text-[14px] text-black decoration-0"} >Home</span>
@@ -145,7 +146,7 @@ const Nav = (props: any) => {
             </li>
             <li id="aboutus" role="listitem" aria-label="about us" className="h-15 my-0 mx-1 w-18">
               <Link className=" cursor-pointer font-500 text-black text-center w-15 decoration-none "
-                href={{ pathname: "/aboutus" }} >
+                href={{ pathname: "/aboutus" }} passHref >
                 <span className=" font-500 text-black text-center  min-w-15 decoration-none">
                   <Image className="mx-auto" src={aboutus} width={30} height={30} alt="about us" />
                   <span className={(pathname == '/aboutus/') ? "text-[14px] decoration-0 font-bold whitespace-nowrap" : "text-[14px] text-black decoration-0"} >About Us</span>
@@ -156,7 +157,7 @@ const Nav = (props: any) => {
 
             <li id="productscat" role="listitem" aria-label="product catalog" className="h-15 my-0 mx-1 w-15">
               <Link className="cursor-pointer"
-                href={{ pathname: "/products" }}>
+                href={{ pathname: "/products" }} passHref>
                 <span className=" font-500 text-black text-center w-13 decoration-none ">
                   <Image className="mx-auto" src={cart} width={30} height={30} alt="product catalog" />
                   <span className={(pathname == '/products/') ? "text-[14px] decoration-0 font-bold" : "text-[14px] text-black decoration-0"} >Products</span>
@@ -166,7 +167,7 @@ const Nav = (props: any) => {
             </li>
             <li id="reviews" role="listitem" aria-label="reviews" className="h-15 my-0 mx-1 w-15">
               <Link className="cursor-pointer "
-                href={{ pathname: "/reviews" }}>
+                href={{ pathname: "/reviews" }} passHref>
                 <span className=" font-500 text-black text-center w-13 decoration-none">
                   <Image className="mx-auto" src={reviews} width={30} height={30} alt="reviews" />
                   <span className={(pathname == '/reviews/') ? "text-[14px] decoration-0 font-bold " : "text-[14px] text-black decoration-0"}>Reviews</span>

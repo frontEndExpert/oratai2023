@@ -34,7 +34,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "config/initAuth.txt"
+    "config/initAuth.txt",
+    "firebase.js"
   ],
   "exclude": [
     "node_modules"

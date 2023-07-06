@@ -27,12 +27,13 @@ const ProductsGroup = (props: { groupid: string }) => {
             setCurrentProductGroup([...allProducts.filter((item) => item.group_id == props.groupid)]);
             dispatch(updateCurrentProductGroup([...allProducts.filter((item) => item.group_id == props.groupid)]));
         }
-
+        // eslint-disable-next-line 
     }, []);
 
     useEffect(() => {
         setCurrentProductGroup([...allProducts.filter((item) => item.group_id == props.groupid)]);
         dispatch(updateCurrentProductGroup([...allProducts.filter((item) => item.group_id == props.groupid)]));
+        // eslint-disable-next-line 
     }, [props.groupid, allProducts]);
 
     useEffect(() => {
@@ -40,6 +41,7 @@ const ProductsGroup = (props: { groupid: string }) => {
             dispatch(fetchProducts() as unknown as AnyAction);
             dispatch(openAdded() as unknown as AnyAction)
         }
+        // eslint-disable-next-line 
     }, [productAdded]);
 
     const openProductModal = (pid: string) => {

@@ -51,6 +51,7 @@ const ProductDisplay = (props: Props) => {
             dispatch(fetchProducts() as unknown as AnyAction);
         }
         setPindex(currentProductGroup.findIndex((p: Product) => p.id === currentProductId))
+        // eslint-disable-next-line 
     }, []);
 
     useEffect(() => {
@@ -70,7 +71,7 @@ const ProductDisplay = (props: Props) => {
         if (prodShow === false) {
             dispatch(updateCurrentProductId(""))
         }
-
+        // eslint-disable-next-line 
     }, [currentProductId, prodShow, allProducts, productAdded]);
 
     useEffect(() => {

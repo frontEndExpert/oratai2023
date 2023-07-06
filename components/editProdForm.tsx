@@ -140,6 +140,7 @@ const EditProdForm = (props: any) => {
     const { isAuthenticated, isAdmin, loading } = useSelector(authSlice);
     const dispatch = useDispatch();
 
+
     useEffect(() => {
         setProdForm({ ...initialState.productForm })
 
@@ -149,7 +150,9 @@ const EditProdForm = (props: any) => {
                 setProductArray(allProducts, currentProductId)
             }
         };
+        // eslint-disable-next-line        
     }, []);
+
 
     useEffect(() => {
         if (currentProductId && currentProductId !== "0" && editShow) {
@@ -158,10 +161,13 @@ const EditProdForm = (props: any) => {
                 setProductArray(allProducts, currentProductId)
             }
         };
+        // eslint-disable-next-line
     }, [currentProductId, editShow, allProducts, productId]);
+
 
     useEffect(() => {
         setProductArray(allProducts, currentProductId)
+        // eslint-disable-next-line    
     }, [allProducts, currentProductId]);
 
 
