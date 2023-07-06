@@ -9,11 +9,20 @@ import Footer from "./footer"
 // import { authClose } from "../store/reducers/authReducer"
 //import useTranslations from "../hoc/useTranslations"
 import AuthModal from "@/components/AuthModal"
-import { ReduxProvider } from "@/redux/reduxProvider";
+// import { ReduxProvider } from "@/redux/reduxProvider";
+import store from "@/redux/store";
+import { Provider } from "react-redux";
 import { LanguagueContextProvider } from "@/contexts/languagueContext";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
 
+
+
+let persistor = persistStore(store);
 
 const App = (props: any) => {
+
+
   //const { t } = useTranslations(props.currentLanguage || "en")
   return (
     <main>
@@ -21,27 +30,29 @@ const App = (props: any) => {
         title={props.title || "OraTai PhaThai"}
         description={props.description || "OraTai PhaThai Page"}
       />
-      <ReduxProvider>
-        <LanguagueContextProvider>
-          <Header />
-          <Nav />
-          <AuthModal />
-          {/*props.authShow && <Modal 
+      <Provider store={store}>
+        <PersistGate persistor={persistor} loading={<div>Loading...</div>}>
+          <LanguagueContextProvider>
+            <Header />
+            <Nav />
+            <AuthModal />
+            {/*props.authShow && <Modal 
             name="authFormModal" 
             show={props.authShow} 
             modalClosed={props.onAuthClose}>
             <button className="btn btn-link auth-btn" onClick={props.onAuthClose}>X</button>
               <Auth t={t} />
             </Modal>*/}
-          {/* <div
+            {/* <div
             className="mainbody"
             dir={props.currentLanguage == "he" ? "rtl" : "ltr"}>
             
           </div> */}
-          {props.children}
-          <Footer />
-        </LanguagueContextProvider>
-      </ReduxProvider>
+            {props.children}
+            <Footer />
+          </LanguagueContextProvider>
+        </PersistGate>
+      </Provider>
     </main>
   )
 }
