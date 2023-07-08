@@ -2,7 +2,7 @@
 
 import productsReducer from './features/productsReducer';
 import authReducer from './features/authReducer';
-import { combineReducers } from "redux";
+import { AnyAction, combineReducers } from "redux";
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { encryptTransform } from "redux-persist-transform-encrypt";
@@ -26,6 +26,8 @@ const RootReducer = combineReducers({
     auth: authReducer
 });
 
+type RootReducerType = ReturnType<typeof RootReducer>
+
 let transforms: Transform<unknown, string, any, any>[] = [];
 
 if (true) {
@@ -45,7 +47,7 @@ const persistConfig = {
     transforms,
 };
 
-const persistedReducer = persistReducer(persistConfig, RootReducer);
+const persistedReducer = persistReducer<RootReducerType, AnyAction>(persistConfig, RootReducer);
 
 const store = configureStore({
     reducer: persistedReducer,

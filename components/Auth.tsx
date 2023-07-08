@@ -176,7 +176,7 @@ const Auth = (props: any) => {
 
         }
 
-
+        //eslint-disable-next-line
     }, [controls, loading]);
 
     let errorMessage = null;
