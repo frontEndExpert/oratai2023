@@ -156,7 +156,7 @@ export const editProduct = createAsyncThunk(
 
 const initialState = {
   loading: true,
-  error: "" as any,
+  error: "",
   orders_loading: false,
   allProducts: [] as Product[],
   productAdded: false,

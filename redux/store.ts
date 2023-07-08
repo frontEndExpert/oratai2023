@@ -3,12 +3,13 @@
 import productsReducer from './features/productsReducer';
 import authReducer from './features/authReducer';
 import { combineReducers } from "redux";
-import { configureStore, PayloadAction, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
-// import { persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
+import { encryptTransform } from "redux-persist-transform-encrypt";
+import storage from './createNoopStorage';
 import thunk from 'redux-thunk'
 import {
+    PersistConfig, Transform,
     persistStore,
     persistReducer,
     FLUSH,
@@ -25,23 +26,39 @@ const RootReducer = combineReducers({
     auth: authReducer
 });
 
+let transforms: Transform<unknown, string, any, any>[] = [];
+
+if (true) {
+    const encrypt = encryptTransform({
+        secretKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY || "123", // NEXT_PUBLIC_REDUX_SECRET,
+        onError: function (error: any) {
+            // Handle the error.
+            console.log("encrypt error", error);
+        },
+    });
+    transforms = [encrypt];
+}
+
 const persistConfig = {
     key: 'root',
-    storage
+    storage,
+    transforms,
 };
 
 const persistedReducer = persistReducer(persistConfig, RootReducer);
 
 const store = configureStore({
     reducer: persistedReducer,
-    devTools: process.env.NODE_ENV !== "production",
-    middleware: [thunk]
-    // middleware: (getDefaultMiddleware) =>
-    //     getDefaultMiddleware({
-    //         serializableCheck: {
-    //             ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-    //         },
-    //     }).concat(thunk)
+    middleware: (getDefaultMiddleware) => {
+        const middleware = getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+            },
+        }).concat(thunk);
+
+        return middleware
+    },
+    devTools: true,
 });
 
 export default store;
