@@ -10,15 +10,7 @@ import Footer from "./footer"
 //import useTranslations from "../hoc/useTranslations"
 import AuthModal from "@/components/AuthModal"
 // import { ReduxProvider } from "@/redux/reduxProvider";
-import store from "@/redux/store";
-import { Provider } from "react-redux";
-import { LanguagueContextProvider } from "@/contexts/languagueContext";
-import { PersistGate } from "redux-persist/integration/react";
-import { persistStore } from "redux-persist";
 
-
-
-let persistor = persistStore(store);
 
 const App = (props: any) => {
 
@@ -30,29 +22,24 @@ const App = (props: any) => {
         title={props.title || "OraTai PhaThai"}
         description={props.description || "OraTai PhaThai Page"}
       />
-      <Provider store={store}>
-        <PersistGate persistor={persistor} loading={<div>Loading...</div>}>
-          <LanguagueContextProvider>
-            <Header />
-            <Nav />
-            <AuthModal />
-            {/*props.authShow && <Modal 
+
+      <Header />
+      <Nav />
+      <AuthModal />
+      {/*props.authShow && <Modal 
             name="authFormModal" 
             show={props.authShow} 
             modalClosed={props.onAuthClose}>
             <button className="btn btn-link auth-btn" onClick={props.onAuthClose}>X</button>
               <Auth t={t} />
             </Modal>*/}
-            {/* <div
+      {/* <div
             className="mainbody"
             dir={props.currentLanguage == "he" ? "rtl" : "ltr"}>
             
           </div> */}
-            {props.children}
-            <Footer />
-          </LanguagueContextProvider>
-        </PersistGate>
-      </Provider>
+      {props.children}
+      <Footer />
     </main>
   )
 }

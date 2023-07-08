@@ -3,19 +3,45 @@
 import productsReducer from './features/productsReducer';
 import authReducer from './features/authReducer';
 import { combineReducers } from "redux";
-import { configureStore, PayloadAction } from '@reduxjs/toolkit';
+import { configureStore, PayloadAction, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
+// import { persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+import thunk from 'redux-thunk'
+import {
+    persistStore,
+    persistReducer,
+    FLUSH,
+    REHYDRATE,
+    PAUSE,
+    PERSIST,
+    PURGE,
+    REGISTER,
+} from 'redux-persist'
+
 
 const RootReducer = combineReducers({
     products: productsReducer,
     auth: authReducer
 });
 
+const persistConfig = {
+    key: 'root',
+    storage
+};
+
+const persistedReducer = persistReducer(persistConfig, RootReducer);
+
 const store = configureStore({
-    reducer: RootReducer,
+    reducer: persistedReducer,
     devTools: process.env.NODE_ENV !== "production",
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware(),
+    middleware: [thunk]
+    // middleware: (getDefaultMiddleware) =>
+    //     getDefaultMiddleware({
+    //         serializableCheck: {
+    //             ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    //         },
+    //     }).concat(thunk)
 });
 
 export default store;

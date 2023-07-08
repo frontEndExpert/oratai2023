@@ -46,7 +46,7 @@ export type FireProduct = {
 
 export type ProductReducer = {
   loading: boolean;
-  error: string;
+  error: any;
   orders_loading: boolean;
   allProducts: Product[];
   productAdded: boolean;
@@ -156,7 +156,7 @@ export const editProduct = createAsyncThunk(
 
 const initialState = {
   loading: true,
-  error: "",
+  error: "" as any,
   orders_loading: false,
   allProducts: [] as Product[],
   productAdded: false,
@@ -227,8 +227,9 @@ export const productsReducer = createSlice({
         state.allProducts = action.payload as unknown as Product[];
         state.loading = false;
       }),
-      builder.addCase(fetchProducts.rejected, (state: ProductReducer, action: PayloadAction<any>) => {
-        state.error = action.payload; //? action.payload.toString() : action.error.toString();
+      builder.addCase(fetchProducts.rejected, (state: ProductReducer, action: any) => {
+        console.log('action.error.message', action.error.message);
+        state.error = action.payload ? action.payload.toString() : action.error.message;
         state.loading = false;
       });
     builder.addCase(editProduct.pending, (state: ProductReducer) => {
@@ -239,8 +240,8 @@ export const productsReducer = createSlice({
         state.productAdded = true;
         state.loading = false;
       }),
-      builder.addCase(editProduct.rejected, (state: ProductReducer, action: PayloadAction<any>) => {
-        state.error = action.payload; //? action.payload.toString() : action.error.toString();
+      builder.addCase(editProduct.rejected, (state: ProductReducer, action: any) => {
+        state.error = action.payload ? action.payload.toString() : action.error.message;
       }),
       builder.addCase(addProduct.pending, (state: ProductReducer) => {
         state.productAdded = false;
@@ -251,8 +252,8 @@ export const productsReducer = createSlice({
         state.loading = false;
         state.add2AllShow = false
       }),
-      builder.addCase(addProduct.rejected, (state: ProductReducer, action: PayloadAction<any>) => {
-        state.error = action.payload.error;
+      builder.addCase(addProduct.rejected, (state: ProductReducer, action: any) => {
+        state.error = action.payload ? action.payload.toString() : action.error.message;
         state.productAdded = false;
         state.loading = false;
       }),
