@@ -1,12 +1,12 @@
 
 import React from 'react';
-import App from '../components/App';
+import Layout from '../components/Layout';
 import styles from '../styles/privacy.module.scss';
 
 
 const PrivacyPage = () => {
     return (
-        <App title="Orataiphathai Thai Sarong - Privacy Policy"
+        <Layout title="Orataiphathai Thai Sarong - Privacy Policy"
             description="Our privacy policy to protect you and us and deliver the best Thai Sarong online shopping experience." >
             <div className={styles.headbox} >
                 <h1 className={styles.bigheader}>Privacy Policy</h1>
@@ -44,7 +44,7 @@ const PrivacyPage = () => {
                 <p>Enforcement of this Privacy Policy and Contact Information:</p>
                 <p>orataiphathai.work welcomes your comments regarding our privacy policy. For any comments, feel free to contact us via our &quot;Contact Us&quot; page.</p>
             </div>
-        </App>
+        </Layout>
     )
 }
 
