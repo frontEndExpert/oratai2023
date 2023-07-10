@@ -131,7 +131,7 @@ const ProductDisplay = (props: Props) => {
                     onClick={() => nextProd()}>{isMobile ? "" : "Next Product"}<span className="glyphicon glyphicon-arrow-right"></span></button>
             </div>
 
-            {(isAdmin === true)
+            {(isAdmin)
                 ? <div className={styles.adminbtn}>
                     <button onClick={() => { if (window.confirm('Are you sure you want to delete this product?')) { handleDelProd(product.id) } }}>Delete This Product</button>
                     <button onClick={() => handleEditProd((product.id.toString()))}>Edit This Product {product.id}</button>

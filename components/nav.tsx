@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { AnyAction } from "@reduxjs/toolkit";
-import { authClose, authLogout, authOpen } from '../redux/features/authReducer'
+import { authClose, authLogout, authOpen, setError } from '../redux/features/authReducer'
 import { closeEdit, add2AllClose, fetchProducts } from '../redux/features/productsReducer';
 import styles from '@/styles/nav.module.scss';
 import { productsSlice, authSlice } from '../redux/store';
@@ -58,6 +58,7 @@ const Nav = (props: any) => {
   }
 
   function onAuthOpen() {
+    dispatch(setError())
     dispatch(authOpen() as unknown as AnyAction)
   }
 

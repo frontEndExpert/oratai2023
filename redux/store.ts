@@ -9,8 +9,7 @@ import { encryptTransform } from "redux-persist-transform-encrypt";
 import storage from './createNoopStorage';
 import thunk from 'redux-thunk'
 import {
-    PersistConfig, Transform,
-    persistStore,
+    Transform,
     persistReducer,
     FLUSH,
     REHYDRATE,
@@ -32,7 +31,7 @@ let transforms: Transform<unknown, string, any, any>[] = [];
 
 if (true) {
     const encrypt = encryptTransform({
-        secretKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY || "123", // NEXT_PUBLIC_REDUX_SECRET,
+        secretKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY || "123",
         onError: function (error: any) {
             // Handle the error.
             console.log("encrypt error", error);
@@ -69,6 +68,5 @@ setupListeners(store.dispatch);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-//export const useDispatch = () => useContext(store).dispatch;
 export const authSlice = (state: RootState) => state.auth;
 export const productsSlice = (state: RootState) => state.products;

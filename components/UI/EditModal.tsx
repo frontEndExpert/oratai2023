@@ -16,7 +16,7 @@ const EditModal = (props: any) => {
                     top: '30px',
                     left: '25%',
                     boxSizing: 'border-box',
-                    width: '600px',
+                    width: '800px',
                     height: '600px',
                     padding: '20px',
                     boxShadow: '1px 1px 1px black',

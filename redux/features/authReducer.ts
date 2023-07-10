@@ -77,7 +77,7 @@ export const auth = createAsyncThunk(
                 }
             }
 
-            dispatch(authClose());
+            // dispatch(authClose());
             return { ...userData };
         } catch (error: any) {
             console.log("error", error)
@@ -138,10 +138,12 @@ const authReducer = createSlice({
             state.authShow = false;
             state.loading = true;
         },
+        setError: (state: AuthState) => {
+            state.error = "";
+        },
     },
     extraReducers: (builder: ActionReducerMapBuilder<AuthState>) => {
         builder.addCase(auth.pending, (state: AuthState) => {
-            state.error = "";
             state.loading = true;
         }),
             builder.addCase(auth.fulfilled, (state: AuthState, action: PayloadAction<any>) => {
@@ -151,14 +153,14 @@ const authReducer = createSlice({
                 state.isAdmin = action.payload.isAdmin;
                 state.loading = false;
             }),
-            builder.addCase(auth.rejected, (state: AuthState, action: PayloadAction<any>) => {
-                state.error = action.payload.toString();
+            builder.addCase(auth.rejected, (state: AuthState, action: any) => {
+                console.log('error2', action.error.message)
+                state.error = action.error.message;
                 state.isAuthenticated = false;
                 state.isAdmin = false;
             }),
 
             builder.addCase(getisAdmin.pending, (state: AuthState) => {
-                state.error = "";
                 state.loading = true;
             }),
             builder.addCase(getisAdmin.fulfilled, (state: AuthState, action: PayloadAction<boolean>) => {
@@ -168,12 +170,11 @@ const authReducer = createSlice({
             }),
             builder.addCase(getisAdmin.rejected, (state: AuthState, action: any) => {
                 state.isAdmin = false;
-                state.error = action.payload.toString();
+                state.error = action.payload;
                 state.loading = false;
             })
 
         builder.addCase(authLogout.pending, (state: AuthState) => {
-            state.error = "";
             state.loading = true;
         }),
             builder.addCase(authLogout.fulfilled, (state: AuthState) => {
@@ -191,6 +192,6 @@ const authReducer = createSlice({
 })
 
 
-export const { authOpen, authClose } = authReducer.actions;
+export const { authOpen, authClose, setError } = authReducer.actions;
 
 export default authReducer.reducer;
