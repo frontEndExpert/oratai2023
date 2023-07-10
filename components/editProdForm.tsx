@@ -269,8 +269,17 @@ const EditProdForm = (props: any) => {
         });
     }
 
-    let form = (
-        <form onSubmit={productHandler}>
+    let form = (<></>);
+
+    // if (loading) {
+    //     form = <div className='Loader'>Loading...</div>;
+    // } else 
+    if (!isAuthenticated) {
+        form = <p key="errMsg">Please Login (Only Admin Can Add Products!)</p>
+    } else if (!isAdmin) {
+        form = <p key="errMsg">Only Admin Can Add Products!</p>
+    } else {
+        form = (<form onSubmit={productHandler}>
             {formElementsArray.map(formElement => (
                 <Input
                     key={formElement.id}
@@ -287,14 +296,7 @@ const EditProdForm = (props: any) => {
             <input type="file" name="myFile" onChange={uploadFile} />
             <button type='submit' className='Button Success'
                 disabled={!formIsValid}>Edit This Product</button>
-        </form>
-    );
-    if (loading) {
-        form = <div className='Loader'>Loading...</div>;
-    } else if (!isAuthenticated) {
-        form = <p key="errMsg">Please Login (Only Admin Can Add Products!)</p>
-    } else if (!isAdmin) {
-        form = <p key="errMsg">Only Admin Can Add Products!</p>
+        </form>);
     }
 
     return (
