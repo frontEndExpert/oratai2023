@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useContext, useEffect, useMemo, useCallback } from 'react';
+import React, { useContext } from 'react';
 import Link from 'next/link';
 import useTranslations from '../hooks/useTranslations'
 import Image from 'next/image';
@@ -42,9 +42,11 @@ const Homepage = (props: any) => {
                     <h1 className='text-center text-red-900 text-3xl'>{t("homepage:welcome")}{" "}<b> {t("homepage:sitename")}{" "}<br />
                         {t("homepage:focus")}</b>.
                     </h1>
-                    <p className="text-center text-lg text-red-600">{t("homepage:prefere")}{" "}
+
+                    <p className="my-2 text-center text-lg text-red-600">{t("homepage:prefere")}{" "}
                     </p>
-                    <p>{t("homepage:purpose1")}{" "}
+
+                    <p className='mt-9'>{t("homepage:purpose1")}{" "}
                     </p>
                     <p>{t("homepage:traits2")}{" "}
                     </p>
@@ -57,7 +59,7 @@ const Homepage = (props: any) => {
                     <p>
                         <span>{t("homepage:contactus5")}{" "} </span> <Link href={{ pathname: '/aboutus/' }}>{t("homepage:contactus5title")}{" "}</Link> <span>{t("homepage:contactus5wa")}{" "}</span>
                     </p>
-                    <p>{t("homepage:join")} <a className="flink" href="https://www.facebook.com/pages/category/Clothing-Store/%E0%B8%AD%E0%B8%A3%E0%B8%97%E0%B8%B1%E0%B8%A2%E0%B8%9C%E0%B9%89%E0%B8%B2%E0%B9%84%E0%B8%97%E0%B8%A2-937874942959104/?locale2=th_TH"
+                    <p className='mb-9'>{t("homepage:join")} <a className="flink" href="https://www.facebook.com/pages/category/Clothing-Store/%E0%B8%AD%E0%B8%A3%E0%B8%97%E0%B8%B1%E0%B8%A2%E0%B8%9C%E0%B9%89%E0%B8%B2%E0%B9%84%E0%B8%97%E0%B8%A2-937874942959104/?locale2=th_TH"
                         target="_new">{t("homepage:Facebook")} </a> {t("homepage:promotions")}
                     </p>
 
