@@ -27,19 +27,14 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 
       <Provider store={store}>
-
-        <LanguagueContextProvider>
-          <Component {...pageProps} />
-        </LanguagueContextProvider>
-
+        <PersistGate persistor={persistor} loading={< div > Loading...</div >}>
+          <LanguagueContextProvider>
+            <Component {...pageProps} />
+          </LanguagueContextProvider>
+        </PersistGate >
       </Provider>
     </Fragment>
   )
 }
 
 export default MyApp
-
-//   < PersistGate persistor = { persistor } loading = {< div > Loading...</div >}>
-
-  
-// </PersistGate >

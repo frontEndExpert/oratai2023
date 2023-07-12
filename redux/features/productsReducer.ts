@@ -60,18 +60,23 @@ export type ProductReducer = {
   pathname: string;
 }
 
-export const fetchAllProducts = () => {
-  let fetchedProducts: Product[] = [];
-  database.ref('allProducts').on('value', async (snapshot) => {
-    const data = await snapshot.val();
-    const keys = Object.keys(data)
-    fetchedProducts = keys.map((key: string) => {
-      return { id: key, ...data[key] }
-    })
-  })
-  console.log('fetchAllProducts', fetchedProducts)
-  return fetchedProducts;
+export async function LoaderFunction() {
+  return new Promise<Product[]>((resolve, reject) => {
+    database.ref('allProducts').on('value', async (snapshot) => {
+      const data = await snapshot.val();
+      const keys = Object.keys(data);
+      var fetchedProducts: Product[] = keys.map((key: string) => {
+        return { id: key, ...data[key] };
+      });
+      const allProducts = [...fetchedProducts];
+      resolve(allProducts);
+    }, (error) => {
+      console.error('getStaticProps', error);
+      reject(error);
+    });
+  });
 }
+
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',

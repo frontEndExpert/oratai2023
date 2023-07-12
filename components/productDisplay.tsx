@@ -47,11 +47,8 @@ const ProductDisplay = (props: Props) => {
     const [pIndex, setPindex] = useState(0);
 
     const allProducts = props.allProducts
-    //console.log('display allProducts', allProducts);
+
     useEffect(() => {
-        // if (allProducts.length == 0) {
-        //     dispatch(fetchProducts() as unknown as AnyAction);
-        // }
         setPindex(currentProductGroup.findIndex((p: Product) => p.id === currentProductId))
         // eslint-disable-next-line 
     }, []);
@@ -117,7 +114,7 @@ const ProductDisplay = (props: Props) => {
         dispatch(openEdit(pid));
     };
 
-    // onError={(event: InputChangeEvent) => {event.target.src="/static/colors1.jpg"}}
+
     return <>
         {product.id != "" && <div key={product.id}
             style={{ visibility: prodShow ? 'visible' : 'hidden' }}

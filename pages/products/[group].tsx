@@ -7,10 +7,9 @@ import ProductsText from '../../components/productsText';
 import GroupMenu from '../../components/groupMenu';
 import { useRouter } from 'next/router';
 import type { GetStaticProps, GetStaticPaths } from 'next'
-import { Product } from "../../redux/features/productsReducer";
+import type { Product } from "../../redux/features/productsReducer";
+import { LoaderFunction } from "../../redux/features/productsReducer";
 import productGroupData from "../../shared/productGroup.json";
-
-import { LoaderFunction } from './index';
 
 
 export default function ProductsPage(props: { allProducts: Product[] }) {
@@ -50,7 +49,6 @@ export default function ProductsPage(props: { allProducts: Product[] }) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
     return {
-        // The paths to be pre-rendered at build time. E.g. /post/1, /post/2, etc
         paths: [{ params: { group: '1' } }, { params: { group: '2' } }, { params: { group: '3' } }, { params: { group: '4' } }, { params: { group: '5' } }, { params: { group: '6' } }, { params: { group: '7' } }, { params: { group: '8' } }, { params: { group: '9' } }, { params: { group: '10' } }],
         fallback: false, // false or "blocking"
     }
