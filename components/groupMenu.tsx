@@ -9,24 +9,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withReduxStore } from "../redux/withReduxStore";
 import { AnyAction } from "redux";
 import Modal from './UI/Modal'
-import { fetchProducts, updateAllProducts, add2AllOpen, add2AllClose, updateCurrentProductGroup, closeProductPage, openProductPage, closeEdit, updateCurrentProductId, closeAdded } from '../redux/features/productsReducer';
+import { fetchProducts, updateAllProducts, add2AllOpen, add2AllClose, updateCurrentProductGroup, closeProductPage, openProductPage, closeEdit, updateCurrentProductId, closeAdded, Product } from '../redux/features/productsReducer';
 import ProductDisplay from './productDisplay';
 
-const GroupMenu = (props: any) => {
+const GroupMenu = (props: { allProducts: Product[] }) => {
     const [currentGroupId, setCurrentGroupId] = useState("1");
 
     const router = useRouter();
-    const { productAdded, allProducts, currentProductId, currentProductGroup, loading, prodShow } = useSelector(productsSlice);
+    const { productAdded, currentProductId, currentProductGroup, loading, prodShow } = useSelector(productsSlice);
     const { isAdmin } = useSelector(authSlice)
     const dispatch = useDispatch();
 
+    const allProducts = props.allProducts
 
-    useEffect(() => {
-        if (allProducts.length == 0) {
-            dispatch(fetchProducts() as unknown as AnyAction);
-        }
-        // eslint-disable-next-line 
-    }, []);
 
     const OpenMenu = (id: string) => {
         setCurrentGroupId(id);
@@ -51,6 +46,7 @@ const GroupMenu = (props: any) => {
                     X
                 </button>
                 <ProductDisplay
+                    allProducts={allProducts}
                     prodShow={prodShow}
                     pid={currentProductId}
                 />

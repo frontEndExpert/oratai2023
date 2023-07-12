@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import Head from "next/head"
 import { AppProps } from 'next/app';
 import "../styles/globals.scss"
@@ -10,24 +10,30 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 
 
-
 let persistor = persistStore(store);
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <Fragment>
+
+
+
       <Head>
         <link rel="icon" href="/static/favicon.ico" />
+        <meta name="author" content="Aylon Spigel" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
+
+
       <Provider store={store}>
-        <PersistGate persistor={persistor} loading={<div>Loading...</div>}>
+        <PersistGate persistor={persistor} loading={< div > Loading...</div >}>
           <LanguagueContextProvider>
             <Component {...pageProps} />
           </LanguagueContextProvider>
-        </PersistGate>
+        </PersistGate >
       </Provider>
-    </>
+    </Fragment>
   )
 }
 

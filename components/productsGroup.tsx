@@ -11,30 +11,30 @@ import useTranslations from "../hooks/useTranslations";
 import { withReduxStore } from "../redux/withReduxStore";
 import { AnyAction } from "redux";
 
-const ProductsGroup = (props: { groupid: string }) => {
+const ProductsGroup = (props: { groupid: string, allProducts: Product[] }) => {
     const [currentProductGroup, setCurrentProductGroup] = useState([] as Product[]);
     const [pin, setPin] = useState(0);
     const { currentLanguage } = useContext(LanguagueContext);
-    const { productAdded, allProducts, prodShow } = useSelector(productsSlice);
+    const { productAdded, prodShow } = useSelector(productsSlice);
     const dispatch = useDispatch();
     const { t } = useTranslations(currentLanguage);
 
     useEffect(() => {
-        if (allProducts.length == 0) {
+        if (props.allProducts.length == 0) {
             dispatch(fetchProducts() as unknown as AnyAction);
         }
-        if (props.groupid != "" && allProducts.length > 0) {
-            setCurrentProductGroup([...allProducts.filter((item) => item.group_id == props.groupid)]);
-            dispatch(updateCurrentProductGroup([...allProducts.filter((item) => item.group_id == props.groupid)]));
+        if (props.groupid != "" && props.allProducts.length > 0) {
+            setCurrentProductGroup([...props.allProducts.filter((item) => item.group_id == props.groupid)]);
+            dispatch(updateCurrentProductGroup([...props.allProducts.filter((item) => item.group_id == props.groupid)]));
         }
         // eslint-disable-next-line 
     }, []);
 
     useEffect(() => {
-        setCurrentProductGroup([...allProducts.filter((item) => item.group_id == props.groupid)]);
-        dispatch(updateCurrentProductGroup([...allProducts.filter((item) => item.group_id == props.groupid)]));
+        setCurrentProductGroup([...props.allProducts.filter((item) => item.group_id == props.groupid)]);
+        dispatch(updateCurrentProductGroup([...props.allProducts.filter((item) => item.group_id == props.groupid)]));
         // eslint-disable-next-line 
-    }, [props.groupid, allProducts]);
+    }, [props.groupid, props.allProducts]);
 
     useEffect(() => {
         if (productAdded) {

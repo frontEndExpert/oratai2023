@@ -1,16 +1,18 @@
 import React from 'react';
-import App from '../components/App';
+import Layout from '../components/Layout';
 import styles from '../styles/terms.module.scss';
+import Head from "next/head"
+import { GetStaticPaths } from 'next';
 
 
 const TermsPage = () => {
     return (
-        <App title="Orataiphathai Thai Sarong - Terms of Use"
+        <Layout title="Orataiphathai Thai Sarong - Terms of Use"
             description="Our Terms of Use to protect you and us and deliver the best online shopping experience." >
             <div className={styles.headbox} >
                 <h2>Website Terms of Use</h2>
 
-                <p className={styles.bigheader}>Version 2.0 (2022)</p>
+                <p className={styles.bigheader}>Version 3.0 (2023) Next.js v13, React.js 18.2</p>
                 <p>The Ora Tai Pha Thai website located at https://www.orataiphathai.work is a copyrighted work belonging to Orataiphathai. Certain features of the Site may be subject to additional guidelines, terms, or rules, which will be posted on the Site in connection with such features.</p>
                 <p>All such additional terms, guidelines, and rules are incorporated by reference into these Terms.</p>
 
@@ -87,9 +89,16 @@ const TermsPage = () => {
                 <p>Address: 30/147 ซอย บางแก้ว 2 Tambon Bang Kaeo, Amphoe Bang Phli, Chang Wat Samut Prakan 10540, Thailand</p>
                 <p>Email: aylon.spigel@gmail.com</p>
             </div>
-            )
-        </App>
+        </Layout>
     )
 }
 
 export default TermsPage
+
+
+// export const getStaticPaths: GetStaticPaths = () => {
+//     return {
+//         paths: [{ params: { slug: 'terms' } }],
+//         fallback: false
+//     };
+// }
