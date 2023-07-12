@@ -2,6 +2,8 @@ import React from 'react';
 import Layout from '../components/Layout';
 import styles from '../styles/terms.module.scss';
 import Head from "next/head"
+import { GetStaticPaths } from 'next';
+
 
 const TermsPage = () => {
     return (
@@ -92,3 +94,11 @@ const TermsPage = () => {
 }
 
 export default TermsPage
+
+
+// export const getStaticPaths: GetStaticPaths = () => {
+//     return {
+//         paths: [{ params: { slug: 'terms' } }],
+//         fallback: false
+//     };
+// }

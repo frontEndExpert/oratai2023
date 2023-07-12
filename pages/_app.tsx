@@ -15,22 +15,31 @@ let persistor = persistStore(store);
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Fragment>
+
+
+
       <Head>
         <link rel="icon" href="/static/favicon.ico" />
-
         <meta name="author" content="Aylon Spigel" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
+
+
       <Provider store={store}>
-        <PersistGate persistor={persistor} loading={<div>Loading...</div>}>
-          <LanguagueContextProvider>
-            <Component {...pageProps} />
-          </LanguagueContextProvider>
-        </PersistGate>
+
+        <LanguagueContextProvider>
+          <Component {...pageProps} />
+        </LanguagueContextProvider>
+
       </Provider>
     </Fragment>
   )
 }
 
 export default MyApp
+
+//   < PersistGate persistor = { persistor } loading = {< div > Loading...</div >}>
+
+  
+// </PersistGate >

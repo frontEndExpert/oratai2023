@@ -60,6 +60,18 @@ export type ProductReducer = {
   pathname: string;
 }
 
+export const fetchAllProducts = () => {
+  let fetchedProducts: Product[] = [];
+  database.ref('allProducts').on('value', async (snapshot) => {
+    const data = await snapshot.val();
+    const keys = Object.keys(data)
+    fetchedProducts = keys.map((key: string) => {
+      return { id: key, ...data[key] }
+    })
+  })
+  console.log('fetchAllProducts', fetchedProducts)
+  return fetchedProducts;
+}
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',

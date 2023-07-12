@@ -2,7 +2,7 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import styles from '../styles/privacy.module.scss';
-
+import { GetStaticPaths } from 'next';
 
 const PrivacyPage = () => {
     return (
@@ -49,3 +49,10 @@ const PrivacyPage = () => {
 }
 
 export default PrivacyPage
+
+// export const getStaticPaths: GetStaticPaths = () => {
+//     return {
+//         paths: [{ params: { slug: 'privacy' } }],
+//         fallback: false
+//     };
+// }

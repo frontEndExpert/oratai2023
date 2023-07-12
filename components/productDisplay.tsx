@@ -19,6 +19,7 @@ type Props = {
     currentGroupId?: string;
     currentArrSize?: number;
     modalClose?: Function;
+    allProducts: Product[];
 }
 
 interface InputChangeEvent extends React.ChangeEvent<HTMLInputElement> {
@@ -41,15 +42,16 @@ const ProductDisplay = (props: Props) => {
     const [isImageError, setIsImageError] = useState(false);
 
     const dispatch = useDispatch();
-    const { productAdded, allProducts, currentProductGroup, prodShow, currentProductId, editShow, add2AllShow } = useSelector(productsSlice);
+    const { productAdded, currentProductGroup, prodShow, currentProductId, editShow, add2AllShow } = useSelector(productsSlice);
     const { isAuthenticated, isAdmin, loading } = useSelector(authSlice);
     const [pIndex, setPindex] = useState(0);
 
-
+    const allProducts = props.allProducts
+    //console.log('display allProducts', allProducts);
     useEffect(() => {
-        if (allProducts.length == 0) {
-            dispatch(fetchProducts() as unknown as AnyAction);
-        }
+        // if (allProducts.length == 0) {
+        //     dispatch(fetchProducts() as unknown as AnyAction);
+        // }
         setPindex(currentProductGroup.findIndex((p: Product) => p.id === currentProductId))
         // eslint-disable-next-line 
     }, []);

@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import Homepage from '../components/Homepage'
-
+import { GetStaticPaths } from 'next';
 
 export default function Index() {
     return (
@@ -13,3 +13,10 @@ export default function Index() {
         </Layout>
     )
 }
+
+// export const getStaticPaths: GetStaticPaths = () => {
+//     return {
+//         paths: [{ params: { slug: '' } }],
+//         fallback: false
+//     };
+// }

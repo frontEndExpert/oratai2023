@@ -1,7 +1,7 @@
 import React from 'react';
 import AboutUs from '../components/AboutUs';
 import Layout from '../components/Layout';
-
+import { GetStaticPaths } from 'next';
 
 const AboutPage = () => {
     return (
@@ -13,3 +13,11 @@ const AboutPage = () => {
 }
 
 export default AboutPage
+
+
+// export const getStaticPaths: GetStaticPaths = () => {
+//     return {
+//         paths: [{ params: { slug: 'aboutus' } }],
+//         fallback: false //or "blocking"
+//     };
+// }

@@ -3,7 +3,7 @@
 import React from 'react';
 import Reviews from '../components/Reviews'
 import Layout from '../components/Layout'
-
+import { GetStaticPaths } from 'next';
 
 const ReviewsPage = () => {
 
@@ -16,3 +16,11 @@ const ReviewsPage = () => {
 }
 
 export default ReviewsPage
+
+
+// export const getStaticPaths: GetStaticPaths = () => {
+//     return {
+//         paths: [{ params: { slug: 'reviews' } }],
+//         fallback: false
+//     };
+// }
