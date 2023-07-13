@@ -19,7 +19,6 @@ interface ProductsPageProps {
 export default function ProductsPage(props: ProductsPageProps) {
     const [groupId, setGroupID] = useState('1');
     const [groupTitle, setGroupTitle] = useState('');
-    const [domLoaded, setDomLoaded] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -31,14 +30,8 @@ export default function ProductsPage(props: ProductsPageProps) {
     }, [router.isReady, router.query]);
 
 
-    useEffect(() => {
-        setDomLoaded(true);
-    }, []);
-
-
-
     return <>
-        {domLoaded && (<Layout title={`Order Your Orataiphathai Thai Sarong Products - ${groupTitle}`}
+        {(<Layout title={`Order Your Orataiphathai Thai Sarong Products - ${groupTitle}`}
             description="Our Products catalog of Thai Sarong fabric. We have many patterns and even unique handmade items therefore you need to contact us to find out price and availability."
         >
             <div className="bg-black">
