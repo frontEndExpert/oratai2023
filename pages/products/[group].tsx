@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layout';
 import ProductsGroup from "../../components/productsGroup";
 import ProductsText from '../../components/productsText';
@@ -11,8 +11,12 @@ import type { Product } from "../../redux/features/productsReducer";
 import { LoaderFunction } from "../../redux/features/productsReducer";
 import productGroupData from "../../shared/productGroup.json";
 
+interface ProductsPageProps {
+    allProducts: Product[];
+    children: React.ReactNode;
+}
 
-export default function ProductsPage(props: { allProducts: Product[] }) {
+export default function ProductsPage(props: ProductsPageProps) {
     const [groupId, setGroupID] = useState('1');
     const [groupTitle, setGroupTitle] = useState('');
     const [domLoaded, setDomLoaded] = useState(false);

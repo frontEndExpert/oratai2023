@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import useTranslations from "../hooks/useTranslations";
 import LanguagueContext from '../contexts/languagueContext';
 

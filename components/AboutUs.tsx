@@ -30,8 +30,8 @@ const AboutUs = (props: any) => {
                         <br />
                         <p >{t("aboutus:love")}{" "}</p>
 
-                        <p >{t("aboutus:supply")}{" "}
-                        </p>
+                        <p >{t("aboutus:supply")}{" "}</p>
+
                         <p >{t("aboutus:sample")}{" "}</p>
                         <p >{t("aboutus:better")}{" "}</p>
                         <p >{t("aboutus:believe")}{" "}</p>

@@ -1,13 +1,12 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import styles from '../styles/terms.module.scss';
-import Head from "next/head"
-import { GetStaticPaths } from 'next';
 
 
 const TermsPage = () => {
-    return (
-        <Layout title="Orataiphathai Thai Sarong - Terms of Use"
+
+    return <>
+        {(<Layout title="Orataiphathai Thai Sarong - Terms of Use"
             description="Our Terms of Use to protect you and us and deliver the best online shopping experience." >
             <div className={styles.headbox} >
                 <h2>Website Terms of Use</h2>
@@ -90,15 +89,8 @@ const TermsPage = () => {
                 <p>Email: aylon.spigel@gmail.com</p>
             </div>
         </Layout>
-    )
+        )}
+    </>
 }
 
 export default TermsPage
-
-
-// export const getStaticPaths: GetStaticPaths = () => {
-//     return {
-//         paths: [{ params: { slug: 'terms' } }],
-//         fallback: false
-//     };
-// }

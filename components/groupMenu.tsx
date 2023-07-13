@@ -1,15 +1,14 @@
 'use client';
 
-import React, { useState, useEffect, useContext, useCallback } from "react";
+import React, { useState } from "react";
 import { useRouter } from 'next/navigation';
 import productGroupData from "../shared/productGroup.json";
 import Image from 'next/image';
 import { authSlice, productsSlice } from '../redux/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { withReduxStore } from "../redux/withReduxStore";
-import { AnyAction } from "redux";
 import Modal from './UI/Modal'
-import { fetchProducts, updateAllProducts, add2AllOpen, add2AllClose, updateCurrentProductGroup, closeProductPage, openProductPage, closeEdit, updateCurrentProductId, closeAdded, Product } from '../redux/features/productsReducer';
+import { add2AllOpen, updateCurrentProductGroup, closeProductPage, Product } from '../redux/features/productsReducer';
 import ProductDisplay from './productDisplay';
 
 const GroupMenu = (props: { allProducts: Product[] }) => {

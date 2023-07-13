@@ -14,8 +14,8 @@ const Reviews = (props: any) => {
     return (
         <>
             <div className={`container ${styles.reviews}`}>
-                <h2>{t("reviews:header")}{" "}</h2>
-                <p>{t("reviews:miniheader")}{" "}</p>
+                <h2 className='mb-2 text-3xl'>{t("reviews:header")}{" "}</h2>
+                <p className='text-lg mb-6'>{t("reviews:miniheader")}{" "}</p>
                 <div className={styles.countries}>
                     <Image className={styles.flag} src="/static/Spain.jpg" title="Spain" alt="Spain" width={100} height={60} />
                     <Image className={styles.flag} src="/static/Australia.png" title="Australia" alt="Australia" width={100} height={60} />

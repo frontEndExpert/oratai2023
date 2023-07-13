@@ -5,26 +5,24 @@ import type { Product } from "../../redux/features/productsReducer";
 import { LoaderFunction } from "../../redux/features/productsReducer";
 import type { GetStaticProps } from 'next';
 
-import { useEffect, useState } from 'react';
 
+interface ProductsPageProps {
+    allProducts: Product[];
+    children: React.ReactNode;
+}
 
-export default function ProductsPage(props: { allProducts: Product[] }, { children }: { children: React.ReactNode }) {
-    const [domLoaded, setDomLoaded] = useState(false);
-    useEffect(() => {
-        setDomLoaded(true);
-    }, []);
+export default function ProductsPage(props: ProductsPageProps) {
 
     return <>
-        {domLoaded && (<Layout title="Order Your Orataiphathai Thai Sarong Products"
+        {(<Layout title="Order Your Orataiphathai Thai Sarong Products"
             description="Our Products catalog of Thai Sarong fabric. We have many patterns and even unique handmade items therefore you need to contact us to find out price and availability."
         >
             <div className="container bg-black">
                 <ProductsText />
                 <GroupMenu allProducts={props.allProducts} />
-                {children}
+                {props.children}
             </div>
-        </Layout>
-        )}
+        </Layout>)}
     </>
 }
 

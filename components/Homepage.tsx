@@ -43,19 +43,13 @@ const Homepage = (props: any) => {
                         {t("homepage:focus")}</b>.
                     </h1>
 
-                    <p className="my-2 text-center text-lg text-red-600">{t("homepage:prefere")}{" "}
-                    </p>
+                    <p className="my-2 text-center text-lg text-red-600">{t("homepage:prefere")}{" "}</p>
 
-                    <p className='mt-9'>{t("homepage:purpose1")}{" "}
-                    </p>
-                    <p>{t("homepage:traits2")}{" "}
-                    </p>
-                    <p>{t("homepage:data3")}{" "}
-                        <Link href={{ pathname: '/products/' }}>{t("homepage:data3link")}{" "}</Link>.<br />
-                    </p>
+                    <p className='mt-9'>{t("homepage:purpose1")}{" "}</p>
+                    <p>{t("homepage:traits2")}{" "}</p>
+                    <p>{t("homepage:data3")}{" "}<Link href={{ pathname: '/products/' }}>{t("homepage:data3link")}{" "}</Link>.<br /></p>
 
-                    <p>{t("homepage:4thai")}{" "}
-                    </p>
+                    <p>{t("homepage:4thai")}{" "}</p>
                     <p>
                         <span>{t("homepage:contactus5")}{" "} </span> <Link href={{ pathname: '/aboutus/' }}>{t("homepage:contactus5title")}{" "}</Link> <span>{t("homepage:contactus5wa")}{" "}</span>
                     </p>

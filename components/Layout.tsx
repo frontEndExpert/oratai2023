@@ -1,20 +1,27 @@
-import React from "react"
+import React, { ReactNode } from "react"
 import Head from "next/head"
 import Header from "./header"
 import Nav from "./nav"
 import Footer from "./footer"
 import AuthModal from "@/components/AuthModal"
-import { DefaultSeo } from 'next-seo';
 import { NextSeo } from 'next-seo';
 
-const Layout = (props: any) => {
+interface LayoutProps {
+  title?: string;
+  description?: string;
+  url?: string;
+  ogImage?: string;
+  children: ReactNode;
+}
+
+const Layout = (props: LayoutProps) => {
 
   const defaultDescription = 'OrataiPhathai Website';
   const defaultOGURL = 'http://www.orataiphathai.work';
   const defaultOGImage = '';
 
   return (
-    <main>
+    <>
       <NextSeo
         title={props.title || "OraTai PhaThai"}
         description={props.description || defaultDescription}
@@ -48,7 +55,7 @@ const Layout = (props: any) => {
       <AuthModal />
       {props.children}
       <Footer />
-    </main>
+    </>
   )
 }
 
