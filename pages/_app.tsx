@@ -2,7 +2,6 @@ import React, { Fragment } from "react"
 import Head from "next/head"
 import { AppProps } from 'next/app';
 import "../styles/globals.scss"
-import Script from "next/script";
 import store from "@/redux/store";
 import { Provider } from "react-redux";
 import { LanguagueContextProvider } from "@/contexts/languagueContext";

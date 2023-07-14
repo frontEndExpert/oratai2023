@@ -17,7 +17,6 @@ const LanguagueContext = createContext<LanguagueContextType>({
 export function LanguagueContextProvider({ children: children }: { children: React.ReactNode }) {
     const [currentLanguage, setCurrentLanguage] = useState<string>("en");
 
-    // function changeLanguages (currentLanguage: string) {   setCurrentLanguage(currentLanguage);} 
     return (
         <LanguagueContext.Provider value={{ currentLanguage, setCurrentLanguage }}>
             {children}

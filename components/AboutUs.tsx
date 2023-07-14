@@ -17,7 +17,7 @@ const AboutUs = (props: any) => {
                     <h1 >orataiphathai.work (formaly .com)</h1>
                     <h2 >{t("aboutus:heading")}{" "}</h2>
                 </div>
-                <Image src="/static/thai_sarong900.jpg"
+                <Image src="static/images/thai_sarong900.jpg"
                     className="img-responsive"
                     width={1000} height={200}
                     alt="Fashionable Thai Sarong Fabric" />
@@ -46,32 +46,32 @@ const AboutUs = (props: any) => {
 
                         <div className={styles.contactLeft}>
                             <div className={styles.mediaPair}>
-                                <Image src="/static/mail.png" width={40} height={40} className="img-icon" alt="orataiphathai Thai Sarong Email" />
+                                <Image src="static/images/mail.png" width={40} height={40} className="img-icon" alt="orataiphathai Thai Sarong Email" />
                                 <a href="mailto:orataiphathai@gmail.com" className={styles.aInfoText}>
                                     orataiphathai@gmail.com</a>
                             </div>
                             <div className={styles.mediaPair}>
-                                <Image src="/static/facebook_icon.png" width={40} height={40} className="img-icon" alt="orataiphathai Email Thai Sarong" />
+                                <Image src="static/images/facebook_icon.png" width={40} height={40} className="img-icon" alt="orataiphathai Email Thai Sarong" />
                                 <a href="https://www.facebook.com/%E0%B8%AD%E0%B8%A3%E0%B8%97%E0%B8%B1%E0%B8%A2%E0%B8%9C%E0%B9%89%E0%B8%B2%E0%B9%84%E0%B8%97%E0%B8%A2-937874942959104/"
                                     target="_new" className={styles.aInfoText}>
                                     Orataiphathai - Facebook Page</a>
                             </div>
                             <div className={styles.mediaPair}>
-                                <Image src="/static/line.gif" width={40} height={40} className={styles.imgIcon} alt="orataiphathai on LINE Thai Sarong" />
+                                <Image src="static/images/line.gif" width={40} height={40} className={styles.imgIcon} alt="orataiphathai on LINE Thai Sarong" />
                                 <a href="line://ti/p/@bcj6324n" className={styles.aInfoText} target="_new" >{t("aboutus:click1")}{" "}</a>
                             </div>
                             <div className={styles.mediaPair}>
-                                <Image src="/static/wa-logo.png" width={40} height={40} className={styles.imgIcon} alt="orataiphathai on WhatsApp Thai Sarong" />
+                                <Image src="static/images/wa-logo.png" width={40} height={40} className={styles.imgIcon} alt="orataiphathai on WhatsApp Thai Sarong" />
                                 <a href="https://bit.ly/orataiphathai" className={styles.aInfoText} target="_new" >{t("aboutus:click2")}{" "}</a>
                             </div>
                         </div>
                         <div className="styles.contact-right">
                             <div className={styles.mediaPair}>
-                                <Image src="/static/line.gif" width={40} height={40} className={styles.imgIcon} alt="Thai Sarong Orataiphathai on LINE QR code" />
+                                <Image src="static/images/line.gif" width={40} height={40} className={styles.imgIcon} alt="Thai Sarong Orataiphathai on LINE QR code" />
                                 <p className="styles.p-info-text">{t("aboutus:qrcode")}{" "}</p>
                             </div>
                             <div className="code-img">
-                                <Image src="/static/LINE_QR_CODE1.jpg" width={160} height={160} className={styles.codeImg} alt="Thai Sarong Orataiphathai on LINE QR code" />
+                                <Image src="static/images/LINE_QR_CODE1.jpg" width={160} height={160} className={styles.codeImg} alt="Thai Sarong Orataiphathai on LINE QR code" />
                             </div>
                         </div>
                     </div>

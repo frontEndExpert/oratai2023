@@ -140,7 +140,7 @@ const ProductDisplay = (props: Props) => {
                 : <></>}
             <div className={styles.productdetails}>
                 <div className={styles.productImgContainer}>
-                    <Image src={isImageError ? "/static/colors1.jpg" : "/static/" + product.photo_url}
+                    <Image src={isImageError ? "/static/images/colors1.jpg" : "/static/images/" + product.photo_url}
                         onError={onError}
                         className={`media-object ${styles.prdimg}`}
                         width={150} height={150}

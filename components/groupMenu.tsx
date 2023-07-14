@@ -84,7 +84,7 @@ const GroupMenu = (props: { allProducts: Product[] }) => {
             </div>}
             <div id="divider1" className="bg-black strike">
                 <Image
-                    src={"/static/divider1.svg"}
+                    src={"/static/images/divider1.svg"}
                     className="img-responsive"
                     width="500"
                     height="50"

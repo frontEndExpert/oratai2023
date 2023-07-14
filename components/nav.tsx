@@ -15,13 +15,13 @@ import EditModal from "./UI/EditModal";
 import EditProdForm from "./editProdForm";
 import Add2AllForm from "./add2AllForm";
 import Image from "next/image";
-import home from "@/public/static/home.svg";
-import cart from "@/public/static/cart.svg";
-import reviews from "@/public/static/person-hearts.svg";
-import aboutus from "@/public/static/question-circle-fill.svg";
-import login from "@/public/static/login.svg";
-import logout from "@/public/static/logout.svg";
-import gear from "@/public/static/gear.svg";
+import home from "@/public/static/images/home.svg";
+import cart from "@/public/static/images/cart.svg";
+import reviews from "@/public/static/images/person-hearts.svg";
+import aboutus from "@/public/static/images/question-circle-fill.svg";
+import login from "@/public/static/images/login.svg";
+import logout from "@/public/static/images/logout.svg";
+import gear from "@/public/static/images/gear.svg";
 
 interface SelectChangeEvent extends React.ChangeEvent<HTMLSelectElement> {
   target: HTMLSelectElement & EventTarget;

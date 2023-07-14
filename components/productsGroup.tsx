@@ -66,7 +66,7 @@ const ProductsGroup = (props: { groupid: string, allProducts: Product[] }) => {
                             >
                                 <span>{product.title}</span>
                                 <Image width={100} height={100}
-                                    src={"/static/" + product.photo_url}
+                                    src={"/static/images/" + product.photo_url}
                                     alt={'Thai Sarong-' + product.title}
                                     sizes="10vw"
                                 />

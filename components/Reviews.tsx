@@ -17,17 +17,17 @@ const Reviews = (props: any) => {
                 <h2 className='mb-2 text-3xl'>{t("reviews:header")}{" "}</h2>
                 <p className='text-lg mb-6'>{t("reviews:miniheader")}{" "}</p>
                 <div className={styles.countries}>
-                    <Image className={styles.flag} src="/static/Spain.jpg" title="Spain" alt="Spain" width={100} height={60} />
-                    <Image className={styles.flag} src="/static/Australia.png" title="Australia" alt="Australia" width={100} height={60} />
-                    <Image className={styles.flag} src="/static/Poland.png" title="Poland" alt="Poland" width={100} height={60} />
-                    <Image className={styles.flag} src="/static/Israel.jpg" title="Israel" alt="Israel" width={100} height={60} />
-                    <Image className={styles.flag} src="/static/Thailand.png" title="Thailand" alt="Thailand" width={100} height={60} />
-                    <Image className={styles.flag} src="/static/Unitedstates.png" title="Unitedstates" alt="Unitedstates" width={100} height={60} />
+                    <Image className={styles.flag} src="/static/images/Spain.jpg" title="Spain" alt="Spain" width={100} height={60} />
+                    <Image className={styles.flag} src="/static/images/Australia.png" title="Australia" alt="Australia" width={100} height={60} />
+                    <Image className={styles.flag} src="/static/images/Poland.png" title="Poland" alt="Poland" width={100} height={60} />
+                    <Image className={styles.flag} src="/static/images/Israel.jpg" title="Israel" alt="Israel" width={100} height={60} />
+                    <Image className={styles.flag} src="/static/images/Thailand.png" title="Thailand" alt="Thailand" width={100} height={60} />
+                    <Image className={styles.flag} src="/static/images/Unitedstates.png" title="Unitedstates" alt="Unitedstates" width={100} height={60} />
                 </div>
                 <div className={styles.reviewslist}>
                     <div className={styles.review}>
                         <div className={styles.customerImg}>
-                            <Image src="/static/customer_0001.jpg"
+                            <Image src="/static/images/customer_0001.jpg"
                                 className={styles.customerImg}
                                 title="Thai Sarong fashion fusion"
                                 alt="Thai Sarong fashion fusion"
@@ -35,7 +35,7 @@ const Reviews = (props: any) => {
                         <div className={styles.customerText}><span>This fashion designer has made a great fusion of Thai Sarong Fabric with his modern wear set.</span></div>
                     </div>
                     <div className={styles.review}>
-                        <Image src="/static/customer_0002.jpg"
+                        <Image src="/static/images/customer_0002.jpg"
                             className={styles.customerImg}
                             title="Thai Sarong Bed Covers"
                             alt="Thai Sarong Bed Covers"
@@ -43,7 +43,7 @@ const Reviews = (props: any) => {
                         <div className={styles.customerText}><span>This spa with its traditional Thai massage used Thai sarong fabric to add a clean and traditional look to its massage suites.</span></div>
                     </div>
                     <div className={styles.review}>
-                        <Image src="/static/customer_0003.jpg"
+                        <Image src="/static/images/customer_0003.jpg"
                             className={styles.customerImg}
                             title="Sarong kitchen wear"
                             alt="Thai Sarong kitchen wear"
@@ -51,7 +51,7 @@ const Reviews = (props: any) => {
                         <div className={styles.customerText}><span>In Europe, they love Thai sarong fabric for kitchen wear.</span></div>
                     </div>
                     <div className={styles.review}>
-                        <Image src="/static/customer_0004.jpg"
+                        <Image src="/static/images/customer_0004.jpg"
                             className={styles.customerImg}
                             title="Sarong elephant figurine"
                             alt="Thai Sarong elephant figurine"
@@ -62,7 +62,7 @@ const Reviews = (props: any) => {
                         </div>
                     </div>
                     <div className={styles.review}>
-                        <Image src="/static/customer_00051.jpg"
+                        <Image src="/static/images/customer_00051.jpg"
                             className={styles.customerImg}
                             title="Kids Fashion Sarong"
                             alt="Kids Fashion Thai Sarong"
@@ -74,7 +74,7 @@ const Reviews = (props: any) => {
                         </div>
                     </div>
                     <div className={styles.review}>
-                        <Image src="/static/aimtam.jpg"
+                        <Image src="/static/images/aimtam.jpg"
                             className={styles.customerImg}
                             title="AimTam thaibaby clothes"
                             alt="AimTam thaibaby clothes Thai Sarong"
@@ -91,7 +91,7 @@ const Reviews = (props: any) => {
                 <h2>Customers Reviews</h2>
                 <div className={styles.reviewslist}>
                     <div className={styles.review}>
-                        <Image src="/static/rapin.jpg"
+                        <Image src="/static/images/rapin.jpg"
                             className={styles.customerImg}
                             title="" alt=""
                             width={560} height={300} />
@@ -103,7 +103,7 @@ const Reviews = (props: any) => {
                         </div>
                     </div>
                     <div className={styles.review}>
-                        <Image src="/static/ong.jpg"
+                        <Image src="/static/images/ong.jpg"
                             className={styles.customerImg}
                             title="" alt=""
                             width={560} height={300} />
@@ -115,7 +115,7 @@ const Reviews = (props: any) => {
                         </div>
                     </div>
                     <div className={styles.review}>
-                        <Image src="/static/sujit.jpg"
+                        <Image src="/static/images/sujit.jpg"
                             className={styles.customerImg}
                             title="" alt=""
                             width={560} height={300} />
@@ -127,7 +127,7 @@ const Reviews = (props: any) => {
                         </div>
                     </div>
                     <div className={styles.review}>
-                        <Image src="/static/surin.jpg"
+                        <Image src="/static/images/surin.jpg"
                             className={styles.customerImg}
                             title="" alt="" width={560} height={300} />
                         <div className={styles.customerText}>

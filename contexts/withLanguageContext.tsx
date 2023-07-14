@@ -1,5 +1,4 @@
 import { LanguagueContextProvider } from "./languagueContext";
-import type { LanguagueContextType } from "./languagueContext";
 
 
 export const withLanguageContext = (Component: any) => {

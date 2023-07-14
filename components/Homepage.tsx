@@ -63,13 +63,13 @@ const Homepage = (props: any) => {
 
             <div className='flex flex-row flex-nowrap m-10 text-center gap-3 ads '>
                 <Image className="h-auto hebrew-img"
-                    src="/static/thaisarong1.png "
+                    src="/static/images/thaisarong1.png "
                     width={550} height={520}
                     alt="thai sarong wholesale תאי סארונג בעברית" />
 
                 <video
                     className="h-auto w-full z-2 relative sm:w-150"
-                    src="/static/batik.mp4"
+                    src="/static/images/batik.mp4"
                     autoPlay
                     controls
                 >
